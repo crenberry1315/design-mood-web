@@ -81,11 +81,37 @@ svg {
   flex-shrink: 0;
 }
 
-/* Flex Icon Box Container */
+/* Flex Icon Box Container - Pixel Perfect 100% Centering */
 .icon-box {
-  display: flex;
-  align-items: center;
-  justify: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.icon-box svg {
+  display: block !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+
+.check-circle-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--primary-brown);
+  color: #FFFFFF;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.check-circle-icon svg {
+  display: block !important;
+  margin: 0 !important;
   flex-shrink: 0;
 }
 

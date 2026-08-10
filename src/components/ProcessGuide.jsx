@@ -7,31 +7,31 @@ export default function ProcessGuide() {
       step: '01',
       title: '현장 실측 & 무료 상담',
       desc: '춘천 아파트/주택 현장을 직접 방문하여 구체적 치수 측정을 진행하고 고객님의 니즈를 청취합니다.',
-      icon: <Compass size={24} />,
+      icon: <Compass size={22} />,
     },
     {
       step: '02',
       title: '3D 도면 & 상세 견적',
       desc: '공간 3D 모델링 도면을 가시화하여 미리 확인하며, 투명한 자재 단가표에 따른 상세 견적서를 안내합니다.',
-      icon: <FileText size={24} />,
+      icon: <FileText size={22} />,
     },
     {
       step: '03',
       title: '자재 선정 & 서면 계약',
       desc: '우두동 매장에서 마루, 벽지, 타일 등 실물 샘플을 직접 체험하여 확정 후 투명 계약을 작성합니다.',
-      icon: <CheckSquare size={24} />,
+      icon: <CheckSquare size={22} />,
     },
     {
       step: '04',
       title: '베테랑 책임 시공',
       desc: '전문 현장소장의 밀착 지휘 아래 공정이 진행되며, 카카오톡으로 매일 현장 진행 사진을 전달해 드립니다.',
-      icon: <HardHat size={24} />,
+      icon: <HardHat size={22} />,
     },
     {
       step: '05',
       title: '완공 검수 & 지속 A/S',
       desc: '전문 입주 청소 후 완공 상태를 꼼꼼히 점검하며, 시공 후 발생할 수 있는 문제까지 신속 A/S 처리합니다.',
-      icon: <ShieldCheck size={24} />,
+      icon: <ShieldCheck size={22} />,
     },
   ];
 
@@ -72,7 +72,7 @@ export default function ProcessGuide() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
             gap: '1.2rem',
             marginBottom: '4.5rem',
           }}
@@ -82,15 +82,16 @@ export default function ProcessGuide() {
               key={idx}
               className="glass-card"
               style={{
-                padding: '1.8rem 1.4rem',
+                padding: '1.8rem 1.3rem',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1rem',
                 position: 'relative',
                 borderTop: '4px solid var(--primary-brown)',
+                boxSizing: 'border-box',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                 <span
                   style={{
                     fontSize: '1.4rem',
@@ -98,6 +99,7 @@ export default function ProcessGuide() {
                     color: 'var(--primary-brown)',
                     fontFamily: 'var(--font-subheading)',
                     lineHeight: 1,
+                    flexShrink: 0,
                   }}
                 >
                   {item.step}
@@ -108,12 +110,8 @@ export default function ProcessGuide() {
                     width: '42px',
                     height: '42px',
                     borderRadius: '50%',
-                    backgroundColor: 'var(--bg-main)',
+                    backgroundColor: 'rgba(124, 94, 67, 0.12)',
                     color: 'var(--primary-brown-dark)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justify: 'center',
-                    lineHeight: 1,
                     flexShrink: 0,
                   }}
                 >
