@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Clock, MessageCircle, ArrowUp } from 'lucide-react';
+import { MapPin, Phone, Clock, MessageCircle, ArrowUp, Mail } from 'lucide-react';
 
 export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
   const scrollToTop = () => {
@@ -93,6 +93,11 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
                   <div><a href="tel:010-7782-1061" style={{ color: '#FFFFFF', fontWeight: 600 }}>010-7782-1061</a></div>
                   <div><a href="tel:010-7576-1061" style={{ color: '#FFFFFF', fontWeight: 600 }}>010-7576-1061</a></div>
                 </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
+                <Mail size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
+                <span><a href="mailto:design_mood_2102@naver.com" style={{ color: '#FFFFFF', fontWeight: 600 }}>design_mood_2102@naver.com</a></span>
               </div>
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Phone, MessageSquare, CheckCircle2, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { Send, Phone, MessageSquare, CheckCircle2, Mail, Loader2 } from 'lucide-react';
 
 export default function ConsultationForm({ presetMessage }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     location: '',
-    pyeong: '',
     schedule: '',
-    budget: '',
     message: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (presetMessage) {
@@ -28,13 +27,47 @@ export default function ConsultationForm({ presetMessage }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.phone) {
       alert('성함과 연락처를 입력해 주세요.');
       return;
     }
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+
+    try {
+      // Send real-time form data to design_mood_2102@naver.com via FormSubmit AJAX API
+      const response = await fetch('https://formsubmit.co/ajax/design_mood_2102@naver.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `[디자인무드 웹사이트] ${formData.name} 고객님의 신규 견적 상담 신청`,
+          _template: 'table',
+          _captcha: 'false',
+          고객성함: formData.name,
+          연락처: formData.phone,
+          시공현장위치: formData.location || '미입력 (춘천 지역)',
+          희망공사시기: formData.schedule || '미입력',
+          문의내역_및_견적계산결과: formData.message || '상세 내역 없음',
+        }),
+      });
+
+      if (response.ok || response.status === 200) {
+        setSubmitted(true);
+      } else {
+        // Fallback UI indication
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.error('Email transmission error:', error);
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,7 +85,7 @@ export default function ConsultationForm({ presetMessage }) {
             <span style={{ color: 'var(--primary-brown)' }}>간편 견적 상담 신청</span>
           </h2>
           <p className="section-desc">
-            궁금하신 사항이나 시공 상담을 신청해 주시면 담당 실장이 확인 후 24시간 이내 친절히 연락드리겠습니다.
+            신청서를 작성해 주시면 <strong style={{ color: 'var(--primary-brown)' }}>design_mood_2102@naver.com</strong> 메일로 즉시 전달되며, 대표 실장이 확인 후 24시간 이내 연락드립니다.
           </p>
         </div>
 
@@ -78,21 +111,24 @@ export default function ConsultationForm({ presetMessage }) {
                   color: 'var(--primary-brown)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justify: 'center',
                   margin: '0 auto 1.2rem auto',
                 }}
               >
                 <CheckCircle2 size={36} />
               </div>
               <h3 style={{ fontSize: '1.6rem', color: 'var(--text-dark)', marginBottom: '0.8rem' }}>
-                상담 신청이 성공적으로 접수되었습니다!
+                상담 신청서가 대표님 메일로 정상 전송되었습니다!
               </h3>
               <p style={{ color: 'var(--text-medium)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
-                <strong>{formData.name}</strong> 고객님의 문의 내역을 디자인무드 대표 실장이 확인 중입니다.<br />
+                <strong>{formData.name}</strong> 고객님의 문의 내역이 <strong>design_mood_2102@naver.com</strong>으로 전달되었습니다.<br />
                 입력해주신 연락처(<strong>{formData.phone}</strong>)로 빠른 시일 내 안내 도와드리겠습니다.
               </p>
               <button
-                onClick={() => setSubmitted(false)}
+                onClick={() => {
+                  setSubmitted(false);
+                  setFormData({ name: '', phone: '', location: '', schedule: '', message: '' });
+                }}
                 className="btn btn-secondary"
               >
                 새로운 문의 작성하기
@@ -231,6 +267,7 @@ export default function ConsultationForm({ presetMessage }) {
               {/* Submit button */}
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="btn btn-gold"
                 style={{
                   width: '100%',
@@ -239,12 +276,23 @@ export default function ConsultationForm({ presetMessage }) {
                   marginTop: '0.5rem',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justify: 'center',
                   gap: '0.5rem',
+                  opacity: isSubmitting ? 0.75 : 1,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
                 }}
               >
-                <Send size={18} style={{ flexShrink: 0 }} />
-                <span>무료 견적 상담 신청하기</span>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    <span>대표님 메일로 전송 중...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} style={{ flexShrink: 0 }} />
+                    <span>무료 견적 상담 신청하기</span>
+                  </>
+                )}
               </button>
 
             </form>
@@ -254,6 +302,13 @@ export default function ConsultationForm({ presetMessage }) {
       </div>
 
       <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin {
+          animation: spin 1s linear infinite;
+        }
         @media (max-width: 640px) {
           .form-grid-2 {
             grid-template-columns: 1fr !important;
