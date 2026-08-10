@@ -23,6 +23,8 @@ export default function HeroSection({ onOpenConsultation }) {
           background: 'radial-gradient(circle, rgba(212, 163, 115, 0.15) 0%, rgba(250, 247, 242, 0) 70%)',
           borderRadius: '50%',
           pointerEvents: 'none',
+          maxWidth: '100vw',
+          overflow: 'hidden',
         }}
       />
       
@@ -74,12 +76,12 @@ export default function HeroSection({ onOpenConsultation }) {
             </p>
 
             {/* Hero CTA Action buttons */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '3rem' }}>
-              <a href="#calculator" className="btn btn-gold" style={{ padding: '0.95rem 2rem', fontSize: '1rem' }}>
+            <div className="hero-cta-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '3rem' }}>
+              <a href="#calculator" className="btn btn-gold hero-btn" style={{ padding: '0.95rem 2rem', fontSize: '1rem' }}>
                 <Calculator size={18} />
                 <span>3초 온라인 견적 계산</span>
               </a>
-              <a href="#portfolio" className="btn btn-secondary" style={{ padding: '0.95rem 1.8rem', fontSize: '1rem' }}>
+              <a href="#portfolio" className="btn btn-secondary hero-btn" style={{ padding: '0.95rem 1.8rem', fontSize: '1rem' }}>
                 <span>시공 사례 보기</span>
                 <ArrowRight size={16} />
               </a>
@@ -143,6 +145,7 @@ export default function HeroSection({ onOpenConsultation }) {
                   display: 'block',
                   transition: 'transform 0.5s ease',
                 }}
+                className="hero-img"
               />
               <div
                 style={{
@@ -178,7 +181,7 @@ export default function HeroSection({ onOpenConsultation }) {
 
             {/* Floating Glass Accent Card */}
             <div
-              className="glass-card"
+              className="glass-card hero-floating-card"
               style={{
                 position: 'absolute',
                 top: '-1.5rem',
@@ -223,11 +226,27 @@ export default function HeroSection({ onOpenConsultation }) {
           .hero-grid h1 {
             font-size: 2.3rem !important;
           }
+          .hero-img {
+            height: 360px !important;
+          }
         }
         @media (max-width: 576px) {
           .hero-stats {
             grid-template-columns: 1fr !important;
             gap: 0.8rem !important;
+          }
+          .hero-cta-buttons {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .hero-btn {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+          .hero-floating-card {
+            top: 0.5rem !important;
+            left: 0.5rem !important;
+            padding: 0.75rem 1rem !important;
           }
         }
       `}</style>

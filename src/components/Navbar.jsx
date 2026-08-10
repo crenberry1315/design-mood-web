@@ -30,22 +30,22 @@ export default function Navbar({ onOpenConsultation }) {
         right: 0,
         zIndex: 1000,
         transition: 'all 0.3s ease',
-        backgroundColor: scrolled ? 'rgba(250, 247, 242, 0.92)' : 'transparent',
+        backgroundColor: scrolled ? 'rgba(250, 247, 242, 0.94)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
         boxShadow: scrolled ? '0 4px 20px rgba(124, 94, 67, 0.08)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(232, 224, 213, 0.7)' : '1px solid transparent',
-        padding: scrolled ? '0.8rem 0' : '1.2rem 0',
+        padding: scrolled ? '0.8rem 0' : '1.1rem 0',
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         {/* Logo Brand */}
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', flexShrink: 0 }}>
+        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
           <img
             src="/logo-brown.png"
             alt="Design Mood Logo"
             style={{
-              height: '42px',
+              height: '38px',
               width: 'auto',
               objectFit: 'contain',
             }}
@@ -57,7 +57,7 @@ export default function Navbar({ onOpenConsultation }) {
             <span
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.35rem',
+                fontSize: '1.25rem',
                 fontWeight: 700,
                 letterSpacing: '0.04em',
                 color: 'var(--primary-brown-dark)',
@@ -67,7 +67,7 @@ export default function Navbar({ onOpenConsultation }) {
             >
               DESIGN MOOD
             </span>
-            <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', letterSpacing: '0.12em', whiteSpace: 'nowrap' }}>
               INTERIOR STUDIO
             </span>
           </div>
@@ -100,7 +100,7 @@ export default function Navbar({ onOpenConsultation }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <a
             href="#calculator"
-            className="btn btn-secondary"
+            className="btn btn-secondary nav-action-btn"
             style={{ padding: '0.65rem 1.25rem', fontSize: '0.88rem', whiteSpace: 'nowrap' }}
           >
             <Calculator size={16} />
@@ -109,7 +109,7 @@ export default function Navbar({ onOpenConsultation }) {
 
           <button
             onClick={onOpenConsultation}
-            className="btn btn-primary"
+            className="btn btn-primary nav-action-btn"
             style={{ padding: '0.65rem 1.35rem', fontSize: '0.88rem', whiteSpace: 'nowrap' }}
           >
             <Sparkles size={16} />
@@ -172,20 +172,43 @@ export default function Navbar({ onOpenConsultation }) {
           ))}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
             <a
-              href="tel:033-000-0000"
+              href="#calculator"
+              onClick={() => setMobileMenuOpen(false)}
               className="btn btn-secondary"
               style={{ width: '100%', justifyContent: 'center' }}
             >
+              <Calculator size={18} />
+              <span>3초 온라인 견적 계산기</span>
+            </a>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (onOpenConsultation) onOpenConsultation();
+              }}
+              className="btn btn-primary"
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
+              <Sparkles size={18} />
+              <span>무료 현장실측 상담 신청</span>
+            </button>
+            <a
+              href="tel:010-7782-1061"
+              className="btn btn-gold"
+              style={{ width: '100%', justifyContent: 'center' }}
+            >
               <Phone size={18} />
-              <span>전화 상담 연결</span>
+              <span>대표 전화 연결 (010-7782-1061)</span>
             </a>
           </div>
         </div>
       )}
 
       <style>{`
-        @media (max-width: 1024px) {
+        @media (max-width: 992px) {
           .desktop-nav {
+            display: none !important;
+          }
+          .nav-action-btn {
             display: none !important;
           }
           .mobile-toggle {

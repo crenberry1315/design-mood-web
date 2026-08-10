@@ -6,6 +6,7 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
 
   return (
     <div
+      className="floating-contact-wrapper"
       style={{
         position: 'fixed',
         bottom: '2rem',
@@ -108,6 +109,7 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
           e.currentTarget.style.boxShadow = '0 6px 20px rgba(254, 229, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12)';
         }}
         title="디자인무드 카카오톡 1:1 상담 연결"
+        className="floating-btn"
       >
         <svg
           width="20"
@@ -152,11 +154,26 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
           e.currentTarget.style.boxShadow = '0 6px 20px rgba(74, 52, 34, 0.35), 0 2px 8px rgba(0, 0, 0, 0.12)';
         }}
         title="디자인무드 대표 전화 연결"
+        className="floating-btn"
       >
         <Phone size={18} style={{ display: 'block', flexShrink: 0, margin: 0 }} />
         <span style={{ paddingTop: '1px' }}>전화 상담 연결</span>
         <ChevronUp size={14} style={{ transform: showPhoneMenu ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
       </button>
+
+      <style>{`
+        @media (max-width: 576px) {
+          .floating-contact-wrapper {
+            bottom: 1.2rem !important;
+            right: 1rem !important;
+            gap: 0.5rem !important;
+          }
+          .floating-btn {
+            padding: 0.65rem 1.05rem !important;
+            font-size: 0.84rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
