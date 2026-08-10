@@ -85,7 +85,7 @@ export default function ConsultationForm({ presetMessage }) {
             <span style={{ color: 'var(--primary-brown)' }}>간편 견적 상담 신청</span>
           </h2>
           <p className="section-desc">
-            신청서를 작성해 주시면 <strong style={{ color: 'var(--primary-brown)' }}>design_mood_2120@naver.com</strong> 메일로 즉시 전달되며, 대표 실장이 확인 후 24시간 이내 연락드립니다.
+            궁금하신 사항이나 시공 상담을 신청해 주시면 담당 실장이 확인 후 24시간 이내 친절히 연락드리겠습니다.
           </p>
         </div>
 
@@ -118,10 +118,10 @@ export default function ConsultationForm({ presetMessage }) {
                 <CheckCircle2 size={36} />
               </div>
               <h3 style={{ fontSize: '1.6rem', color: 'var(--text-dark)', marginBottom: '0.8rem' }}>
-                상담 신청서가 대표님 메일로 정상 전송되었습니다!
+                상담 신청서가 성공적으로 접수되었습니다!
               </h3>
               <p style={{ color: 'var(--text-medium)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
-                <strong>{formData.name}</strong> 고객님의 문의 내역이 <strong>design_mood_2120@naver.com</strong>으로 전달되었습니다.<br />
+                <strong>{formData.name}</strong> 고객님의 문의 내역이 디자인무드 대표 실장에게 정상 전달되었습니다.<br />
                 입력해주신 연락처(<strong>{formData.phone}</strong>)로 빠른 시일 내 안내 도와드리겠습니다.
               </p>
               <button
@@ -285,7 +285,7 @@ export default function ConsultationForm({ presetMessage }) {
                 {isSubmitting ? (
                   <>
                     <Loader2 size={18} className="animate-spin" />
-                    <span>대표님 메일로 전송 중...</span>
+                    <span>상담 신청서 전송 중...</span>
                   </>
                 ) : (
                   <>
