@@ -21,15 +21,30 @@ export default function Navbar({ onOpenConsultation }) {
     { name: '오시는 길 & 문의', href: '#contact' },
   ];
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (href === '#' || href === '') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header
       style={{
-        position: mobileMenuOpen ? 'relative' : 'fixed',
+        position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 1000,
-        transition: 'background-color 0.3s ease',
+        transition: 'all 0.3s ease',
         backgroundColor: scrolled || mobileMenuOpen ? 'rgba(250, 247, 242, 0.98)' : 'transparent',
         backdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
         WebkitBackdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
@@ -40,7 +55,11 @@ export default function Navbar({ onOpenConsultation }) {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         {/* Logo Brand */}
-        <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}>
+        <a
+          href="#"
+          onClick={(e) => handleNavClick(e, '#')}
+          style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none', flexShrink: 0 }}
+        >
           <img
             src="/logo-brown.png"
             alt="Design Mood Logo"
@@ -79,6 +98,7 @@ export default function Navbar({ onOpenConsultation }) {
             <a
               key={link.name}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               style={{
                 fontSize: '0.95rem',
                 fontWeight: 500,
@@ -100,6 +120,7 @@ export default function Navbar({ onOpenConsultation }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
           <a
             href="#calculator"
+            onClick={(e) => handleNavClick(e, '#calculator')}
             className="btn btn-secondary nav-action-btn"
             style={{ padding: '0.65rem 1.25rem', fontSize: '0.88rem', whiteSpace: 'nowrap' }}
           >
@@ -135,25 +156,35 @@ export default function Navbar({ onOpenConsultation }) {
         </div>
       </div>
 
-      {/* Accordion In-line Expandable Mobile Menu (Pushes main content down, no popups) */}
+      {/* Responsive Mobile Overlay Dropdown */}
       {mobileMenuOpen && (
         <div
           style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
             width: '100%',
-            backgroundColor: 'var(--bg-main)',
-            borderTop: '1px solid var(--border-subtle)',
-            padding: '1.2rem 1.5rem 2rem 1.5rem',
-            marginTop: '0.8rem',
+            maxHeight: 'calc(100vh - 64px)',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            backgroundColor: 'rgba(250, 247, 242, 0.98)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderBottom: '2px solid var(--border-strong)',
+            padding: '1.2rem 1.5rem 2.5rem 1.5rem',
+            boxShadow: '0 12px 30px rgba(124, 94, 67, 0.15)',
             display: 'flex',
             flexDirection: 'column',
             gap: '0.8rem',
+            zIndex: 1000,
           }}
         >
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, link.href)}
               style={{
                 fontSize: '1.05rem',
                 fontWeight: 600,
@@ -169,7 +200,7 @@ export default function Navbar({ onOpenConsultation }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.8rem' }}>
             <a
               href="#calculator"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, '#calculator')}
               className="btn btn-secondary"
               style={{ width: '100%', justifyContent: 'center' }}
             >
