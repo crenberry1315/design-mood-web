@@ -135,27 +135,25 @@ export default function Navbar({ onOpenConsultation }) {
         </div>
       </div>
 
-      {/* Responsive Mobile Overlay - Fixed Scrollable Menu Container */}
+      {/* Responsive Mobile Overlay - Natural Body Flow Menu attached to Header */}
       {mobileMenuOpen && (
         <div
           style={{
-            position: 'fixed',
-            top: '64px',
+            position: 'absolute',
+            top: '100%',
             left: 0,
             right: 0,
-            bottom: 0,
-            maxHeight: 'calc(100vh - 64px)',
-            overflowY: 'auto',
-            WebkitOverflowScrolling: 'touch',
+            width: '100%',
             backgroundColor: 'rgba(250, 247, 242, 0.98)',
             backdropFilter: 'blur(16px)',
-            borderBottom: '1px solid var(--border-subtle)',
-            padding: '1.5rem 1.5rem 3.5rem 1.5rem',
-            boxShadow: 'var(--shadow-md)',
+            WebkitBackdropFilter: 'blur(16px)',
+            borderBottom: '2px solid var(--border-strong)',
+            padding: '1.5rem 1.5rem 2.5rem 1.5rem',
+            boxShadow: '0 12px 30px rgba(124, 94, 67, 0.15)',
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
-            zIndex: 999,
+            zIndex: 1000,
           }}
         >
           {navLinks.map((link) => (
