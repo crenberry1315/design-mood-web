@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Phone, Clock, MessageCircle, ArrowUp } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -41,7 +41,7 @@ export default function Footer() {
                 <span>전화 문의 연결</span>
               </a>
               <a
-                href="https://pf.kakao.com"
+                href={kakaoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-gold"

@@ -11,8 +11,7 @@ import FloatingKakao from './components/FloatingKakao';
 
 export default function App() {
   const [presetConsultation, setPresetConsultation] = useState('');
-  // User can easily change kakaoUrl here when they share their channel link
-  const kakaoChannelUrl = 'https://pf.kakao.com'; 
+  const kakaoChannelUrl = 'https://pf.kakao.com/_MJyIX';
 
   const handleOpenConsultation = () => {
     const element = document.getElementById('contact');
@@ -47,7 +46,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer kakaoUrl={kakaoChannelUrl} />
 
       {/* Floating KakaoTalk & Phone Buttons */}
       <FloatingKakao kakaoUrl={kakaoChannelUrl} phone="033-250-0000" />

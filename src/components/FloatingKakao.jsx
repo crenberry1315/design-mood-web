@@ -1,7 +1,7 @@
 import React from 'react';
-import { MessageCircle, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
-export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com', phone = '033-250-0000' }) {
+export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX', phone = '033-250-0000' }) {
   return (
     <div
       style={{
