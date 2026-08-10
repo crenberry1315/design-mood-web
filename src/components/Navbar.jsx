@@ -30,12 +30,12 @@ export default function Navbar({ onOpenConsultation }) {
         right: 0,
         zIndex: 1000,
         transition: 'all 0.3s ease',
-        backgroundColor: scrolled ? 'rgba(250, 247, 242, 0.94)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
-        boxShadow: scrolled ? '0 4px 20px rgba(124, 94, 67, 0.08)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(232, 224, 213, 0.7)' : '1px solid transparent',
-        padding: scrolled ? '0.8rem 0' : '1.1rem 0',
+        backgroundColor: scrolled || mobileMenuOpen ? 'rgba(250, 247, 242, 0.96)' : 'transparent',
+        backdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
+        boxShadow: scrolled || mobileMenuOpen ? '0 4px 20px rgba(124, 94, 67, 0.08)' : 'none',
+        borderBottom: scrolled || mobileMenuOpen ? '1px solid rgba(232, 224, 213, 0.7)' : '1px solid transparent',
+        padding: scrolled ? '0.7rem 0' : '1rem 0',
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
@@ -135,22 +135,27 @@ export default function Navbar({ onOpenConsultation }) {
         </div>
       </div>
 
-      {/* Responsive Mobile Overlay */}
+      {/* Responsive Mobile Overlay - Fixed Scrollable Menu Container */}
       {mobileMenuOpen && (
         <div
           style={{
-            position: 'absolute',
-            top: '100%',
+            position: 'fixed',
+            top: '64px',
             left: 0,
             right: 0,
+            bottom: 0,
+            maxHeight: 'calc(100vh - 64px)',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
             backgroundColor: 'rgba(250, 247, 242, 0.98)',
             backdropFilter: 'blur(16px)',
             borderBottom: '1px solid var(--border-subtle)',
-            padding: '1.5rem',
+            padding: '1.5rem 1.5rem 3.5rem 1.5rem',
             boxShadow: 'var(--shadow-md)',
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem',
+            zIndex: 999,
           }}
         >
           {navLinks.map((link) => (
@@ -162,15 +167,15 @@ export default function Navbar({ onOpenConsultation }) {
                 fontSize: '1.05rem',
                 fontWeight: 600,
                 color: 'var(--text-dark)',
-                padding: '0.5rem 0',
-                borderBottom: '1px solid rgba(232, 224, 213, 0.4)',
+                padding: '0.6rem 0',
+                borderBottom: '1px solid rgba(232, 224, 213, 0.5)',
                 whiteSpace: 'nowrap',
               }}
             >
               {link.name}
             </a>
           ))}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.8rem' }}>
             <a
               href="#calculator"
               onClick={() => setMobileMenuOpen(false)}

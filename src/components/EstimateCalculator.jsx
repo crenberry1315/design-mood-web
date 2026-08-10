@@ -8,9 +8,9 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   const [materialGrade, setMaterialGrade] = useState('premium');
 
   const spaceOptions = [
-    { id: 'apartment', label: '아파트', icon: <Building size={22} /> },
-    { id: 'house', label: '단독주택', icon: <Home size={22} /> },
-    { id: 'commercial', label: '상가 / 오피스', icon: <Store size={22} /> },
+    { id: 'apartment', label: '아파트', icon: <Building size={20} /> },
+    { id: 'house', label: '단독주택', icon: <Home size={20} /> },
+    { id: 'commercial', label: '상가 / 오피스', icon: <Store size={20} /> },
   ];
 
   // Dynamic scope options for residential vs commercial spaces
@@ -81,7 +81,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
 
         {/* Calculator Main Box */}
         <div
-          className="glass-card"
+          className="glass-card calc-card"
           style={{
             maxWidth: '960px',
             margin: '0 auto',
@@ -89,19 +89,20 @@ export default function EstimateCalculator({ onApplyEstimate }) {
             padding: '2.5rem',
             boxShadow: 'var(--shadow-lg)',
             backgroundColor: '#FFFFFF',
+            boxSizing: 'border-box',
           }}
         >
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '2.5rem' }} className="calc-layout">
             
             {/* Left Column: Interactive Inputs */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
               
               {/* Step 1: Space Type */}
               <div>
                 <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.8rem', display: 'block', wordBreak: 'keep-all' }}>
                   1. 공간 유형 선택
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.6rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
                   {spaceOptions.map((opt) => (
                     <button
                       key={opt.id}
@@ -110,22 +111,23 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         setScope('full');
                       }}
                       style={{
-                        padding: '0.8rem 0.5rem',
+                        padding: '0.75rem 0.3rem',
                         borderRadius: 'var(--radius-md)',
                         border: spaceType === opt.id ? '2px solid var(--primary-brown)' : '1px solid var(--border-subtle)',
                         backgroundColor: spaceType === opt.id ? 'var(--bg-secondary)' : 'var(--bg-main)',
                         color: spaceType === opt.id ? 'var(--primary-brown-dark)' : 'var(--text-medium)',
                         fontWeight: 600,
-                        fontSize: '0.88rem',
+                        fontSize: '0.82rem',
                         cursor: 'pointer',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justify: 'center',
-                        gap: '0.4rem',
+                        gap: '0.35rem',
                         transition: 'var(--transition-fast)',
                         whiteSpace: 'nowrap',
                       }}
+                      className="space-opt-btn"
                     >
                       <div className="icon-box">{opt.icon}</div>
                       <span>{opt.label}</span>
@@ -140,8 +142,8 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', wordBreak: 'keep-all' }}>
                     2. 시공 평수 선택
                   </label>
-                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary-brown)', whiteSpace: 'nowrap' }}>
-                    {pyeong} 평 <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>({Math.round(pyeong * 3.3)}㎡)</span>
+                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown)', whiteSpace: 'nowrap' }}>
+                    {pyeong} 평 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>({Math.round(pyeong * 3.3)}㎡)</span>
                   </span>
                 </div>
                 <input
@@ -170,7 +172,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
               {/* Step 3: Dynamic Scope Selection */}
               <div>
                 <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.8rem', display: 'block', wordBreak: 'keep-all' }}>
-                  3. 시공 범위 선택 {spaceType === 'commercial' && <span style={{ color: 'var(--primary-brown)', fontSize: '0.8rem' }}>(상가/오피스 전용 항목)</span>}
+                  3. 시공 범위 선택 {spaceType === 'commercial' && <span style={{ color: 'var(--primary-brown)', fontSize: '0.8rem' }}>(상가/오피스 전용)</span>}
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                   {currentScopeOptions.map((opt) => (
@@ -178,7 +180,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                       key={opt.id}
                       onClick={() => setScope(opt.id)}
                       style={{
-                        padding: '0.9rem 1.2rem',
+                        padding: '0.85rem 1rem',
                         borderRadius: 'var(--radius-md)',
                         border: scope === opt.id ? '2px solid var(--primary-brown)' : '1px solid var(--border-subtle)',
                         backgroundColor: scope === opt.id ? 'var(--bg-secondary)' : '#FFFFFF',
@@ -186,20 +188,21 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         display: 'flex',
                         alignItems: 'center',
                         justify: 'space-between',
-                        gap: '1rem',
+                        gap: '0.75rem',
                         transition: 'var(--transition-fast)',
                       }}
+                      className="calc-opt-item"
                     >
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text-dark)', wordBreak: 'keep-all' }}>{opt.label}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', wordBreak: 'keep-all' }}>{opt.desc}</div>
+                        <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-dark)', wordBreak: 'keep-all' }}>{opt.label}</div>
+                        <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', wordBreak: 'keep-all' }}>{opt.desc}</div>
                       </div>
                       {scope === opt.id ? (
                         <div className="check-circle-icon">
                           <Check size={14} />
                         </div>
                       ) : (
-                        <div style={{ width: '24px', flexShrink: 0 }} />
+                        <div style={{ width: '22px', flexShrink: 0 }} />
                       )}
                     </div>
                   ))}
@@ -217,7 +220,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                       key={opt.id}
                       onClick={() => setMaterialGrade(opt.id)}
                       style={{
-                        padding: '0.9rem 1.2rem',
+                        padding: '0.85rem 1rem',
                         borderRadius: 'var(--radius-md)',
                         border: materialGrade === opt.id ? '2px solid var(--primary-brown)' : '1px solid var(--border-subtle)',
                         backgroundColor: materialGrade === opt.id ? 'var(--bg-secondary)' : '#FFFFFF',
@@ -225,20 +228,21 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         display: 'flex',
                         alignItems: 'center',
                         justify: 'space-between',
-                        gap: '1rem',
+                        gap: '0.75rem',
                         transition: 'var(--transition-fast)',
                       }}
+                      className="calc-opt-item"
                     >
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text-dark)', wordBreak: 'keep-all' }}>{opt.label}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', wordBreak: 'keep-all' }}>{opt.desc}</div>
+                        <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-dark)', wordBreak: 'keep-all' }}>{opt.label}</div>
+                        <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', wordBreak: 'keep-all' }}>{opt.desc}</div>
                       </div>
                       {materialGrade === opt.id ? (
                         <div className="check-circle-icon">
                           <Check size={14} />
                         </div>
                       ) : (
-                        <div style={{ width: '24px', flexShrink: 0 }} />
+                        <div style={{ width: '22px', flexShrink: 0 }} />
                       )}
                     </div>
                   ))}
@@ -252,12 +256,13 @@ export default function EstimateCalculator({ onApplyEstimate }) {
               style={{
                 backgroundColor: 'var(--bg-secondary)',
                 borderRadius: 'var(--radius-md)',
-                padding: '2rem 1.8rem',
+                padding: '1.8rem 1.4rem',
                 display: 'flex',
                 flexDirection: 'column',
                 justify: 'space-between',
                 border: '1px solid var(--border-strong)',
               }}
+              className="calc-result-box"
             >
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary-brown)', fontWeight: 600, fontSize: '0.85rem', marginBottom: '0.4rem', whiteSpace: 'nowrap' }}>
@@ -265,7 +270,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   <span>실시간 예상 견적 산출</span>
                 </div>
 
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-medium)', marginBottom: '1.2rem', wordBreak: 'keep-all' }}>
+                <div style={{ fontSize: '0.88rem', color: 'var(--text-medium)', marginBottom: '1.2rem', wordBreak: 'keep-all' }}>
                   {spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} · {pyeong}평형 기준
                 </div>
 
@@ -274,32 +279,32 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   style={{
                     backgroundColor: '#FFFFFF',
                     borderRadius: 'var(--radius-md)',
-                    padding: '1.5rem 1.2rem',
+                    padding: '1.2rem 0.8rem',
                     textAlign: 'center',
                     border: '1px solid var(--border-subtle)',
                     marginBottom: '1.5rem',
                     boxShadow: 'var(--shadow-sm)',
                   }}
                 >
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '0.3rem', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.3rem', whiteSpace: 'nowrap' }}>
                     예상 시공 비용 (VAT 포함 추정)
                   </div>
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary-brown-dark)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary-brown-dark)', lineHeight: 1.25 }} className="calc-price-main">
                     {minTotal.toLocaleString()} 만원 ~
                   </div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 700, color: 'var(--accent-amber)', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '1.45rem', fontWeight: 700, color: 'var(--accent-amber)' }} className="calc-price-sub">
                     {maxTotal.toLocaleString()} 만원
                   </div>
                 </div>
 
-                {/* Included Services Bullet points (A/S warranty deleted per CEO request) */}
+                {/* Included Services Bullet points */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
                   <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-dark)' }}>기본 포함 내역:</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-medium)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
                     <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
                     <span>3D 설계 도면 및 현장 실측 무료</span>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-medium)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
                     <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
                     <span>친환경 E0 정품 자재 인증서 제공</span>
                   </div>
@@ -310,7 +315,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
               <button
                 onClick={handleApply}
                 className="btn btn-gold"
-                style={{ width: '100%', padding: '0.95rem 1rem', fontSize: '0.98rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                style={{ width: '100%', padding: '0.9rem 0.8rem', fontSize: '0.95rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}
               >
                 <span>이 견적으로 디테일 상담 신청</span>
                 <ArrowRight size={18} />
@@ -326,6 +331,26 @@ export default function EstimateCalculator({ onApplyEstimate }) {
         @media (max-width: 860px) {
           .calc-layout {
             grid-template-columns: 1fr !important;
+            gap: 1.8rem !important;
+          }
+        }
+        @media (max-width: 576px) {
+          .calc-card {
+            padding: 1.2rem 1rem !important;
+            border-radius: var(--radius-md) !important;
+          }
+          .calc-result-box {
+            padding: 1.4rem 1rem !important;
+          }
+          .space-opt-btn {
+            font-size: 0.78rem !important;
+            padding: 0.6rem 0.2rem !important;
+          }
+          .calc-price-main {
+            font-size: 1.5rem !important;
+          }
+          .calc-price-sub {
+            font-size: 1.25rem !important;
           }
         }
       `}</style>
