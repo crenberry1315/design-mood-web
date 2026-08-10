@@ -151,9 +151,52 @@ export default function HeroSection({ onOpenConsultation }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0) 60%, rgba(44, 38, 35, 0.6) 100%)',
+                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0) 50%, rgba(44, 38, 35, 0.65) 100%)',
                 }}
               />
+
+              {/* Perfectly Positioned Floating Glass Accent Card inside Top-Left of Image */}
+              <div
+                className="glass-card hero-floating-card"
+                style={{
+                  position: 'absolute',
+                  top: '1.2rem',
+                  left: '1.2rem',
+                  padding: '0.85rem 1.2rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.85rem',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+                  border: '1px solid rgba(255, 255, 255, 0.8)',
+                  zIndex: 3,
+                }}
+              >
+                <div
+                  className="icon-box"
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(124, 94, 67, 0.12)',
+                    color: 'var(--primary-brown-dark)',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Sparkles size={20} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 500, lineHeight: 1.2, marginBottom: '0.15rem', whiteSpace: 'nowrap' }}>
+                    대표 시공 만족도
+                  </div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown-dark)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                    99.4% 고객 만족
+                  </div>
+                </div>
+              </div>
 
               {/* Bottom Caption Badge on Hero Image */}
               <div
@@ -176,39 +219,6 @@ export default function HeroSection({ onOpenConsultation }) {
                     따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링
                   </h3>
                 </div>
-              </div>
-            </div>
-
-            {/* Floating Glass Accent Card */}
-            <div
-              className="glass-card hero-floating-card"
-              style={{
-                position: 'absolute',
-                top: '-1.5rem',
-                left: '-1.5rem',
-                padding: '1rem 1.4rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.8rem',
-                background: 'rgba(255, 255, 255, 0.92)',
-                boxShadow: 'var(--shadow-md)',
-              }}
-            >
-              <div
-                className="icon-box"
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--bg-secondary)',
-                  color: 'var(--primary-brown)',
-                }}
-              >
-                <Sparkles size={22} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>대표 시공 만족도</div>
-                <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown-dark)' }}>99.4% 고객 만족</div>
               </div>
             </div>
 
@@ -244,9 +254,9 @@ export default function HeroSection({ onOpenConsultation }) {
             justify-content: center !important;
           }
           .hero-floating-card {
-            top: 0.5rem !important;
-            left: 0.5rem !important;
-            padding: 0.75rem 1rem !important;
+            top: 0.8rem !important;
+            left: 0.8rem !important;
+            padding: 0.65rem 0.95rem !important;
           }
         }
       `}</style>
