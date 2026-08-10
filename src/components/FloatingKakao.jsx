@@ -1,7 +1,9 @@
-import React from 'react';
-import { Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { Phone, ChevronUp } from 'lucide-react';
 
-export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX', phone = '033-250-0000' }) {
+export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
+  const [showPhoneMenu, setShowPhoneMenu] = useState(false);
+
   return (
     <div
       style={{
@@ -15,6 +17,64 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
         alignItems: 'flex-end',
       }}
     >
+      {/* Phone Popover Menu (when user wants to choose between 2 numbers) */}
+      {showPhoneMenu && (
+        <div
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: 'var(--radius-md)',
+            padding: '0.8rem',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+            border: '1px solid var(--border-subtle)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.5rem',
+            animation: 'fadeIn 0.2s ease-out',
+            marginBottom: '0.3rem',
+          }}
+        >
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600, padding: '0 0.4rem' }}>
+            연결하실 매장 전화번호를 선택해 주세요:
+          </div>
+          <a
+            href="tel:010-7782-1061"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.55rem 0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--bg-secondary)',
+              color: 'var(--primary-brown-dark)',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              textDecoration: 'none',
+            }}
+          >
+            <Phone size={15} />
+            <span>010-7782-1061 (직통)</span>
+          </a>
+          <a
+            href="tel:010-7576-1061"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.55rem 0.85rem',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'var(--bg-secondary)',
+              color: 'var(--primary-brown-dark)',
+              fontWeight: 700,
+              fontSize: '0.88rem',
+              textDecoration: 'none',
+            }}
+          >
+            <Phone size={15} />
+            <span>010-7576-1061 (직통)</span>
+          </a>
+        </div>
+      )}
+
       {/* 1. KakaoTalk 1:1 Chat Pill Button */}
       <a
         href={kakaoUrl}
@@ -62,8 +122,8 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
       </a>
 
       {/* 2. Direct Phone Call Pill Button */}
-      <a
-        href={`tel:${phone}`}
+      <button
+        onClick={() => setShowPhoneMenu(!showPhoneMenu)}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
@@ -95,7 +155,8 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
       >
         <Phone size={18} style={{ display: 'block', flexShrink: 0, margin: 0 }} />
         <span style={{ paddingTop: '1px' }}>전화 상담 연결</span>
-      </a>
+        <ChevronUp size={14} style={{ transform: showPhoneMenu ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
+      </button>
     </div>
   );
 }

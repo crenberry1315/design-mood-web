@@ -31,14 +31,22 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
               고객의 일상에 따뜻한 감성과 무드를 더하는 투명하고 정직한 공간을 만듭니다.
             </p>
 
-            <div style={{ display: 'flex', gap: '0.8rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
               <a
-                href="tel:033-250-0000"
+                href="tel:010-7782-1061"
                 className="btn btn-secondary"
-                style={{ padding: '0.5rem 1rem', fontSize: '0.82rem', backgroundColor: 'rgba(255,255,255,0.08)', color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.2)' }}
+                style={{ padding: '0.5rem 0.9rem', fontSize: '0.82rem', backgroundColor: 'rgba(255,255,255,0.08)', color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.2)' }}
               >
                 <Phone size={14} />
-                <span>전화 문의 연결</span>
+                <span>전화 010-7782-1061</span>
+              </a>
+              <a
+                href="tel:010-7576-1061"
+                className="btn btn-secondary"
+                style={{ padding: '0.5rem 0.9rem', fontSize: '0.82rem', backgroundColor: 'rgba(255,255,255,0.08)', color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.2)' }}
+              >
+                <Phone size={14} />
+                <span>전화 010-7576-1061</span>
               </a>
               <a
                 href={kakaoUrl}
@@ -48,7 +56,7 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
                 style={{ padding: '0.5rem 1rem', fontSize: '0.82rem' }}
               >
                 <MessageCircle size={14} />
-                <span>카카오톡 상담 연결</span>
+                <span>카카오톡 1:1 상담</span>
               </a>
             </div>
           </div>
@@ -70,13 +78,21 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
           {/* Location & Operating Hours */}
           <div>
             <h4 style={{ fontSize: '1.05rem', color: '#FFFFFF', marginBottom: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600 }}>
-              매장 위치 &amp; 운영 안내
+              매장 위치 &amp; 대표 연락처
             </h4>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.88rem', color: '#C0B7AF' }}>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
                 <span>강원특별자치도 춘천시 우두동 충열로16번길 21-20 1층</span>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
+                <Phone size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
+                <div>
+                  <div><a href="tel:010-7782-1061" style={{ color: '#FFFFFF', fontWeight: 600 }}>010-7782-1061</a></div>
+                  <div><a href="tel:010-7576-1061" style={{ color: '#FFFFFF', fontWeight: 600 }}>010-7576-1061</a></div>
+                </div>
               </div>
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
