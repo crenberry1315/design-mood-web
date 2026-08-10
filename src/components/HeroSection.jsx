@@ -1,7 +1,52 @@
-import React from 'react';
-import { ArrowRight, Calculator, CheckCircle2, ShieldCheck, Sparkles, MapPin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowRight, Calculator, CheckCircle2, ShieldCheck, Sparkles, MapPin, ChevronLeft, ChevronRight, Store } from 'lucide-react';
 
 export default function HeroSection({ onOpenConsultation }) {
+  const slides = [
+    {
+      image: '/hero/store-real.png',
+      badge: '춘천 우두동 매장 실제 모습',
+      title: '실제 장판, 마루, 벽지, 타일 샘플 직접 확인이 가능한 매장',
+    },
+    {
+      image: '/hero/hero-site-1.jpg',
+      badge: '춘천 아파트 올 리모델링',
+      title: '따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링',
+    },
+    {
+      image: '/hero/hero-site-2.jpg',
+      badge: '감성 거실 인테리어',
+      title: '600각 포세린 타일과 시그니처 간접조명 연출',
+    },
+    {
+      image: '/hero/hero-site-3.jpg',
+      badge: '디테일 목공 & 히든도어 시공',
+      title: '오차 없이 마감하는 정밀 현장 목공 라인',
+    },
+    {
+      image: '/hero/hero-site-4.jpg',
+      badge: '친환경 E0 맞춤 주방 시공',
+      title: '동선 최적화 감성 아일랜드 주방 및 씽크대',
+    },
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
   return (
     <section
       style={{
@@ -124,7 +169,7 @@ export default function HeroSection({ onOpenConsultation }) {
             </div>
           </div>
 
-          {/* Right Column: Hero Visual Card Showcase */}
+          {/* Right Column: Dynamic Real Photo Slideshow Showcase */}
           <div style={{ position: 'relative' }}>
             <div
               style={{
@@ -133,29 +178,45 @@ export default function HeroSection({ onOpenConsultation }) {
                 overflow: 'hidden',
                 boxShadow: 'var(--shadow-lg)',
                 border: '4px solid #FFFFFF',
+                backgroundColor: '#1E1917',
               }}
             >
-              <img
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
-                alt="디자인무드 춘천 인테리어 대표 시공"
-                style={{
-                  width: '100%',
-                  height: '480px',
-                  objectFit: 'cover',
-                  display: 'block',
-                  transition: 'transform 0.5s ease',
-                }}
-                className="hero-img"
-              />
+              {/* Image Carousel Transition */}
+              <div style={{ position: 'relative', width: '100%', height: '480px' }} className="hero-img-container">
+                {slides.map((slide, idx) => (
+                  <img
+                    key={idx}
+                    src={slide.image}
+                    alt={slide.title}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      opacity: idx === currentSlide ? 1 : 0,
+                      transition: 'opacity 0.75s ease-in-out',
+                      pointerEvents: idx === currentSlide ? 'auto' : 'none',
+                    }}
+                    onError={(e) => {
+                      // Fallback if local image has loading issue
+                      e.target.src = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80';
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Gradient Overlay for Text Contrast */}
               <div
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0) 50%, rgba(44, 38, 35, 0.65) 100%)',
+                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0.2) 30%, rgba(44, 38, 35, 0.75) 100%)',
+                  pointerEvents: 'none',
                 }}
               />
 
-              {/* Perfectly Positioned Floating Glass Accent Card inside Top-Left of Image */}
+              {/* Top Floating Glass Stat Badge */}
               <div
                 className="glass-card hero-floating-card"
                 style={{
@@ -198,7 +259,60 @@ export default function HeroSection({ onOpenConsultation }) {
                 </div>
               </div>
 
-              {/* Bottom Caption Badge on Hero Image */}
+              {/* Manual Nav Prev/Next Buttons */}
+              <button
+                onClick={prevSlide}
+                aria-label="Previous photo"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '1rem',
+                  transform: 'translateY(-50%)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                  color: '#FFFFFF',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justify: 'center',
+                  zIndex: 4,
+                  transition: 'var(--transition-fast)',
+                }}
+                className="carousel-arrow-btn icon-box"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                aria-label="Next photo"
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  right: '1rem',
+                  transform: 'translateY(-50%)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                  color: '#FFFFFF',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justify: 'center',
+                  zIndex: 4,
+                  transition: 'var(--transition-fast)',
+                }}
+                className="carousel-arrow-btn icon-box"
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              {/* Bottom Caption & Slide Indicator Dots */}
               <div
                 style={{
                   position: 'absolute',
@@ -207,18 +321,55 @@ export default function HeroSection({ onOpenConsultation }) {
                   right: '1.5rem',
                   color: '#FFFFFF',
                   display: 'flex',
-                  justify: 'space-between',
-                  alignItems: 'flex-end',
+                  flexDirection: 'column',
+                  gap: '0.8rem',
+                  zIndex: 3,
                 }}
               >
                 <div>
-                  <span className="badge" style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: '#FFFFFF', borderColor: 'transparent', marginBottom: '0.4rem' }}>
-                    춘천 우두동 동부아파트 32평형
+                  <span
+                    className="badge"
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                      color: '#FFFFFF',
+                      borderColor: 'transparent',
+                      marginBottom: '0.4rem',
+                      backdropFilter: 'blur(4px)',
+                    }}
+                  >
+                    {slides[currentSlide].badge}
                   </span>
-                  <h3 style={{ color: '#FFFFFF', fontSize: '1.25rem', fontFamily: 'var(--font-body)', fontWeight: 600, wordBreak: 'keep-all' }}>
-                    따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링
+                  <h3 style={{ color: '#FFFFFF', fontSize: '1.2rem', fontFamily: 'var(--font-body)', fontWeight: 600, wordBreak: 'keep-all', textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+                    {slides[currentSlide].title}
                   </h3>
                 </div>
+
+                {/* Dots Pagination */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '0.3rem' }}>
+                  <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    {slides.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentSlide(i)}
+                        aria-label={`Go to slide ${i + 1}`}
+                        style={{
+                          width: i === currentSlide ? '24px' : '8px',
+                          height: '8px',
+                          borderRadius: '4px',
+                          backgroundColor: i === currentSlide ? 'var(--accent-gold)' : 'rgba(255, 255, 255, 0.4)',
+                          border: 'none',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease',
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  <span style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.8)', fontWeight: 600 }}>
+                    0{currentSlide + 1} / 0{slides.length}
+                  </span>
+                </div>
+
               </div>
             </div>
 
@@ -228,6 +379,10 @@ export default function HeroSection({ onOpenConsultation }) {
       </div>
 
       <style>{`
+        .carousel-arrow-btn:hover {
+          background-color: rgba(124, 94, 67, 0.85) !important;
+          transform: translateY(-50%) scale(1.08) !important;
+        }
         @media (max-width: 992px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
@@ -236,7 +391,7 @@ export default function HeroSection({ onOpenConsultation }) {
           .hero-grid h1 {
             font-size: 2.3rem !important;
           }
-          .hero-img {
+          .hero-img-container {
             height: 360px !important;
           }
         }
