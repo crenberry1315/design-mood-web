@@ -6,73 +6,95 @@ export default function FloatingKakao({ kakaoUrl = 'https://pf.kakao.com/_MJyIX'
     <div
       style={{
         position: 'fixed',
-        bottom: '1.8rem',
-        right: '1.8rem',
+        bottom: '2rem',
+        right: '2rem',
         zIndex: 9999,
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.8rem',
+        gap: '0.65rem',
         alignItems: 'flex-end',
       }}
     >
-      {/* KakaoTalk Direct 1:1 Chat Button */}
+      {/* 1. KakaoTalk 1:1 Chat Pill Button */}
       <a
         href={kakaoUrl}
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          display: 'flex',
+          display: 'inline-flex',
           alignItems: 'center',
-          gap: '0.6rem',
+          justify: 'center',
+          gap: '0.55rem',
           backgroundColor: '#FEE500',
           color: '#191919',
-          padding: '0.75rem 1.2rem',
+          padding: '0.75rem 1.25rem',
           borderRadius: 'var(--radius-full)',
           fontWeight: 700,
           fontSize: '0.9rem',
-          boxShadow: '0 8px 24px rgba(254, 229, 0, 0.45), var(--shadow-md)',
+          lineHeight: 1,
+          boxShadow: '0 6px 20px rgba(254, 229, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12)',
           textDecoration: 'none',
-          transition: 'transform 0.25s ease, boxShadow 0.25s ease',
+          whiteSpace: 'nowrap',
+          transition: 'transform 0.2s ease, boxShadow 0.2s ease',
           cursor: 'pointer',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-3px)';
-          e.currentTarget.style.boxShadow = '0 12px 28px rgba(254, 229, 0, 0.6)';
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 8px 24px rgba(254, 229, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.15)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 8px 24px rgba(254, 229, 0, 0.45), var(--shadow-md)';
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(254, 229, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12)';
         }}
         title="디자인무드 카카오톡 1:1 상담 연결"
       >
-        {/* KakaoTalk Icon SVG */}
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="#191919"
+          style={{ display: 'block', flexShrink: 0, margin: 0 }}
+        >
           <path d="M12 3C6.477 3 2 6.477 2 10.77C2 13.518 3.791 15.918 6.5 17.265L5.438 21.147C5.352 21.463 5.705 21.721 5.981 21.538L10.518 18.528C11.004 18.586 11.498 18.618 12 18.618C17.523 18.618 22 15.141 22 10.848C22 6.555 17.523 3 12 3Z" />
         </svg>
-        <span>카톡 1:1 즉시 상담</span>
+        <span style={{ paddingTop: '1px' }}>카톡 1:1 상담</span>
       </a>
 
-      {/* Direct Phone Call Button */}
+      {/* 2. Direct Phone Call Pill Button */}
       <a
         href={`tel:${phone}`}
         style={{
-          display: 'flex',
+          display: 'inline-flex',
           alignItems: 'center',
           justify: 'center',
-          width: '46px',
-          height: '46px',
-          borderRadius: '50%',
-          backgroundColor: 'var(--primary-brown)',
+          gap: '0.55rem',
+          backgroundColor: 'var(--primary-brown-dark)',
           color: '#FFFFFF',
-          boxShadow: 'var(--shadow-md)',
+          padding: '0.75rem 1.25rem',
+          borderRadius: 'var(--radius-full)',
+          fontWeight: 600,
+          fontSize: '0.9rem',
+          lineHeight: 1,
+          boxShadow: '0 6px 20px rgba(74, 52, 34, 0.35), 0 2px 8px rgba(0, 0, 0, 0.12)',
           textDecoration: 'none',
-          transition: 'transform 0.25s ease',
+          whiteSpace: 'nowrap',
+          transition: 'transform 0.2s ease, boxShadow 0.2s ease',
+          cursor: 'pointer',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-        title="전화 문의 연결"
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 8px 24px rgba(74, 52, 34, 0.5), 0 4px 12px rgba(0, 0, 0, 0.18)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(74, 52, 34, 0.35), 0 2px 8px rgba(0, 0, 0, 0.12)';
+        }}
+        title="디자인무드 대표 전화 연결"
       >
-        <Phone size={20} />
+        <Phone size={18} style={{ display: 'block', flexShrink: 0, margin: 0 }} />
+        <span style={{ paddingTop: '1px' }}>전화 상담 연결</span>
       </a>
     </div>
   );
