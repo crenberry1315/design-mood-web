@@ -24,13 +24,13 @@ export default function Navbar({ onOpenConsultation }) {
   return (
     <header
       style={{
-        position: 'fixed',
+        position: mobileMenuOpen ? 'relative' : 'fixed',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 1000,
-        transition: 'all 0.3s ease',
-        backgroundColor: scrolled || mobileMenuOpen ? 'rgba(250, 247, 242, 0.96)' : 'transparent',
+        transition: 'background-color 0.3s ease',
+        backgroundColor: scrolled || mobileMenuOpen ? 'rgba(250, 247, 242, 0.98)' : 'transparent',
         backdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
         WebkitBackdropFilter: scrolled || mobileMenuOpen ? 'blur(12px)' : 'none',
         boxShadow: scrolled || mobileMenuOpen ? '0 4px 20px rgba(124, 94, 67, 0.08)' : 'none',
@@ -135,25 +135,18 @@ export default function Navbar({ onOpenConsultation }) {
         </div>
       </div>
 
-      {/* Responsive Mobile Overlay - Natural Body Flow Menu attached to Header */}
+      {/* Accordion In-line Expandable Mobile Menu (Pushes main content down, no popups) */}
       {mobileMenuOpen && (
         <div
           style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
             width: '100%',
-            backgroundColor: 'rgba(250, 247, 242, 0.98)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: '2px solid var(--border-strong)',
-            padding: '1.5rem 1.5rem 2.5rem 1.5rem',
-            boxShadow: '0 12px 30px rgba(124, 94, 67, 0.15)',
+            backgroundColor: 'var(--bg-main)',
+            borderTop: '1px solid var(--border-subtle)',
+            padding: '1.2rem 1.5rem 2rem 1.5rem',
+            marginTop: '0.8rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
-            zIndex: 1000,
+            gap: '0.8rem',
           }}
         >
           {navLinks.map((link) => (
