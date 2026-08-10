@@ -37,8 +37,8 @@ export default function ConsultationForm({ presetMessage }) {
     setIsSubmitting(true);
 
     try {
-      // Send real-time form data to design_mood_2102@naver.com via FormSubmit AJAX API
-      const response = await fetch('https://formsubmit.co/ajax/design_mood_2102@naver.com', {
+      // Send real-time form data to design_mood_2120@naver.com via FormSubmit AJAX API
+      const response = await fetch('https://formsubmit.co/ajax/design_mood_2120@naver.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function ConsultationForm({ presetMessage }) {
             <span style={{ color: 'var(--primary-brown)' }}>간편 견적 상담 신청</span>
           </h2>
           <p className="section-desc">
-            신청서를 작성해 주시면 <strong style={{ color: 'var(--primary-brown)' }}>design_mood_2102@naver.com</strong> 메일로 즉시 전달되며, 대표 실장이 확인 후 24시간 이내 연락드립니다.
+            신청서를 작성해 주시면 <strong style={{ color: 'var(--primary-brown)' }}>design_mood_2120@naver.com</strong> 메일로 즉시 전달되며, 대표 실장이 확인 후 24시간 이내 연락드립니다.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export default function ConsultationForm({ presetMessage }) {
                 상담 신청서가 대표님 메일로 정상 전송되었습니다!
               </h3>
               <p style={{ color: 'var(--text-medium)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
-                <strong>{formData.name}</strong> 고객님의 문의 내역이 <strong>design_mood_2102@naver.com</strong>으로 전달되었습니다.<br />
+                <strong>{formData.name}</strong> 고객님의 문의 내역이 <strong>design_mood_2120@naver.com</strong>으로 전달되었습니다.<br />
                 입력해주신 연락처(<strong>{formData.phone}</strong>)로 빠른 시일 내 안내 도와드리겠습니다.
               </p>
               <button

@@ -97,7 +97,7 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <Mail size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
-                <span><a href="mailto:design_mood_2102@naver.com" style={{ color: '#FFFFFF', fontWeight: 600 }}>design_mood_2102@naver.com</a></span>
+                <span><a href="mailto:design_mood_2120@naver.com" style={{ color: '#FFFFFF', fontWeight: 600 }}>design_mood_2120@naver.com</a></span>
               </div>
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
