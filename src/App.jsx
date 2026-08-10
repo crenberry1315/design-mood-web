@@ -7,10 +7,12 @@ import EstimateCalculator from './components/EstimateCalculator';
 import ProcessGuide from './components/ProcessGuide';
 import ConsultationForm from './components/ConsultationForm';
 import Footer from './components/Footer';
-import { Phone, MessageCircle } from 'lucide-react';
+import FloatingKakao from './components/FloatingKakao';
 
 export default function App() {
   const [presetConsultation, setPresetConsultation] = useState('');
+  // User can easily change kakaoUrl here when they share their channel link
+  const kakaoChannelUrl = 'https://pf.kakao.com'; 
 
   const handleOpenConsultation = () => {
     const element = document.getElementById('contact');
@@ -47,37 +49,8 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Floating Sticky Mobile Contact Bar */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '1.2rem',
-          right: '1.2rem',
-          zIndex: 999,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.6rem',
-        }}
-      >
-        <a
-          href="#contact"
-          style={{
-            width: '52px',
-            height: '52px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--primary-brown)',
-            color: '#FFFFFF',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: 'var(--shadow-lg)',
-            transition: 'var(--transition-fast)',
-          }}
-          title="간편 상담 신청"
-        >
-          <MessageCircle size={24} />
-        </a>
-      </div>
+      {/* Floating KakaoTalk & Phone Buttons */}
+      <FloatingKakao kakaoUrl={kakaoChannelUrl} phone="033-250-0000" />
     </div>
   );
 }
