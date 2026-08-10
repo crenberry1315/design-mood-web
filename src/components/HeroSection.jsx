@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowRight, Calculator, CheckCircle2, ShieldCheck, Sparkles, MapPin, ChevronLeft, ChevronRight, Store } from 'lucide-react';
+import { ArrowRight, Calculator, CheckCircle2, ShieldCheck, Sparkles, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function HeroSection({ onOpenConsultation }) {
   const slides = [
     {
-      image: '/hero/store-real.png',
+      image: '/hero/store-real-opt.jpg',
       badge: '춘천 우두동 매장 실제 모습',
       title: '실제 장판, 마루, 벽지, 타일 샘플 직접 확인이 가능한 매장',
     },
     {
-      image: '/hero/hero-site-1.jpg',
+      image: '/hero/hero-site-1-opt.jpg',
       badge: '춘천 아파트 올 리모델링',
       title: '따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링',
     },
     {
-      image: '/hero/hero-site-2.jpg',
+      image: '/hero/hero-site-2-opt.jpg',
       badge: '감성 거실 인테리어',
       title: '600각 포세린 타일과 시그니처 간접조명 연출',
     },
     {
-      image: '/hero/hero-site-3.jpg',
+      image: '/hero/hero-site-3-opt.jpg',
       badge: '디테일 목공 & 히든도어 시공',
       title: '오차 없이 마감하는 정밀 현장 목공 라인',
     },
     {
-      image: '/hero/hero-site-4.jpg',
+      image: '/hero/hero-site-4-opt.jpg',
       badge: '친환경 E0 맞춤 주방 시공',
       title: '동선 최적화 감성 아일랜드 주방 및 씽크대',
     },
@@ -169,7 +169,7 @@ export default function HeroSection({ onOpenConsultation }) {
             </div>
           </div>
 
-          {/* Right Column: Dynamic Real Photo Slideshow Showcase */}
+          {/* Right Column: Dynamic Crisp Photo Slideshow Showcase */}
           <div style={{ position: 'relative' }}>
             <div
               style={{
@@ -179,10 +179,11 @@ export default function HeroSection({ onOpenConsultation }) {
                 boxShadow: 'var(--shadow-lg)',
                 border: '4px solid #FFFFFF',
                 backgroundColor: '#1E1917',
+                aspectRatio: '4 / 3',
               }}
             >
-              {/* Image Carousel Transition */}
-              <div style={{ position: 'relative', width: '100%', height: '480px' }} className="hero-img-container">
+              {/* Image Carousel Transition with High Sharpness Rendering */}
+              <div style={{ position: 'relative', width: '100%', height: '100%' }} className="hero-img-container">
                 {slides.map((slide, idx) => (
                   <img
                     key={idx}
@@ -194,12 +195,15 @@ export default function HeroSection({ onOpenConsultation }) {
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
+                      objectPosition: 'center',
                       opacity: idx === currentSlide ? 1 : 0,
                       transition: 'opacity 0.75s ease-in-out',
                       pointerEvents: idx === currentSlide ? 'auto' : 'none',
+                      imageRendering: '-webkit-optimize-contrast',
+                      WebkitBackfaceVisibility: 'hidden',
+                      transform: 'translateZ(0)',
                     }}
                     onError={(e) => {
-                      // Fallback if local image has loading issue
                       e.target.src = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80';
                     }}
                   />
@@ -211,7 +215,7 @@ export default function HeroSection({ onOpenConsultation }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0.2) 30%, rgba(44, 38, 35, 0.75) 100%)',
+                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0.15) 30%, rgba(44, 38, 35, 0.75) 100%)',
                   pointerEvents: 'none',
                 }}
               />
@@ -390,9 +394,6 @@ export default function HeroSection({ onOpenConsultation }) {
           }
           .hero-grid h1 {
             font-size: 2.3rem !important;
-          }
-          .hero-img-container {
-            height: 360px !important;
           }
         }
         @media (max-width: 576px) {
