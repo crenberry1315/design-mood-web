@@ -13,11 +13,20 @@ export default function EstimateCalculator({ onApplyEstimate }) {
     { id: 'commercial', label: '상가 / 오피스', icon: <Store size={22} /> },
   ];
 
-  const scopeOptions = [
+  // Dynamic scope options for residential vs commercial spaces
+  const residentialScopeOptions = [
     { id: 'full', label: '전체 올 리모델링', desc: '바닥/도배/주방/욕실/목공/조명/창호 풀 시공' },
     { id: 'partial_wallpaper_floor', label: '도배 + 바닥 + 조명', desc: '실속 마감재 교체' },
     { id: 'partial_bath_kitchen', label: '욕실 + 주방 씽크대', desc: '물사용 특화 공간 리모델링' },
   ];
+
+  const commercialScopeOptions = [
+    { id: 'full', label: '전체 상업공간 올 인테리어', desc: '철거/파사드/전기/목공/조명 풀 시공' },
+    { id: 'partial_wallpaper_floor', label: '바닥 데코타일 + 벽체 감성 페인팅', desc: '상업공간 실속 마감 연출' },
+    { id: 'partial_bath_kitchen', label: '천장 텍스 공사 + 수입 조명 설치', desc: '상가 조명 및 천장 환경 개선' },
+  ];
+
+  const currentScopeOptions = spaceType === 'commercial' ? commercialScopeOptions : residentialScopeOptions;
 
   const gradeOptions = [
     { id: 'standard', label: '스탠다드 실속형', desc: '친환경 실크벽지 + LX 2.2T 장판 + 정품 씽크대' },
@@ -34,6 +43,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
     if (scope === 'partial_bath_kitchen') basePerPyeong *= 0.45;
 
     if (spaceType === 'house') basePerPyeong *= 1.15;
+    if (spaceType === 'commercial') basePerPyeong *= 1.10;
 
     const minTotal = Math.round((basePerPyeong * pyeong * 0.9) / 10) * 10;
     const maxTotal = Math.round((basePerPyeong * pyeong * 1.1) / 10) * 10;
@@ -44,7 +54,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   const { minTotal, maxTotal } = calculatePrice();
 
   const handleApply = () => {
-    const summary = `${spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가'} ${pyeong}평 (${scopeOptions.find(s=>s.id===scope)?.label}, ${gradeOptions.find(g=>g.id===materialGrade)?.label}) - 예상 견적: ${minTotal.toLocaleString()}만 ~ ${maxTotal.toLocaleString()}만원`;
+    const summary = `${spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} ${pyeong}평 (${currentScopeOptions.find(s=>s.id===scope)?.label}, ${gradeOptions.find(g=>g.id===materialGrade)?.label}) - 예상 견적: ${minTotal.toLocaleString()}만 ~ ${maxTotal.toLocaleString()}만원`;
     if (onApplyEstimate) {
       onApplyEstimate(summary);
     }
@@ -95,7 +105,10 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   {spaceOptions.map((opt) => (
                     <button
                       key={opt.id}
-                      onClick={() => setSpaceType(opt.id)}
+                      onClick={() => {
+                        setSpaceType(opt.id);
+                        setScope('full');
+                      }}
                       style={{
                         padding: '0.8rem 0.5rem',
                         borderRadius: 'var(--radius-md)',
@@ -108,7 +121,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justify: 'center',
                         gap: '0.4rem',
                         transition: 'var(--transition-fast)',
                         whiteSpace: 'nowrap',
@@ -154,13 +167,13 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                 </div>
               </div>
 
-              {/* Step 3: Scope Selection */}
+              {/* Step 3: Dynamic Scope Selection */}
               <div>
                 <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.8rem', display: 'block', wordBreak: 'keep-all' }}>
-                  3. 시공 범위 선택
+                  3. 시공 범위 선택 {spaceType === 'commercial' && <span style={{ color: 'var(--primary-brown)', fontSize: '0.8rem' }}>(상가/오피스 전용 항목)</span>}
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                  {scopeOptions.map((opt) => (
+                  {currentScopeOptions.map((opt) => (
                     <div
                       key={opt.id}
                       onClick={() => setScope(opt.id)}
@@ -172,7 +185,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justify: 'space-between',
                         gap: '1rem',
                         transition: 'var(--transition-fast)',
                       }}
@@ -211,7 +224,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justify: 'space-between',
                         gap: '1rem',
                         transition: 'var(--transition-fast)',
                       }}
@@ -242,7 +255,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                 padding: '2rem 1.8rem',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
+                justify: 'space-between',
                 border: '1px solid var(--border-strong)',
               }}
             >
@@ -253,7 +266,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                 </div>
 
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-medium)', marginBottom: '1.2rem', wordBreak: 'keep-all' }}>
-                  {spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가'} · {pyeong}평형 기준
+                  {spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} · {pyeong}평형 기준
                 </div>
 
                 {/* Price Display */}
@@ -279,7 +292,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   </div>
                 </div>
 
-                {/* Included Services Bullet points */}
+                {/* Included Services Bullet points (A/S warranty deleted per CEO request) */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
                   <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-dark)' }}>기본 포함 내역:</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-medium)' }}>
@@ -288,11 +301,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-medium)' }}>
                     <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
-                    <span>정품 자재 인증서 제공</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--text-medium)' }}>
-                    <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
-                    <span>시공 후 무상 A/S 보증서 발급</span>
+                    <span>친환경 E0 정품 자재 인증서 제공</span>
                   </div>
                 </div>
               </div>

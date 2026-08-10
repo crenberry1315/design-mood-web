@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
 
             <p style={{ color: '#C0B7AF', fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '420px' }}>
-              강원특별자치도 춘천시 아파트 &amp; 주택 인테리어 전문 스튜디오.<br />
+              강원특별자치도 춘천시 아파트 &amp; 주택 리모델링 전문 스튜디오.<br />
               고객의 일상에 따뜻한 감성과 무드를 더하는 투명하고 정직한 공간을 만듭니다.
             </p>
 
@@ -38,15 +38,17 @@ export default function Footer() {
                 style={{ padding: '0.5rem 1rem', fontSize: '0.82rem', backgroundColor: 'rgba(255,255,255,0.08)', color: '#FFFFFF', borderColor: 'rgba(255,255,255,0.2)' }}
               >
                 <Phone size={14} />
-                <span>전화 문의</span>
+                <span>전화 문의 연결</span>
               </a>
               <a
-                href="#contact"
+                href="https://pf.kakao.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-gold"
                 style={{ padding: '0.5rem 1rem', fontSize: '0.82rem' }}
               >
                 <MessageCircle size={14} />
-                <span>카카오톡 상담</span>
+                <span>카카오톡 상담 연결</span>
               </a>
             </div>
           </div>
@@ -57,8 +59,8 @@ export default function Footer() {
               바로가기
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem', color: '#C0B7AF' }}>
-              <li><a href="#about" style={{ hover: { color: '#FFFFFF' } }}>브랜드 소개</a></li>
-              <li><a href="#portfolio">춘천 시공 포트폴리오</a></li>
+              <li><a href="#about">브랜드 소개</a></li>
+              <li><a href="#portfolio">춘천 시공 포트폴리오 (Before-After)</a></li>
               <li><a href="#calculator">온라인 3초 견적 계산기</a></li>
               <li><a href="#process">5단계 시공 프로세스</a></li>
               <li><a href="#contact">무료 상담 신청 및 오시는 길</a></li>
@@ -74,13 +76,13 @@ export default function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.88rem', color: '#C0B7AF' }}>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
-                <span>강원특별자치도 춘천시 우두동 (디자인무드 본점 매장)</span>
+                <span>강원특별자치도 춘천시 우두동 충열로16번길 21-20 1층</span>
               </div>
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <Clock size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
                 <div>
-                  <div>월요일 ~ 토요일: 09:00 - 19:00</div>
+                  <div>월요일 ~ 토요일: 09:00 - 18:00</div>
                   <div style={{ fontSize: '0.8rem', color: '#8F857D' }}>* 일요일 및 공휴일: 사전 예약제 방문 상담</div>
                 </div>
               </div>
@@ -96,7 +98,7 @@ export default function Footer() {
             borderTop: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justify: 'space-between',
             flexWrap: 'wrap',
             gap: '1rem',
             fontSize: '0.82rem',
@@ -104,7 +106,7 @@ export default function Footer() {
           }}
         >
           <div>
-            © DESIGN MOOD Interior Studio. All rights reserved. | 대표: 디자인무드 | 사업자등록번호: 000-00-00000
+            © DESIGN MOOD Interior Studio. All rights reserved. | 대표: 디자인무드 | 사업자등록번호: 102-05-58031
           </div>
 
           <button

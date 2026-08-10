@@ -42,6 +42,11 @@ export default function ProcessGuide() {
     '개나리 벽지',
     '한샘 (HANSSEM)',
     '대림 바스 (DAELIM)',
+    '영림 (YOUNGLIM)',
+    '예림 (YERIM)',
+    '현대 L&C',
+    '재현하늘창',
+    '아메리칸 스탠다드',
   ];
 
   return (
@@ -98,7 +103,7 @@ export default function ProcessGuide() {
                   {item.step}
                 </span>
                 <div
-                  className="icon-center"
+                  className="icon-box"
                   style={{
                     width: '42px',
                     height: '42px',
@@ -107,7 +112,7 @@ export default function ProcessGuide() {
                     color: 'var(--primary-brown-dark)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    justify: 'center',
                     lineHeight: 1,
                     flexShrink: 0,
                   }}
@@ -142,17 +147,17 @@ export default function ProcessGuide() {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'center',
+              justify: 'center',
               alignItems: 'center',
               flexWrap: 'wrap',
-              gap: '1.5rem 2.5rem',
+              gap: '1.2rem 1.8rem',
             }}
           >
             {brandPartners.map((brand, i) => (
               <div
                 key={i}
                 style={{
-                  padding: '0.6rem 1.2rem',
+                  padding: '0.65rem 1.3rem',
                   backgroundColor: '#FFFFFF',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-sm)',

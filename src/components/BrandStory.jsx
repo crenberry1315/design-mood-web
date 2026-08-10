@@ -6,12 +6,12 @@ export default function BrandStory() {
     {
       icon: <Home size={28} />,
       title: '춘천 지역 맞춤 설계',
-      desc: '우두동 동부·삼성·이지더원, 장학리 아이파크, 후평동 세경 등 춘천 주요 아파트 단지 특성을 완벽히 이해하고 구조에 맞춰 최적화된 동선을 설계합니다.',
+      desc: '춘천 전 지역 아파트 단지 특성을 완벽히 이해하고 구조에 맞춰 최적화된 동선을 설계합니다.',
     },
     {
       icon: <Layers size={28} />,
       title: '투명한 정직 단가제',
-      desc: 'LX하우시스, KCC, 개나리벽지 등 검증된 정품 자재만을 사용하며, 거품 없는 단가표와 명확한 견적 정산서로 신뢰를 약속드립니다.',
+      desc: '친환경 E0 등급의 검증된 정품 자재만을 사용하며, 거품 없는 단가표와 명확한 견적 정산서로 신뢰를 약속드립니다.',
     },
     {
       icon: <Eye size={28} />,
@@ -66,19 +66,14 @@ export default function BrandStory() {
               }}
             >
               <div
-                className="icon-center"
+                className="icon-box"
                 style={{
                   width: '56px',
                   height: '56px',
                   borderRadius: 'var(--radius-md)',
                   backgroundColor: 'var(--bg-secondary)',
                   color: 'var(--primary-brown)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   boxShadow: 'inset 0 0 0 1px var(--border-subtle)',
-                  lineHeight: 1,
-                  flexShrink: 0,
                 }}
               >
                 {item.icon}
@@ -91,20 +86,6 @@ export default function BrandStory() {
               <p style={{ fontSize: '0.95rem', color: 'var(--text-medium)', lineHeight: 1.65, wordBreak: 'keep-all' }}>
                 {item.desc}
               </p>
-
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '1rem',
-                  right: '1.2rem',
-                  fontSize: '2rem',
-                  fontWeight: 700,
-                  color: 'rgba(124, 94, 67, 0.08)',
-                  fontFamily: 'var(--font-subheading)',
-                }}
-              >
-                0{idx + 1}
-              </div>
             </div>
           ))}
         </div>
@@ -119,25 +100,20 @@ export default function BrandStory() {
             border: '1px solid var(--border-strong)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justify: 'space-between',
             flexWrap: 'wrap',
             gap: '1.5rem',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
             <div
-              className="icon-center"
+              className="icon-box"
               style={{
                 width: '52px',
                 height: '52px',
                 borderRadius: '50%',
                 backgroundColor: 'var(--primary-brown)',
                 color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                lineHeight: 1,
               }}
             >
               <Award size={26} />
@@ -147,12 +123,12 @@ export default function BrandStory() {
                 춘천시 우두동 매장 직접 방문 &amp; 자재 샘플 관람 가능
               </h4>
               <p style={{ fontSize: '0.92rem', color: 'var(--text-medium)', marginTop: '0.2rem', wordBreak: 'keep-all' }}>
-                실제 마루, 벽지, 타일, 조명, 욕실 악세사리 샘플을 매장에서 직접 눈으로 확인해 보세요.
+                실제 장판, 마루, 벽지, 타일 샘플을 매장에서 직접 눈으로 확인해 보세요.
               </p>
             </div>
           </div>
 
-          <a href="#contact" className="btn btn-primary" style={{ whiteSpace: 'nowrap' }}>
+          <a href="#contact" className="btn btn-primary">
             <span>매장 위치 &amp; 상담 예약</span>
           </a>
         </div>

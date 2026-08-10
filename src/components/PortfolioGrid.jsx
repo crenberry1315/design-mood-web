@@ -16,6 +16,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '30평대 아파트',
       duration: '3주 (21일)',
       tags: ['웜베이지', '간접조명', '템바보드', 'LX장판'],
+      beforeImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80',
@@ -25,7 +26,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       description: '우두동 삼성아파트 32평 아파트의 전체 리모델링 현장입니다. 거실 천장 라인 조명과 웜베이지 톤의 도배, 부드러운 LX 샌드우드 강마루 마감으로 온가족이 편안히 휴식할 수 있는 따뜻한 쉼터를 완성했습니다.',
       materials: [
         '바닥재: LX하우시스 지아소리샘 3.2T 샌드크림',
-        '벽지: 개나리 친환경 실크벽지 (웜아이보리)',
+        '벽지: 개나리 친환경 E0 실크벽지 (웜아이보리)',
         '주방: 한샘 시그니처 샌드베이지 아일랜드 씽크대',
         '조명: 3000K 다운라이트 간접 엠비언트 조명',
         '창호: KCC 이중 단열 창호 (백색 로이유리)',
@@ -40,6 +41,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '30평대 아파트',
       duration: '3.5주 (25일)',
       tags: ['무몰딩', '포세린타일', '히든도어', '아일랜드'],
+      beforeImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
@@ -49,9 +51,9 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       description: '장학리 아이파크 34평 현장으로, 무몰딩 마감과 히든도어 디자인을 적용하여 개방감을 극대화했습니다. 거실과 주방 바닥에는 600각 무광 포세린 타일을 시공하여 시원하면서도 정갈한 무드를 선사합니다.',
       materials: [
         '바닥재: 600x600 이태리 수입 포세린 타일 (크림 그레이)',
-        '목공: 천장 라인조명 마감, 히든도어 문틀',
-        '욕실: 호텔식 해바라기 젠다이 인비저블 욕실',
-        '가구: 커스텀 무광 페트 신발장 & 드레스룸',
+        '목공: 천장 라인조명 마감, 영림 히든도어 문틀',
+        '욕실: 아메리칸 스탠다드 원피스 양변기 & 젠다이 인비저블 욕실',
+        '가구: 예림 무광 페트 신발장 & 드레스룸',
       ],
     },
     {
@@ -63,6 +65,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '20평대 아파트',
       duration: '2.5주 (18일)',
       tags: ['광폭마루', '템바월', '확장공사', '우드포인트'],
+      beforeImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80',
@@ -72,7 +75,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       materials: [
         '확장: 거실 단열 보강 및 KCC 발코니 단열창',
         '바닥재: 동화자연마루 나투스진 텍스쳐 광폭',
-        '도배: LX 베스띠 친환경 마이크로 텍스처',
+        '도배: 개나리 친환경 E0 실크벽지',
       ],
     },
     {
@@ -84,13 +87,14 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '20평대 아파트',
       duration: '2주 (14일)',
       tags: ['화이트우드', '슬라이딩도어', '맞춤가구'],
+      beforeImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80',
       ],
       description: '오래된 20평대 아파트의 구조적 단점을 커버하고 실용적 수납공간을 확보한 콤팩트 스마트 리모델링 사례입니다.',
       materials: [
-        '가구: 맞춤형 ㄷ자 구조 씽크대 & 아일랜드 식탁',
+        '가구: 현대 리바트 맞춤형 ㄷ자 구조 씽크대 & 아일랜드 식탁',
         '욕실: 테라조 포인트 타일 & 무광 수전',
       ],
     },
@@ -103,6 +107,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '30평대 아파트',
       duration: '4주 (28일)',
       tags: ['원목마루', '대형아일랜드', '시그니처월'],
+      beforeImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
@@ -122,6 +127,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       category: '주택/상가',
       duration: '3.5주 (24일)',
       tags: ['단독주택', '원목천장', '단열창호'],
+      beforeImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
       coverImage: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=800&q=80',
       images: [
         'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80',
@@ -129,7 +135,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       description: '오래된 단독주택 2층 전체를 신축 아파트 이상으로 단열성을 끌어올리고 감성 서재와 원목 포인트를 더한 주택 리노베이션 프로젝트입니다.',
       materials: [
         '단열: 외벽 내단열 핑크폼 100T 풀 보강',
-        '창호: 로이 시스템 3중 단열 유리 창호',
+        '창호: KCC 로이 시스템 3중 단열 유리 창호',
       ],
     },
   ];
@@ -155,7 +161,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
             <span style={{ color: 'var(--primary-brown)' }}>춘천 시공 포트폴리오</span>
           </h2>
           <p className="section-desc">
-            우두동, 장학리, 후평동 등 춘천 실제 아파트 및 주택 현장의 시공 사례를 확인해 보세요.
+            춘천 전지역 아파트 및 주택 현장의 시공 사례를 확인해 보세요.
           </p>
         </div>
 
@@ -163,7 +169,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'center',
+            justify: 'center',
             gap: '0.6rem',
             flexWrap: 'wrap',
             marginBottom: '3rem',
@@ -246,6 +252,9 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                   <span className="badge" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', color: 'var(--primary-brown-dark)' }}>
                     {project.size}
                   </span>
+                  <span className="badge" style={{ backgroundColor: 'var(--primary-brown)', color: '#FFFFFF', border: 'none' }}>
+                    Before &amp; After 비교가능
+                  </span>
                 </div>
 
                 {/* View Details Icon Overlay */}
@@ -257,7 +266,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                     opacity: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    justify: 'center',
                     color: '#FFFFFF',
                     transition: 'var(--transition-fast)',
                   }}
@@ -277,7 +286,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                     }}
                   >
                     <Eye size={16} />
-                    <span>상세보기</span>
+                    <span>상세보기 &amp; AI 비교</span>
                   </div>
                 </div>
               </div>
@@ -328,7 +337,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                 </p>
 
                 {/* Tags Footer */}
-                <div style={{ marginTop: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.4rem', pt: '0.6rem' }}>
+                <div style={{ marginTop: 'auto', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                   {project.tags.map((tag, idx) => (
                     <span
                       key={idx}

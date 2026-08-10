@@ -69,7 +69,7 @@ export default function HeroSection({ onOpenConsultation }) {
                 maxWidth: '540px',
               }}
             >
-              우두동, 장학리, 후평동, 석사동 등 춘천 아파트 &amp; 주택 리모델링 전문.<br />
+              춘천 전지역 아파트 &amp; 주택 리모델링 전문.<br />
               거품 없는 투명한 단가표와 감각적인 3D 공간 설계로 정직한 시공을 약속드립니다.
             </p>
 
@@ -161,7 +161,7 @@ export default function HeroSection({ onOpenConsultation }) {
                   right: '1.5rem',
                   color: '#FFFFFF',
                   display: 'flex',
-                  justifyContent: 'space-between',
+                  justify: 'space-between',
                   alignItems: 'flex-end',
                 }}
               >
