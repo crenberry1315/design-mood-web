@@ -71,8 +71,8 @@ export default function ConsultationForm({ presetMessage }) {
   };
 
   return (
-    <section id="contact" className="section-padding" style={{ backgroundColor: 'var(--bg-main)', position: 'relative' }}>
-      <div className="container">
+    <section id="contact" className="section-padding" style={{ backgroundColor: 'var(--bg-main)', position: 'relative', overflow: 'hidden' }}>
+      <div className="container" style={{ maxWidth: '100%', boxSizing: 'border-box' }}>
         
         {/* Header */}
         <div className="section-header">
@@ -91,17 +91,20 @@ export default function ConsultationForm({ presetMessage }) {
 
         {/* Form Container */}
         <div
-          className="glass-card"
+          className="glass-card consultation-card"
           style={{
             maxWidth: '840px',
             margin: '0 auto',
             padding: '2.8rem 2.2rem',
             borderRadius: 'var(--radius-lg)',
             backgroundColor: '#FFFFFF',
+            boxSizing: 'border-box',
+            width: '100%',
+            overflow: 'hidden',
           }}
         >
           {submitted ? (
-            <div style={{ textAlign: 'center', padding: '2rem 1rem' }}>
+            <div style={{ textAlign: 'center', padding: '1.5rem 0.5rem', width: '100%', boxSizing: 'border-box' }}>
               <div
                 style={{
                   width: '64px',
@@ -114,13 +117,20 @@ export default function ConsultationForm({ presetMessage }) {
                   justify: 'center',
                   margin: '0 auto 1.2rem auto',
                 }}
+                className="icon-box"
               >
                 <CheckCircle2 size={36} />
               </div>
-              <h3 style={{ fontSize: '1.6rem', color: 'var(--text-dark)', marginBottom: '0.8rem' }}>
+              <h3
+                style={{ fontSize: '1.6rem', color: 'var(--text-dark)', marginBottom: '0.8rem', wordBreak: 'keep-all', lineHeight: 1.3 }}
+                className="success-title"
+              >
                 상담 신청서가 성공적으로 접수되었습니다!
               </h3>
-              <p style={{ color: 'var(--text-medium)', marginBottom: '1.8rem', lineHeight: 1.6 }}>
+              <p
+                style={{ color: 'var(--text-medium)', marginBottom: '1.8rem', lineHeight: 1.6, wordBreak: 'keep-all' }}
+                className="success-desc"
+              >
                 <strong>{formData.name}</strong> 고객님의 문의 내역이 디자인무드 대표 실장에게 정상 전달되었습니다.<br />
                 입력해주신 연락처(<strong>{formData.phone}</strong>)로 빠른 시일 내 안내 도와드리겠습니다.
               </p>
@@ -130,12 +140,13 @@ export default function ConsultationForm({ presetMessage }) {
                   setFormData({ name: '', phone: '', location: '', schedule: '', message: '' });
                 }}
                 className="btn btn-secondary"
+                style={{ maxWidth: '100%', whiteSpace: 'nowrap' }}
               >
                 새로운 문의 작성하기
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', boxSizing: 'border-box' }}>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }} className="form-grid-2">
                 {/* Name */}
@@ -158,6 +169,7 @@ export default function ConsultationForm({ presetMessage }) {
                       backgroundColor: 'var(--bg-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
+                      boxSizing: 'border-box',
                     }}
                   />
                 </div>
@@ -182,6 +194,7 @@ export default function ConsultationForm({ presetMessage }) {
                       backgroundColor: 'var(--bg-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
+                      boxSizing: 'border-box',
                     }}
                   />
                 </div>
@@ -207,6 +220,7 @@ export default function ConsultationForm({ presetMessage }) {
                       backgroundColor: 'var(--bg-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
+                      boxSizing: 'border-box',
                     }}
                   />
                 </div>
@@ -228,6 +242,7 @@ export default function ConsultationForm({ presetMessage }) {
                       backgroundColor: 'var(--bg-main)',
                       fontSize: '0.95rem',
                       outline: 'none',
+                      boxSizing: 'border-box',
                     }}
                   >
                     <option value="">시기 선택</option>
@@ -260,6 +275,7 @@ export default function ConsultationForm({ presetMessage }) {
                     outline: 'none',
                     resize: 'vertical',
                     fontFamily: 'var(--font-body)',
+                    boxSizing: 'border-box',
                   }}
                 />
               </div>
@@ -280,6 +296,7 @@ export default function ConsultationForm({ presetMessage }) {
                   gap: '0.5rem',
                   opacity: isSubmitting ? 0.75 : 1,
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  boxSizing: 'border-box',
                 }}
               >
                 {isSubmitting ? (
@@ -312,6 +329,22 @@ export default function ConsultationForm({ presetMessage }) {
         @media (max-width: 640px) {
           .form-grid-2 {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 576px) {
+          .consultation-card {
+            padding: 1.5rem 1rem !important;
+            border-radius: var(--radius-md) !important;
+            max-width: 100% !important;
+            overflow: hidden !important;
+          }
+          .success-title {
+            font-size: 1.28rem !important;
+            word-break: keep-all !important;
+          }
+          .success-desc {
+            font-size: 0.88rem !important;
+            word-break: keep-all !important;
           }
         }
       `}</style>
