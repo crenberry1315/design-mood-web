@@ -14,10 +14,10 @@ export default function Navbar({ onOpenConsultation }) {
   }, []);
 
   const navLinks = [
-    { name: '브랜드 소개', href: '#about' },
     { name: '시공 사례', href: '#portfolio' },
+    { name: '4가지 약속', href: '#about' },
+    { name: '5단계 프로세스', href: '#process' },
     { name: '온라인 견적 계산기', href: '#calculator' },
-    { name: '시공 프로세스', href: '#process' },
     { name: '오시는 길 & 문의', href: '#contact' },
   ];
 

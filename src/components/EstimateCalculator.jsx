@@ -4,8 +4,8 @@ import { Calculator, Check, ArrowRight, Sparkles, Building, Home, Store } from '
 export default function EstimateCalculator({ onApplyEstimate }) {
   const [spaceType, setSpaceType] = useState('apartment');
   const [pyeong, setPyeong] = useState(32);
-  const [scope, setScope] = useState('full');
-  const [materialGrade, setMaterialGrade] = useState('premium');
+  const [scope, setScope] = useState('full_window');
+  const [materialGrade, setMaterialGrade] = useState('modern_classic');
 
   const spaceOptions = [
     { id: 'apartment', label: '아파트', icon: <Building size={20} /> },
@@ -15,35 +15,89 @@ export default function EstimateCalculator({ onApplyEstimate }) {
 
   // Dynamic scope options for residential vs commercial spaces
   const residentialScopeOptions = [
-    { id: 'full', label: '전체 올 리모델링', desc: '바닥/도배/주방/욕실/목공/조명/창호 풀 시공' },
-    { id: 'partial_wallpaper_floor', label: '도배 + 바닥 + 조명', desc: '실속 마감재 교체' },
-    { id: 'partial_bath_kitchen', label: '욕실 + 주방 씽크대', desc: '물사용 특화 공간 리모델링' },
+    { id: 'full_window', label: '1. 전체 올 리모델링(창호포함)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/KCC 창호 풀 시공' },
+    { id: 'full_no_window', label: '2. 전체 올 리모델링(창호제외)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/창호 리폼 등 풀 시공' },
+    { id: 'partial', label: '3. 부분인테리어(상담 후 확인)', desc: '도배/바닥/조명/가구/중문/필름/리폼/도장 등 부분 인테리어' },
+    { id: 'sink_single', label: '4. 씽크대(단품)', desc: 'E0등급 친환경 자재 / 씽크볼,후드,쿡탑,수전 4대기기 포함' },
+    { id: 'bath_single', label: '5. 욕실단품(단품)', desc: '욕실 간단교체 및 철거,타일,셋팅 전체 욕실 시공' },
+    { id: 'etc_single', label: '6. 중문,가구 등 기타 단품', desc: '작은 디테일에서 오는 고급스러움을 어필할 때 유용합니다.' },
   ];
 
   const commercialScopeOptions = [
-    { id: 'full', label: '전체 상업공간 올 인테리어', desc: '철거/파사드/전기/목공/조명 풀 시공' },
-    { id: 'partial_wallpaper_floor', label: '바닥 데코타일 + 벽체 감성 페인팅', desc: '상업공간 실속 마감 연출' },
-    { id: 'partial_bath_kitchen', label: '천장 텍스 공사 + 수입 조명 설치', desc: '상가 조명 및 천장 환경 개선' },
+    { id: 'comm_full', label: '1. 올 인테리어', desc: '철거 / 전기 / 에어컨 / 가구 / 목공 / 도장 등 풀 시공' },
+    { id: 'comm_partial', label: '2. 부분 인테리어', desc: '필름 / 전기 / 가구 / 바닥등 부분 교체를 통한 실속 마감 연출' },
+    { id: 'comm_single', label: '3. 단품 인테리어', desc: '가구 / 조명 / 바닥 / 타일 / 필름 등을 통한 상가 분위기의 변화' },
+  ];
+
+  const residentialGradeOptions = [
+    { id: 'basic', label: '베이직 실속형', desc: '‘최소한의 비용으로 최대의 효율과 깔끔함을 내는 것’을 목표' },
+    { id: 'modern_classic', label: '모던 클래식', desc: '과거의 우아함과 현재의 세련미가 조화롭게 어우러진 하이브리드 프리미엄 등급' },
+    { id: 'residential_highend', label: '하이엔드', desc: '타협 없는 최고급 자재와 독창적인 디자인으로 공간의 가치를 예술의 경지로 끌어올리는 최상위 프리미엄 등급' },
+  ];
+
+  const commercialGradeOptions = [
+    { id: 'standard', label: '스탠다드', desc: '가성비와 기능성에 집중한 기본형으로, 임대 목적의 상가나 소규모 오피스에 적합' },
+    { id: 'premium', label: '프리미엄', desc: '브랜드의 신뢰감과 세련된 이미지를 주는 등급,일반적인 병원, 카페, 중대형 오피스, 쇼룸에 가장 많이 쓰입니다.' },
+    { id: 'commercial_highend', label: '하이엔드', desc: '오감으로 브랜드의 가치와 압도적인 럭셔리를 전달하는 등급으로, 플래그십 스토어, 고급 오피스(임원실/로비), 파인 다이닝, 프리미엄 뷰티샵에 적용됩니다.' },
   ];
 
   const currentScopeOptions = spaceType === 'commercial' ? commercialScopeOptions : residentialScopeOptions;
+  const currentGradeOptions = spaceType === 'commercial' ? commercialGradeOptions : residentialGradeOptions;
 
-  const gradeOptions = [
-    { id: 'standard', label: '스탠다드 실속형', desc: '친환경 실크벽지 + LX 2.2T 장판 + 정품 씽크대' },
-    { id: 'premium', label: '프리미엄 웜베이지 (추천)', desc: '동화 강마루 + KCC 창호 + 600각 타일 + 간접조명' },
-    { id: 'luxury', label: '하이엔드 무몰딩', desc: '원목마루 + 무몰딩 도배 + 히든도어 + 수입 포세린' },
-  ];
+  const handleSpaceTypeChange = (newType) => {
+    setSpaceType(newType);
+    if (newType === 'commercial') {
+      setScope('comm_full');
+      setMaterialGrade('premium');
+    } else {
+      setScope('full_window');
+      setMaterialGrade('modern_classic');
+    }
+  };
 
   const calculatePrice = () => {
-    let basePerPyeong = 85;
-    if (materialGrade === 'premium') basePerPyeong = 120;
-    if (materialGrade === 'luxury') basePerPyeong = 175;
+    let basePerPyeong = 100;
 
-    if (scope === 'partial_wallpaper_floor') basePerPyeong *= 0.35;
-    if (scope === 'partial_bath_kitchen') basePerPyeong *= 0.45;
+    if (spaceType === 'commercial') {
+      if (materialGrade === 'standard') basePerPyeong = 90;
+      if (materialGrade === 'premium') basePerPyeong = 135;
+      if (materialGrade === 'commercial_highend') basePerPyeong = 210;
 
-    if (spaceType === 'house') basePerPyeong *= 1.15;
-    if (spaceType === 'commercial') basePerPyeong *= 1.10;
+      if (scope === 'comm_full') basePerPyeong *= 1.0;
+      if (scope === 'comm_partial') basePerPyeong *= 0.45;
+      if (scope === 'comm_single') basePerPyeong *= 0.25;
+    } else {
+      // Residential (apartment, house)
+      if (materialGrade === 'basic') basePerPyeong = 110;
+      if (materialGrade === 'modern_classic') basePerPyeong = 145;
+      if (materialGrade === 'residential_highend') basePerPyeong = 215;
+
+      if (scope === 'full_window') basePerPyeong *= 1.0;
+      if (scope === 'full_no_window') basePerPyeong *= 0.78;
+      if (scope === 'partial') basePerPyeong *= 0.45;
+
+      // Handle single item estimates
+      if (scope === 'sink_single') {
+        const sinkBase = materialGrade === 'basic' ? 280 : materialGrade === 'modern_classic' ? 380 : 550;
+        const minVal = Math.round((sinkBase * 0.9) / 5) * 5;
+        const maxVal = Math.round((sinkBase * 1.15) / 5) * 5;
+        return { minTotal: minVal, maxTotal: maxVal };
+      }
+      if (scope === 'bath_single') {
+        const bathBase = materialGrade === 'basic' ? 250 : materialGrade === 'modern_classic' ? 340 : 490;
+        const minVal = Math.round((bathBase * 0.9) / 5) * 5;
+        const maxVal = Math.round((bathBase * 1.15) / 5) * 5;
+        return { minTotal: minVal, maxTotal: maxVal };
+      }
+      if (scope === 'etc_single') {
+        const etcBase = materialGrade === 'basic' ? 160 : materialGrade === 'modern_classic' ? 230 : 360;
+        const minVal = Math.round((etcBase * 0.9) / 5) * 5;
+        const maxVal = Math.round((etcBase * 1.2) / 5) * 5;
+        return { minTotal: minVal, maxTotal: maxVal };
+      }
+    }
+
+    if (spaceType === 'house') basePerPyeong *= 1.12;
 
     const minTotal = Math.round((basePerPyeong * pyeong * 0.9) / 10) * 10;
     const maxTotal = Math.round((basePerPyeong * pyeong * 1.1) / 10) * 10;
@@ -54,7 +108,12 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   const { minTotal, maxTotal } = calculatePrice();
 
   const handleApply = () => {
-    const summary = `${spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} ${pyeong}평 (${currentScopeOptions.find(s=>s.id===scope)?.label}, ${gradeOptions.find(g=>g.id===materialGrade)?.label}) - 예상 견적: ${minTotal.toLocaleString()}만 ~ ${maxTotal.toLocaleString()}만원`;
+    const spaceLabel = spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스';
+    const scopeLabel = currentScopeOptions.find((s) => s.id === scope)?.label || '';
+    const gradeLabel = currentGradeOptions.find((g) => g.id === materialGrade)?.label || '';
+    const pyeongText = (scope === 'sink_single' || scope === 'bath_single' || scope === 'etc_single') ? '' : ` ${pyeong}평형`;
+
+    const summary = `${spaceLabel}${pyeongText} (${scopeLabel}, ${gradeLabel}) - 예상 견적: ${minTotal.toLocaleString()}만 ~ ${maxTotal.toLocaleString()}만원`;
     if (onApplyEstimate) {
       onApplyEstimate(summary);
     }
@@ -106,10 +165,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   {spaceOptions.map((opt) => (
                     <button
                       key={opt.id}
-                      onClick={() => {
-                        setSpaceType(opt.id);
-                        setScope('full');
-                      }}
+                      onClick={() => handleSpaceTypeChange(opt.id)}
                       style={{
                         padding: '0.75rem 0.3rem',
                         borderRadius: 'var(--radius-md)',
@@ -122,7 +178,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justify: 'center',
+                        justifyContent: 'center',
                         gap: '0.35rem',
                         transition: 'var(--transition-fast)',
                         whiteSpace: 'nowrap',
@@ -187,7 +243,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        justify: 'space-between',
+                        justifyContent: 'space-between',
                         gap: '0.75rem',
                         transition: 'var(--transition-fast)',
                       }}
@@ -215,7 +271,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                   4. 선호 자재 등급
                 </label>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                  {gradeOptions.map((opt) => (
+                  {currentGradeOptions.map((opt) => (
                     <div
                       key={opt.id}
                       onClick={() => setMaterialGrade(opt.id)}
@@ -271,7 +327,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                 </div>
 
                 <div style={{ fontSize: '0.88rem', color: 'var(--text-medium)', marginBottom: '1.2rem', wordBreak: 'keep-all' }}>
-                  {spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} · {pyeong}평형 기준
+                  {spaceType === 'apartment' ? '아파트' : spaceType === 'house' ? '단독주택' : '상가/오피스'} · {(scope === 'sink_single' || scope === 'bath_single' || scope === 'etc_single') ? '단품 시공' : `${pyeong}평형 기준`}
                 </div>
 
                 {/* Price Display */}

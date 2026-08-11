@@ -38,10 +38,10 @@ export default function App() {
       {/* Main Content Sections */}
       <main>
         <HeroSection onOpenConsultation={handleOpenConsultation} />
-        <BrandStory />
         <PortfolioGrid onSelectConsultation={handleSelectPortfolioConsultation} />
-        <EstimateCalculator onApplyEstimate={handleApplyEstimate} />
+        <BrandStory />
         <ProcessGuide />
+        <EstimateCalculator onApplyEstimate={handleApplyEstimate} />
         <ConsultationForm presetMessage={presetConsultation} />
       </main>
 

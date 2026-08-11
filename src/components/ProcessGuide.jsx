@@ -35,7 +35,7 @@ export default function ProcessGuide() {
     },
   ];
 
-  const brandPartners = [
+  const brandPartnersMain = [
     'KCC 글라스',
     'LX 하우시스',
     '한솔 홈데코',
@@ -43,6 +43,9 @@ export default function ProcessGuide() {
     '한샘 (HANSSEM)',
     '대림 바스 (DAELIM)',
     '영림 (YOUNGLIM)',
+  ];
+
+  const brandPartnersBottom = [
     '예림 (YERIM)',
     '현대 L&C',
     '재현하늘창',
@@ -142,33 +145,68 @@ export default function ProcessGuide() {
             TRUSTED MATERIAL PARTNERS (엄선된 정품 제휴 자재)
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              justify: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '1.2rem 1.8rem',
-            }}
-          >
-            {brandPartners.map((brand, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: '0.65rem 1.3rem',
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  fontSize: '0.92rem',
-                  fontWeight: 600,
-                  color: 'var(--text-medium)',
-                  boxShadow: 'var(--shadow-sm)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {brand}
-              </div>
-            ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+            {/* Top Row Partners */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem 1.4rem',
+                width: '100%',
+              }}
+            >
+              {brandPartnersMain.map((brand, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: '0.65rem 1.3rem',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.92rem',
+                    fontWeight: 600,
+                    color: 'var(--text-medium)',
+                    boxShadow: 'var(--shadow-sm)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {brand}
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Row Partners (Centered 4 items: 예림 ~ 아메리칸스탠다드) */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem 1.4rem',
+                width: '100%',
+              }}
+            >
+              {brandPartnersBottom.map((brand, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: '0.65rem 1.3rem',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: '0.92rem',
+                    fontWeight: 600,
+                    color: 'var(--text-medium)',
+                    boxShadow: 'var(--shadow-sm)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {brand}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
