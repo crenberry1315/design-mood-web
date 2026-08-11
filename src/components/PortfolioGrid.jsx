@@ -8,6 +8,29 @@ export default function PortfolioGrid({ onSelectConsultation }) {
 
   const projects = [
     {
+      id: 0,
+      title: '[AI 3D 시안] 우두동 동부아파트 32평 웜베이지 모던 리모델링',
+      location: '춘천시 우두동 동부아파트 101동 / 105동',
+      size: '32평형',
+      type: 'AI 3D 설계 시안',
+      category: '30평대 아파트',
+      duration: '실시간 AI 렌더링',
+      tags: ['3D도면기반', 'AI렌더링', '600각타일', '웜베이지', '무몰딩'],
+      beforeImage: '/portfolio/woodoo-dongbu-ai.jpg',
+      coverImage: '/portfolio/woodoo-dongbu-ai.jpg',
+      images: [
+        '/portfolio/woodoo-dongbu-ai.jpg',
+      ],
+      description: '우두동 동부아파트 실제 3D 도면(동부.skp)과 파싱된 발주 자재(600각 무광 포세린 타일, 개나리 실크벽지, LX 2.2T 장판, 3인치 다운라이트)를 토대로 AI 렌더링 기술을 통해 구현한 최상급 웜베이지 3D 시공 시안입니다.',
+      materials: [
+        '3D 도면: 동부.skp 스케치업 도면 레이아웃 100% 매칭',
+        '바닥재: 600x600 무광 웜베이지 포세린 타일 & LX 2.2T 장판',
+        '벽지: 개나리 친환경 E0 무몰딩 실크벽지 (웜아이보리)',
+        '주방: E0 등급 아일랜드 씽크대 & 웜화이트 매트 도어',
+        '조명: 3인치 다운라이트 & 천장 라인 간접 엠비언트 조명',
+      ],
+    },
+    {
       id: 1,
       title: '우두동 삼성아파트 32평 웜베이지 모던 리모델링',
       location: '춘천시 우두동 삼성아파트 103동',
