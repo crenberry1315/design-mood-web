@@ -170,7 +170,53 @@ export default function HeroSection({ onOpenConsultation }) {
           </div>
 
           {/* Right Column: Dynamic Crisp Photo Slideshow Showcase */}
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            
+            {/* Top Bar Outside Photo: Gallery Header & Satisfaction Stat Badge */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.6rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: 'var(--primary-brown-dark)', fontWeight: 600, fontSize: '0.88rem' }}>
+                <Sparkles size={16} style={{ color: 'var(--primary-brown)' }} />
+                <span>매장 &amp; 실제 시공 갤러리</span>
+              </div>
+
+              {/* Stat Badge Moved Outside Slideshow Photo */}
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--border-subtle)',
+                  boxShadow: 'var(--shadow-sm)',
+                }}
+              >
+                <div
+                  className="icon-box"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(124, 94, 67, 0.12)',
+                    color: 'var(--primary-brown-dark)',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Sparkles size={16} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 500, lineHeight: 1.1, whiteSpace: 'nowrap' }}>
+                    대표 시공 만족도
+                  </div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--primary-brown-dark)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
+                    99.4% 고객 만족
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Photo Slideshow Frame */}
             <div
               style={{
                 position: 'relative',
@@ -215,53 +261,10 @@ export default function HeroSection({ onOpenConsultation }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0.15) 30%, rgba(44, 38, 35, 0.75) 100%)',
+                  background: 'linear-gradient(180deg, rgba(44, 38, 35, 0.05) 40%, rgba(44, 38, 35, 0.75) 100%)',
                   pointerEvents: 'none',
                 }}
               />
-
-              {/* Top Floating Glass Stat Badge */}
-              <div
-                className="glass-card hero-floating-card"
-                style={{
-                  position: 'absolute',
-                  top: '1.2rem',
-                  left: '1.2rem',
-                  padding: '0.85rem 1.2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.85rem',
-                  background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  borderRadius: 'var(--radius-md)',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
-                  border: '1px solid rgba(255, 255, 255, 0.8)',
-                  zIndex: 3,
-                }}
-              >
-                <div
-                  className="icon-box"
-                  style={{
-                    width: '42px',
-                    height: '42px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(124, 94, 67, 0.12)',
-                    color: 'var(--primary-brown-dark)',
-                    flexShrink: 0,
-                  }}
-                >
-                  <Sparkles size={20} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 500, lineHeight: 1.2, marginBottom: '0.15rem', whiteSpace: 'nowrap' }}>
-                    대표 시공 만족도
-                  </div>
-                  <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown-dark)', lineHeight: 1.2, whiteSpace: 'nowrap' }}>
-                    99.4% 고객 만족
-                  </div>
-                </div>
-              </div>
 
               {/* Manual Nav Prev/Next Buttons */}
               <button
@@ -408,11 +411,6 @@ export default function HeroSection({ onOpenConsultation }) {
           .hero-btn {
             width: 100% !important;
             justify-content: center !important;
-          }
-          .hero-floating-card {
-            top: 0.8rem !important;
-            left: 0.8rem !important;
-            padding: 0.65rem 0.95rem !important;
           }
         }
       `}</style>
