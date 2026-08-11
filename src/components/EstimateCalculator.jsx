@@ -20,7 +20,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
     { id: 'partial', label: '3. 부분인테리어(상담 후 확인)', desc: '도배/바닥/조명/가구/중문/필름/리폼/도장 등 부분 인테리어' },
     { id: 'sink_single', label: '4. 씽크대(단품)', desc: 'E0등급 친환경 자재 / 씽크볼,후드,쿡탑,수전 4대기기 포함' },
     { id: 'bath_single', label: '5. 욕실단품(단품)', desc: '욕실 간단교체 및 철거,타일,셋팅 전체 욕실 시공' },
-    { id: 'etc_single', label: '6. 중문,가구 등 기타 단품', desc: '작은 디테일에서 오는 고급스러움을 어필할 때 유용합니다.' },
+    { id: 'etc_single', label: '6. 중문,가구 등 기타 단품', desc: '중문,가구,필름 등 기타 단품 상품' },
   ];
 
   const commercialScopeOptions = [
@@ -30,15 +30,15 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   ];
 
   const residentialGradeOptions = [
-    { id: 'basic', label: '베이직 실속형', desc: '‘최소한의 비용으로 최대의 효율과 깔끔함을 내는 것’을 목표' },
+    { id: 'basic', label: '베이직 실속형', desc: '최소한의 비용으로 최대의 효율과 깔끔함을 내는 것을 목표로하는 등급' },
     { id: 'modern_classic', label: '모던 클래식', desc: '과거의 우아함과 현재의 세련미가 조화롭게 어우러진 하이브리드 프리미엄 등급' },
     { id: 'residential_highend', label: '하이엔드', desc: '타협 없는 최고급 자재와 독창적인 디자인으로 공간의 가치를 예술의 경지로 끌어올리는 최상위 프리미엄 등급' },
   ];
 
   const commercialGradeOptions = [
     { id: 'standard', label: '스탠다드', desc: '가성비와 기능성에 집중한 기본형으로, 임대 목적의 상가나 소규모 오피스에 적합' },
-    { id: 'premium', label: '프리미엄', desc: '브랜드의 신뢰감과 세련된 이미지를 주는 등급,일반적인 병원, 카페, 중대형 오피스, 쇼룸에 가장 많이 쓰입니다.' },
-    { id: 'commercial_highend', label: '하이엔드', desc: '오감으로 브랜드의 가치와 압도적인 럭셔리를 전달하는 등급으로, 플래그십 스토어, 고급 오피스(임원실/로비), 파인 다이닝, 프리미엄 뷰티샵에 적용됩니다.' },
+    { id: 'premium', label: '프리미엄', desc: '브랜드의 신뢰감과 세련된 이미지를 주는 등급, 일반적인 병원,카페,중대형오피스,쇼룸에 적합' },
+    { id: 'commercial_highend', label: '하이엔드', desc: '오감으로 브랜드의 가치와 압도적인 럭셔리를 전달하는 등급으로, 플래그십 스토어, 고급오피스,파인다이닝,프리미엄 뷰티샵에 적합' },
   ];
 
   const currentScopeOptions = spaceType === 'commercial' ? commercialScopeOptions : residentialScopeOptions;
