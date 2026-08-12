@@ -1,419 +1,352 @@
 import React, { useState } from 'react';
-import { MapPin, Navigation, Car, Footprints, School, Building2, Utensils, CheckCircle2, ZoomIn, Download } from 'lucide-react';
+import { MapPin, Navigation, Car, ExternalLink, Copy, Check } from 'lucide-react';
 
 export default function SvgStoreMap() {
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'car' | 'walk'
-  const [hoveredLandmark, setHoveredLandmark] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAddress = () => {
+    navigator.clipboard.writeText('강원특별자치도 춘천시 충열로16번길 21-20 1층 디자인무드');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <div className="svg-map-wrapper" style={{ width: '100%', fontFamily: "'Noto Sans KR', sans-serif" }}>
-      {/* Dynamic Control Bar */}
-      <div style={{
-        display: 'flex',
-        justify: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '0.6rem',
-        marginBottom: '0.8rem',
-        padding: '0.5rem 0.8rem',
-        backgroundColor: '#F7F4EF',
-        borderRadius: 'var(--radius-md, 8px)',
-        border: '1px solid #E6DFC5'
-      }}>
-        {/* Route Filter Tabs */}
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
-          <button
-            type="button"
-            onClick={() => setActiveTab('all')}
-            style={{
-              padding: '0.35rem 0.75rem',
-              borderRadius: '6px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              backgroundColor: activeTab === 'all' ? 'var(--primary-brown, #5C3D2E)' : 'transparent',
-              color: activeTab === 'all' ? '#FFFFFF' : '#666',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            🗺️ 전체 지도
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('walk')}
-            style={{
-              padding: '0.35rem 0.75rem',
-              borderRadius: '6px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              backgroundColor: activeTab === 'walk' ? '#C5A059' : 'transparent',
-              color: activeTab === 'walk' ? '#FFFFFF' : '#666',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            🚶 도보 동선 (3분)
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('car')}
-            style={{
-              padding: '0.35rem 0.75rem',
-              borderRadius: '6px',
-              border: 'none',
-              fontSize: '0.82rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              backgroundColor: activeTab === 'car' ? '#3B82F6' : 'transparent',
-              color: activeTab === 'car' ? '#FFFFFF' : '#666',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            🚗 차량 / 주차 안내
-          </button>
-        </div>
-
-        {/* Info Legend */}
-        <div style={{ fontSize: '0.78rem', color: '#666', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-          <span>📍 <strong>춘천시 충열로16번길 21-20 1층</strong></span>
-        </div>
-      </div>
-
-      {/* SVG Canvas Map Container */}
+    <div className="svg-store-map-container" style={{ width: '100%', fontFamily: "'Noto Sans KR', sans-serif" }}>
+      
+      {/* High-Precision Clean SVG Vector Map */}
       <div style={{
         position: 'relative',
         width: '100%',
         borderRadius: '12px',
         overflow: 'hidden',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-        border: '1.5px solid #E2D9CD',
-        backgroundColor: '#FBF9F5'
+        border: '1px solid #EAE3D8',
+        backgroundColor: '#F9F8F6',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
       }}>
         <svg
-          viewBox="0 0 900 560"
+          viewBox="0 0 900 640"
           style={{ width: '100%', height: 'auto', display: 'block' }}
         >
           <defs>
-            {/* Soft Shadow Filter */}
-            <filter id="soft-shadow" x="-10%" y="-10%" width="130%" height="130%">
-              <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#2C1A11" floodOpacity="0.12" />
+            {/* Soft Drop Shadow Filter for Buildings */}
+            <filter id="building-shadow" x="-5%" y="-5%" width="110%" height="110%">
+              <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000000" floodOpacity="0.06" />
             </filter>
 
-            {/* Pin Glow Shadow Filter */}
-            <filter id="pin-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#8B5E3C" floodOpacity="0.35" />
+            {/* Glowing Pin Shadow */}
+            <filter id="pin-shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#D9531E" floodOpacity="0.35" />
             </filter>
 
-            {/* Road Strip Pattern */}
-            <pattern id="road-centerline" width="20" height="20" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="10" x2="10" y2="10" stroke="#FAF8F5" strokeWidth="2.5" strokeDasharray="6,6" />
-            </pattern>
-
-            {/* Linear Gradient for Destination Pin */}
-            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#DFBA6E" />
-              <stop offset="100%" stopColor="#9E7631" />
+            {/* Design Mood Building Linear Gradient */}
+            <linearGradient id="designMoodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFC899" />
+              <stop offset="100%" stopColor="#FFA056" />
             </linearGradient>
-
-            <linearGradient id="brownGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#5C3D2E" />
-              <stop offset="100%" stopColor="#2E1C13" />
-            </linearGradient>
-
-            {/* Pulsing Pin Animation */}
-            <style>{`
-              @keyframes pulse-ring {
-                0% { transform: scale(0.95); opacity: 0.85; }
-                50% { transform: scale(1.35); opacity: 0.25; }
-                100% { transform: scale(0.95); opacity: 0.85; }
-              }
-              @keyframes dash-walk {
-                to { stroke-dashoffset: -24; }
-              }
-              .pulse-circle {
-                animation: pulse-ring 2.4s ease-in-out infinite;
-                transform-origin: center;
-              }
-              .dash-walk-line {
-                animation: dash-walk 1.2s linear infinite;
-              }
-              .landmark-hover {
-                transition: all 0.25s ease;
-                cursor: pointer;
-              }
-              .landmark-hover:hover {
-                transform: translateY(-2px);
-                filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
-              }
-            `}</style>
           </defs>
 
-          {/* Background Map Fill */}
-          <rect width="900" height="560" fill="#F7F3EC" />
-
-          {/* District & Grid Background Accents */}
-          <rect x="30" y="30" width="840" height="500" rx="10" fill="#FCFAF6" stroke="#EFEBE4" strokeWidth="2" />
-          
-          {/* Green Area / Parks / School Grounds */}
-          {/* Soyang Elementary School Grounds */}
-          <path d="M 50 60 L 260 60 L 260 170 L 50 170 Z" fill="#EAE5D9" rx="8" />
-          
-          {/* Dongbu Apt Complex Zone */}
-          <path d="M 640 60 L 850 60 L 850 220 L 640 220 Z" fill="#EDE7DD" rx="8" />
-
-          {/* Residential Blocks */}
-          <rect x="330" y="60" width="270" height="110" rx="6" fill="#F4F0E8" stroke="#E6E0D6" strokeWidth="1.5" />
-          <rect x="50" y="270" width="220" height="140" rx="6" fill="#F4F0E8" stroke="#E6E0D6" strokeWidth="1.5" />
-          <rect x="660" y="290" width="190" height="200" rx="6" fill="#F4F0E8" stroke="#E6E0D6" strokeWidth="1.5" />
+          {/* Map Base Background Layer */}
+          <rect width="900" height="640" fill="#F4F3F0" />
 
           {/* ==================== ROAD NETWORK ==================== */}
 
-          {/* 1. 충열로 (Main Thoroughfare - Horizontal Top-to-Mid) */}
-          <g id="road-chungyeol">
-            {/* Base Road */}
-            <path d="M 30 210 L 870 210" stroke="#DCD4C6" strokeWidth="58" strokeLinecap="round" />
-            <path d="M 30 210 L 870 210" stroke="#EFE9DD" strokeWidth="52" strokeLinecap="round" />
-            {/* Center Yellow Lines */}
-            <path d="M 30 208 L 870 208" stroke="#E5B95C" strokeWidth="2.5" />
-            <path d="M 30 212 L 870 212" stroke="#E5B95C" strokeWidth="2.5" />
-            {/* Road Label */}
-            <rect x="110" y="195" width="90" height="30" rx="15" fill="#3D3028" opacity="0.88" />
-            <text x="155" y="215" fill="#FFFFFF" fontSize="13" fontWeight="700" textAnchor="middle">충열로 (대로)</text>
-          </g>
+          {/* Background Gray Land Blocks */}
+          {/* Top Left Block Frame */}
+          <rect x="180" y="110" width="280" height="360" fill="#ECEAE5" rx="2" />
+          {/* Top Right Block Frame */}
+          <rect x="520" y="110" width="280" height="360" fill="#ECEAE5" rx="2" />
+          {/* Bottom Area (Samsung Apt Zone) */}
+          <rect x="80" y="510" width="740" height="130" fill="#E8E6E1" rx="2" />
 
-          {/* 2. 우두로 (Vertical Left Connection) */}
-          <g id="road-woodoo">
-            <path d="M 290 30 L 290 530" stroke="#DCD4C6" strokeWidth="44" strokeLinecap="round" />
-            <path d="M 290 30 L 290 530" stroke="#F4EFE6" strokeWidth="38" strokeLinecap="round" />
-            <path d="M 290 30 L 290 530" stroke="#D6CCC0" strokeWidth="1.5" strokeDasharray="8,8" />
-            {/* Label */}
-            <rect x="250" y="470" width="80" height="26" rx="13" fill="#6B594D" opacity="0.85" />
-            <text x="290" y="487" fill="#FFFFFF" fontSize="12" fontWeight="700" textAnchor="middle">우두로</text>
-          </g>
+          {/* White Main Roads */}
+          {/* Vertical Road 1: 충열로 16번길 (Left Side) */}
+          <rect x="100" y="0" width="80" height="510" fill="#FFFFFF" />
 
-          {/* 3. 충열로16번길 (Access Alleyway - Turning down to Design Mood) */}
-          <g id="road-chungyeol-16">
-            <path d="M 520 210 L 520 450 L 410 450" stroke="#D5CCC0" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M 520 210 L 520 450 L 410 450" stroke="#FAF7F2" strokeWidth="30" strokeLinecap="round" strokeLinejoin="round" />
-            {/* Road Name Label Badge */}
-            <g transform="translate(535, 290)">
-              <rect width="115" height="24" rx="5" fill="#5C3D2E" opacity="0.9" />
-              <text x="57" y="16" fill="#FFF" fontSize="11" fontWeight="700" textAnchor="middle">충열로16번길</text>
+          {/* Vertical Road 2: 충열로 16번길 (Center Alley) */}
+          <rect x="460" y="0" width="60" height="510" fill="#FFFFFF" />
+
+          {/* Vertical Road 3: 영서로 2756번길 (Right Side) */}
+          <rect x="800" y="0" width="70" height="510" fill="#FFFFFF" />
+
+          {/* Horizontal Road: 충열로 20번길 */}
+          <rect x="0" y="470" width="900" height="40" fill="#FFFFFF" />
+
+          {/* Road Outer Border Lines */}
+          <line x1="100" y1="0" x2="100" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="180" y1="0" x2="180" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="460" y1="0" x2="460" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="520" y1="0" x2="520" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="800" y1="0" x2="800" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="870" y1="0" x2="870" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+
+          <line x1="0" y1="470" x2="900" y2="470" stroke="#DDD7CE" strokeWidth="1.5" />
+          <line x1="0" y1="510" x2="900" y2="510" stroke="#DDD7CE" strokeWidth="1.5" />
+
+          {/* Road Name Vertical Labels */}
+          {/* 충열로 16번길 (Left) */}
+          <text x="140" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 140 240)">
+            충열로 16번길
+          </text>
+
+          {/* 충열로 16번길 (Center) */}
+          <text x="490" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 490 240)">
+            충열로 16번길
+          </text>
+
+          {/* 영서로 2756번길 (Right) */}
+          <text x="835" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 835 240)">
+            영서로 2756번길
+          </text>
+
+          {/* 충열로 20번길 (Horizontal Bottom) */}
+          <text x="500" y="496" fill="#665E55" fontSize="15" fontWeight="600" textAnchor="middle">
+            충열로 20번길
+          </text>
+
+
+          {/* ==================== BUILDINGS - TOP LEFT BLOCK ==================== */}
+
+          {/* Top Left - Custom Polygon Building */}
+          <path
+            d="M 205 130 H 325 V 150 H 350 V 215 H 205 Z"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+
+          {/* BBQ Building */}
+          <rect
+            x="365"
+            y="145"
+            width="80"
+            height="70"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="405" y="186" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">BBQ</text>
+
+          {/* 대청마루 Building */}
+          <path
+            d="M 205 230 H 260 V 310 H 295 V 450 H 205 Z"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="250" y="345" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">대청마루</text>
+
+
+          {/* ⭐ DESIGN MOOD BUILDING (HIGHLIGHTED ORANGE) ⭐ */}
+          <g id="design-mood-building">
+            <path
+              d="M 310 320 H 455 V 450 H 310 Z"
+              fill="url(#designMoodGrad)"
+              stroke="#D9531E"
+              strokeWidth="2.5"
+              filter="url(#building-shadow)"
+            />
+            {/* Inner Design Mood Box Icon & Text */}
+            <g transform="translate(382, 385)">
+              {/* Logo House Icon Outline */}
+              <path d="M -16 -12 L 0 -26 L 16 -12 V 12 H -16 Z" fill="none" stroke="#2C1A11" strokeWidth="2.2" strokeLinejoin="round" />
+              <text x="0" y="-1" fill="#2C1A11" fontSize="11" fontWeight="800" textAnchor="middle">M</text>
+              <text x="0" y="28" fill="#1C1009" fontSize="13" fontWeight="800" textAnchor="middle">Design Mood</text>
             </g>
           </g>
 
-          {/* Secondary Alley Connection */}
-          <path d="M 290 340 L 520 340" stroke="#E2D9CD" strokeWidth="22" strokeLinecap="round" />
-          <path d="M 290 340 L 520 340" stroke="#FAF7F2" strokeWidth="18" strokeLinecap="round" />
 
-          {/* Crossroad Signal Icon - 우두사거리 */}
-          <g transform="translate(290, 210)" className="landmark-hover">
-            <circle r="22" fill="#FFFFFF" stroke="#6B594D" strokeWidth="2.5" filter="url(#soft-shadow)" />
-            <circle r="16" fill="#F4F0E8" />
-            <text x="0" y="4" fontSize="14" textAnchor="middle">🚦</text>
-            <rect x="-42" y="-45" width="84" height="22" rx="4" fill="#2C1A11" />
-            <text x="0" y="-30" fill="#FFFFFF" fontSize="11" fontWeight="700" textAnchor="middle">우두사거리</text>
-          </g>
+          {/* ==================== BUILDINGS - TOP RIGHT BLOCK ==================== */}
 
-          {/* ==================== LANDMARKS & BUILDINGS ==================== */}
+          {/* Top Right Polygon 1 */}
+          <path
+            d="M 535 130 H 605 V 145 H 645 V 215 H 535 Z"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
 
-          {/* 1. 소양초등학교 */}
-          <g id="lm-soyang-school" transform="translate(70, 70)" className="landmark-hover" onMouseEnter={() => setHoveredLandmark('school')} onMouseLeave={() => setHoveredLandmark(null)}>
-            <rect width="170" height="90" rx="8" fill="#FFFFFF" stroke="#C5B69F" strokeWidth="2" filter="url(#soft-shadow)" />
-            <rect width="170" height="28" rx="8" fill="#EAE2D4" />
-            <text x="15" y="19" fill="#5C3D2E" fontSize="13" fontWeight="700">🏫 소양초등학교</text>
-            <text x="15" y="52" fill="#77685D" fontSize="11">도보 3분 거리</text>
-            <text x="15" y="70" fill="#99887B" fontSize="10">춘천시 우두동 교육 랜드마크</text>
-          </g>
+          {/* Top Right Polygon 2 */}
+          <rect
+            x="660"
+            y="130"
+            width="125"
+            height="85"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
 
-          {/* 2. 우두동부아파트 (101동) */}
-          <g id="lm-dongbu-apt" transform="translate(650, 70)" className="landmark-hover" onMouseEnter={() => setHoveredLandmark('apt')} onMouseLeave={() => setHoveredLandmark(null)}>
-            <rect width="180" height="130" rx="8" fill="#FFFFFF" stroke="#C5B69F" strokeWidth="2" filter="url(#soft-shadow)" />
-            <rect width="180" height="30" rx="8" fill="#5C3D2E" />
-            <text x="15" y="20" fill="#FFFFFF" fontSize="13" fontWeight="700">🏢 우두 동부아파트</text>
-            <text x="15" y="56" fill="#3D3028" fontSize="12" fontWeight="700">101동 정문 인근</text>
-            <text x="15" y="78" fill="#77685D" fontSize="11">· 도보 약 3분 (200m)</text>
-            <text x="15" y="98" fill="#77685D" fontSize="11">· 101동 앞 골목 진입</text>
-            <rect x="15" y="105" width="150" height="18" rx="4" fill="#F4EFE6" />
-            <text x="90" y="118" fill="#8B5E3C" fontSize="10" fontWeight="700" textAnchor="middle">충열로 대로변 위치</text>
-          </g>
+          {/* 참미 닭갈비 Building */}
+          <rect
+            x="535"
+            y="230"
+            width="110"
+            height="80"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="590" y="266" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">참미</text>
+          <text x="590" y="288" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
 
-          {/* 3. 대영닭갈비 (주요 진입 랜드마크) */}
-          <g id="lm-daeyeong" transform="translate(545, 340)" className="landmark-hover">
-            <rect width="140" height="65" rx="6" fill="#FFFFFF" stroke="#D1C4B2" strokeWidth="1.5" filter="url(#soft-shadow)" />
-            <rect width="140" height="22" rx="6" fill="#8B5E3C" />
-            <text x="10" y="16" fill="#FFFFFF" fontSize="11" fontWeight="700">🍗 대영닭갈비</text>
-            <text x="10" y="42" fill="#5C3D2E" fontSize="11" fontWeight="700">골목 입구 랜드마크</text>
-            <text x="10" y="57" fill="#88776B" fontSize="10">진입 후 50m 직진</text>
-          </g>
+          {/* Right Middle Rect */}
+          <rect
+            x="660"
+            y="230"
+            width="125"
+            height="80"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
 
-          {/* ==================== PEDESTRIAN / CAR ROUTE HIGHLIGHTS ==================== */}
+          {/* 대영 닭갈비 Building */}
+          <rect
+            x="535"
+            y="325"
+            width="75"
+            height="125"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="572" y="378" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">대영</text>
+          <text x="572" y="400" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
 
-          {/* Walk Route (소양초/동부아파트 -> 충열로16번길 -> 디자인무드) */}
-          {(activeTab === 'all' || activeTab === 'walk') && (
-            <g id="pedestrian-path">
-              {/* Path Glowing Outer Line */}
-              <path
-                d="M 650 180 L 520 180 L 520 450 L 490 450"
-                fill="none"
-                stroke="#FFE082"
-                strokeWidth="10"
-                strokeOpacity="0.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* Dashed Animated Path */}
-              <path
-                d="M 650 180 L 520 180 L 520 450 L 490 450"
-                fill="none"
-                stroke="#C5A059"
-                strokeWidth="4.5"
-                strokeDasharray="8,6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="dash-walk-line"
-              />
-              {/* Start Pin - Dongbu Apt */}
-              <circle cx="650" cy="180" r="7" fill="#C5A059" stroke="#FFF" strokeWidth="2" />
-              {/* Walk Waypoint Badges */}
-              <g transform="translate(560, 160)">
-                <rect width="70" height="20" rx="10" fill="#C5A059" />
-                <text x="35" y="14" fill="#FFF" fontSize="10" fontWeight="700" textAnchor="middle">🚶 도보 3분</text>
-              </g>
-            </g>
-          )}
+          {/* CAFE HWA Building */}
+          <path
+            d="M 625 325 H 685 V 450 H 625 Z"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="655" y="378" fill="#332D27" fontSize="13" fontWeight="700" textAnchor="middle">CAFE</text>
+          <text x="655" y="398" fill="#332D27" fontSize="13" fontWeight="700" textAnchor="middle">HWA</text>
 
-          {/* Car Driving Route Highlight */}
-          {(activeTab === 'car') && (
-            <g id="car-path">
-              <path
-                d="M 100 210 L 520 210 L 520 450 L 490 450"
-                fill="none"
-                stroke="#60A5FA"
-                strokeWidth="12"
-                strokeOpacity="0.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M 100 210 L 520 210 L 520 450 L 490 450"
-                fill="none"
-                stroke="#2563EB"
-                strokeWidth="5"
-                strokeDasharray="10,6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="dash-walk-line"
-              />
-              <g transform="translate(340, 185)">
-                <rect width="110" height="22" rx="11" fill="#2563EB" />
-                <text x="55" y="15" fill="#FFF" fontSize="10" fontWeight="700" textAnchor="middle">🚗 매장전면 주차장</text>
-              </g>
-            </g>
-          )}
+          {/* Far Right Bottom Polygon */}
+          <path
+            d="M 700 335 H 785 V 420 L 760 450 H 700 Z"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
 
-          {/* ==================== DESTINATION: DESIGN MOOD (MAIN HERO PIN) ==================== */}
 
-          <g id="destination-design-mood" transform="translate(420, 390)" className="landmark-hover">
+          {/* ==================== BUILDINGS - BOTTOM AREA (삼성 아파트) ==================== */}
 
-            {/* Pulsing Outer Ping Effect */}
-            <circle cx="65" cy="50" r="42" fill="#C5A059" className="pulse-circle" />
-            <circle cx="65" cy="50" r="30" fill="#8B5E3C" opacity="0.2" />
+          {/* 103동 */}
+          <rect
+            x="235"
+            y="545"
+            width="130"
+            height="80"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="300" y="593" fill="#2C241D" fontSize="18" fontWeight="700" textAnchor="middle">103동</text>
 
-            {/* Main Destination Box (Store Building Block) */}
-            <rect width="210" height="115" rx="12" fill="url(#brownGradient)" stroke="#C5A059" strokeWidth="3" filter="url(#pin-glow)" />
+          {/* 우두동 삼성 아파트 */}
+          <rect
+            x="395"
+            y="545"
+            width="150"
+            height="80"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="470" y="582" fill="#2C241D" fontSize="15" fontWeight="700" textAnchor="middle">우두동</text>
+          <text x="470" y="605" fill="#2C241D" fontSize="15" fontWeight="700" textAnchor="middle">삼성 아파트</text>
 
-            {/* Top Accent Gold Strip */}
-            <path d="M 0 12 C 0 5, 5 0, 12 0 L 198 0 C 205 0, 210 5, 210 12 L 210 28 L 0 28 Z" fill="url(#goldGradient)" />
-            <text x="105" y="19" fill="#2E1C13" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="1">
-              ✨ DESIGN MOOD 본사 스튜디오
-            </text>
+          {/* 102동 */}
+          <rect
+            x="575"
+            y="545"
+            width="130"
+            height="80"
+            fill="#FFF8F0"
+            stroke="#554D44"
+            strokeWidth="1.5"
+            filter="url(#building-shadow)"
+          />
+          <text x="640" y="593" fill="#2C241D" fontSize="18" fontWeight="700" textAnchor="middle">102동</text>
 
-            {/* Building Address & Details */}
-            <text x="15" y="48" fill="#FFFFFF" fontSize="13" fontWeight="700">📍 디자인무드 (1층)</text>
-            <text x="15" y="67" fill="#EADCC9" fontSize="11">강원 춘천시 충열로16번길 21-20</text>
 
-            {/* Parking Badge */}
-            <g transform="translate(15, 78)">
-              <rect width="180" height="24" rx="6" fill="#FAF7F2" />
-              <text x="10" y="16" fill="#8B5E3C" fontSize="11" fontWeight="800">🅿️ 매장 전면 무료 주차 공간 완비</text>
-            </g>
-          </g>
+          {/* ==================== DESTINATION PIN & BADGE ==================== */}
 
-          {/* Map Compass & Scale Badge */}
-          <g transform="translate(820, 500)">
-            <circle r="18" fill="#FFFFFF" stroke="#DCD4C6" strokeWidth="1.5" filter="url(#soft-shadow)" />
-            <text x="0" y="-4" fill="#5C3D2E" fontSize="11" fontWeight="800" textAnchor="middle">N</text>
-            <path d="M 0 -12 L 4 -2 L -4 -2 Z" fill="#5C3D2E" />
-            <path d="M 0 12 L 4 2 L -4 2 Z" fill="#C5A059" />
+          <g transform="translate(425, 410)" filter="url(#pin-glow)">
+            {/* Pin Pointer Drop Icon */}
+            <path
+              d="M 0 0 C -14 -14, -20 -28, -20 -40 C -20 -53, -9 -62, 0 -62 C 9 -62, 20 -53, 20 -40 C 20 -28, 14 -14, 0 0 Z"
+              fill="#E03E00"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
+            />
+            {/* Center Inner Circle */}
+            <circle cx="0" cy="-40" r="8" fill="#FFFFFF" />
+
+            {/* "도착지" Text Badge */}
+            <rect x="-35" y="6" width="70" height="24" rx="4" fill="#000000" />
+            <text x="0" y="23" fill="#FFFFFF" fontSize="13" fontWeight="800" textAnchor="middle">도착지</text>
           </g>
 
         </svg>
       </div>
 
-      {/* Quick Location Summary Card below Map */}
+      {/* Address Quick Actions & Directions */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-        gap: '0.8rem',
-        marginTop: '0.9rem'
+        marginTop: '0.8rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '0.6rem',
+        padding: '0.6rem 0.8rem',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '8px',
+        border: '1px solid #EAE3D8'
       }}>
-        <div style={{
-          padding: '0.75rem 0.9rem',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '8px',
-          border: '1px solid #EAE3D8',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem'
-        }}>
-          <div style={{ padding: '0.5rem', borderRadius: '50%', backgroundColor: '#F5EBE1', color: '#5C3D2E' }}>
-            <MapPin size={18} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.76rem', color: '#88776B', fontWeight: 500 }}>정확한 지번 주소</div>
-            <div style={{ fontSize: '0.86rem', color: '#2C1A11', fontWeight: 700 }}>춘천시 충열로16번길 21-20 1층</div>
-          </div>
+        <div style={{ fontSize: '0.86rem', color: '#2C1A11', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <MapPin size={16} style={{ color: '#D9531E' }} />
+          <span>강원특별자치도 춘천시 충열로16번길 21-20 1층 (우두동)</span>
         </div>
 
-        <div style={{
-          padding: '0.75rem 0.9rem',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '8px',
-          border: '1px solid #EAE3D8',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem'
-        }}>
-          <div style={{ padding: '0.5rem', borderRadius: '50%', backgroundColor: '#FAF3E0', color: '#C5A059' }}>
-            <Footprints size={18} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.76rem', color: '#88776B', fontWeight: 500 }}>주요 도보 접근성</div>
-            <div style={{ fontSize: '0.86rem', color: '#2C1A11', fontWeight: 700 }}>동부아파트 / 소양초 도보 3분</div>
-          </div>
-        </div>
-
-        <div style={{
-          padding: '0.75rem 0.9rem',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '8px',
-          border: '1px solid #EAE3D8',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem'
-        }}>
-          <div style={{ padding: '0.5rem', borderRadius: '50%', backgroundColor: '#EBF5FF', color: '#2563EB' }}>
-            <Car size={18} />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.76rem', color: '#88776B', fontWeight: 500 }}>주차 편의성</div>
-            <div style={{ fontSize: '0.86rem', color: '#2C1A11', fontWeight: 700 }}>매장 전면 전용 주차장 보유</div>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={handleCopyAddress}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            padding: '0.35rem 0.75rem',
+            borderRadius: '6px',
+            border: '1px solid #D9C8B5',
+            backgroundColor: copied ? '#E8F5E9' : '#FBF9F5',
+            color: copied ? '#2E7D32' : '#5C3D2E',
+            fontSize: '0.8rem',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          {copied ? <Check size={14} /> : <Copy size={14} />}
+          <span>{copied ? '주소 복사 완료!' : '주소 복사'}</span>
+        </button>
       </div>
+
     </div>
   );
 }
