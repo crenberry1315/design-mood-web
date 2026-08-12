@@ -331,6 +331,7 @@ export default function ConsultationForm({ presetMessage }) {
             디자인무드 매장에 방문하시면 실제 마감재(마루, 장판, 타일, 스위치, 조명) 샘플을 직접 보시며 1:1 디테일 상담을 진행하실 수 있습니다.
           </p>
 
+          {/* Map Image Container */}
           <div
             style={{
               position: 'relative',
@@ -338,8 +339,12 @@ export default function ConsultationForm({ presetMessage }) {
               overflow: 'hidden',
               border: '1px solid var(--border-strong)',
               marginBottom: '1.8rem',
-              backgroundColor: '#F8F6F2',
+              backgroundColor: '#FFFFFF',
               boxShadow: 'var(--shadow-sm)',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <img
@@ -349,9 +354,9 @@ export default function ConsultationForm({ presetMessage }) {
                 width: '100%',
                 height: 'auto',
                 display: 'block',
-                maxHeight: '450px',
-                objectFit: 'contain',
-                margin: '0 auto',
+                maxHeight: '480px',
+                objectFit: 'cover',
+                borderRadius: 'var(--radius-md)',
               }}
             />
           </div>
