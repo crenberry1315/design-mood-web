@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>디자인무드 약도</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #F4F3F0;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <svg viewBox="0 0 900 580" preserveAspectRatio="none">
+    <defs>
+      <!-- Soft Drop Shadow Filter for Buildings -->
+      <filter id="building-shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" floodColor="#000000" floodOpacity="0.08" />
+      </filter>
+
+      <!-- Glowing Pin Shadow -->
+      <filter id="pin-shadow" x="-30%" y="-30%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="5" stdDeviation="6" floodColor="#D9531E" floodOpacity="0.4" />
+      </filter>
+
+      <!-- Design Mood Building Linear Gradient -->
+      <linearGradient id="designMoodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFAE68" />
+        <stop offset="100%" stopColor="#F07C28" />
+      </linearGradient>
+    </defs>
+
+    <!-- Map Base Background Layer -->
+    <rect width="900" height="580" fill="#F2F0EB" />
+
+    <!-- ==================== ROAD NETWORK ==================== -->
+
+    <!-- Background Gray Land Blocks -->
+    <rect x="150" y="30" width="300" height="420" fill="#E8E5DF" rx="3" />
+    <rect x="510" y="30" width="300" height="420" fill="#E8E5DF" rx="3" />
+    <rect x="50" y="490" width="800" height="90" fill="#E4E1DB" rx="3" />
+
+    <!-- White Main Roads -->
+    {/* Vertical Road 1: 충열로 16번길 (Left Side) */}
+    <rect x="60" y="0" width="90" height="490" fill="#FFFFFF" />
+
+    {/* Vertical Road 2: 충열로 16번길 (Center Alley) */}
+    <rect x="450" y="0" width="60" height="490" fill="#FFFFFF" />
+
+    {/* Vertical Road 3: 영서로 2756번길 (Right Side) */}
+    <rect x="810" y="0" width="90" height="490" fill="#FFFFFF" />
+
+    {/* Horizontal Road: 충열로 20번길 */}
+    <rect x="0" y="450" width="900" height="40" fill="#FFFFFF" />
+
+    <!-- Road Outer Border Lines -->
+    <line x1="60" y1="0" x2="60" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="150" y1="0" x2="150" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="450" y1="0" x2="450" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="510" y1="0" x2="510" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="810" y1="0" x2="810" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="900" y1="0" x2="900" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+
+    <line x1="0" y1="450" x2="900" y2="450" stroke="#D3CCC1" stroke-width="1.8" />
+    <line x1="0" y1="490" x2="900" y2="490" stroke="#D3CCC1" stroke-width="1.8" />
+
+    <!-- Road Name Labels (Bolder & Larger) -->
+    <text x="105" y="220" fill="#585047" font-size="16" font-weight="700" text-anchor="middle" transform="rotate(-90 105 220)">
+      충열로 16번길
+    </text>
+    <text x="480" y="220" fill="#585047" font-size="16" font-weight="700" text-anchor="middle" transform="rotate(-90 480 220)">
+      충열로 16번길
+    </text>
+    <text x="855" y="220" fill="#585047" font-size="16" font-weight="700" text-anchor="middle" transform="rotate(-90 855 220)">
+      영서로 2756번길
+    </text>
+    <text x="480" y="476" fill="#585047" font-size="17" font-weight="700" text-anchor="middle">
+      충열로 20번길
+    </text>
+
+    <!-- ==================== BUILDINGS - TOP LEFT BLOCK ==================== -->
+    <path d="M 175 50 H 305 V 75 H 335 V 150 H 175 Z" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+
+    <rect x="350" y="65" width="85" height="85" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="392" y="115" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">BBQ</text>
+
+    <path d="M 175 170 H 235 V 270 H 275 V 430 H 175 Z" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="225" y="310" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">대청마루</text>
+
+    <!-- ⭐ DESIGN MOOD BUILDING (BOLD ORANGE HIGHLIGHT) ⭐ -->
+    <g id="design-mood-building">
+      <path d="M 290 280 H 445 V 430 H 290 Z" fill="url(#designMoodGrad)" stroke="#C8420C" stroke-width="3" filter="url(#building-shadow)" />
+      <g transform="translate(367, 355)">
+        <path d="M -18 -14 L 0 -30 L 18 -14 V 14 H -18 Z" fill="none" stroke="#1F0D03" stroke-width="2.8" stroke-linejoin="round" />
+        <text x="0" y="-1" fill="#1F0D03" font-size="13" font-weight="900" text-anchor="middle">M</text>
+        <text x="0" y="32" fill="#1A0A02" font-size="15" font-weight="900" text-anchor="middle">Design Mood</text>
+      </g>
+    </g>
+
+    <!-- ==================== BUILDINGS - TOP RIGHT BLOCK ==================== -->
+    <path d="M 525 50 H 605 V 70 H 645 V 150 H 525 Z" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <rect x="665" y="50" width="130" height="100" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+
+    <rect x="525" y="170" width="125" height="95" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="587" y="215" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">참미</text>
+    <text x="587" y="240" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">닭갈비</text>
+
+    <rect x="665" y="170" width="130" height="95" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+
+    <rect x="525" y="280" width="85" height="150" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="567" y="345" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">대영</text>
+    <text x="567" y="370" fill="#2C241D" font-size="16" font-weight="800" text-anchor="middle">닭갈비</text>
+
+    <path d="M 625 280 H 695 V 430 H 625 Z" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="660" y="345" fill="#2C241D" font-size="15" font-weight="800" text-anchor="middle">CAFE</text>
+    <text x="660" y="370" fill="#2C241D" font-size="15" font-weight="800" text-anchor="middle">HWA</text>
+
+    <path d="M 715 290 H 795 V 390 L 765 430 H 715 Z" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+
+    <!-- ==================== BUILDINGS - BOTTOM AREA (삼성 아파트) ==================== -->
+    <rect x="210" y="505" width="145" height="65" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="282" y="546" fill="#1C140E" font-size="20" font-weight="800" text-anchor="middle">103동</text>
+
+    <rect x="380" y="505" width="170" height="65" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="465" y="534" fill="#1C140E" font-size="16" font-weight="800" text-anchor="middle">우두동</text>
+    <text x="465" y="556" fill="#1C140E" font-size="16" font-weight="800" text-anchor="middle">삼성 아파트</text>
+
+    <rect x="575" y="505" width="145" height="65" fill="#FFFBF5" stroke="#4A423A" stroke-width="2" filter="url(#building-shadow)" />
+    <text x="647" y="546" fill="#1C140E" font-size="20" font-weight="800" text-anchor="middle">102동</text>
+
+    <!-- ==================== PROMINENT DESTINATION PIN & BADGE ==================== -->
+    <g transform="translate(415, 380)" filter="url(#pin-shadow)">
+      <path d="M 0 0 C -16 -16, -24 -32, -24 -46 C -24 -60, -11 -70, 0 -70 C 11 -70, 24 -60, 24 -46 C 24 -32, 16 -16, 0 0 Z" fill="#E62E00" stroke="#FFFFFF" stroke-width="3" />
+      <circle cx="0" cy="-46" r="9" fill="#FFFFFF" />
+      <rect x="-42" y="8" width="84" height="28" rx="5" fill="#111111" />
+      <text x="0" y="27" fill="#FFFFFF" font-size="14" font-weight="900" text-anchor="middle">도착지</text>
+    </g>
+
+  </svg>
+
+</body>
+</html>
