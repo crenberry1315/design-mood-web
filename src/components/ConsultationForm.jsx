@@ -308,128 +308,123 @@ export default function ConsultationForm({ presetMessage }) {
           )}
         </div>
 
-        {/* Store Location & Map Section */}
+        {/* Store Location & Pedestrian Map Section */}
         <div
           style={{
             maxWidth: '840px',
-            margin: '3.5rem auto 0 auto',
-            padding: '2.2rem',
+            margin: '2.5rem auto 0 auto',
+            padding: '1.8rem',
             borderRadius: 'var(--radius-lg)',
             backgroundColor: '#FFFFFF',
-            boxShadow: 'var(--shadow-md)',
+            boxShadow: 'var(--shadow-sm)',
             border: '1px solid var(--border-subtle)',
             boxSizing: 'border-box',
           }}
           className="glass-card location-card"
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--primary-brown)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.6rem' }}>
-            <MapPin size={22} />
-            <span>오시는 길 & 매장 약도</span>
-          </div>
-
-          <p style={{ fontSize: '0.92rem', color: 'var(--text-medium)', marginBottom: '1.8rem', wordBreak: 'keep-all' }}>
-            디자인무드 매장에 방문하시면 실제 마감재(마루, 장판, 타일, 스위치, 조명) 샘플을 직접 보시며 1:1 디테일 상담을 진행하실 수 있습니다.
-          </p>
-
-          {/* Map Image Container */}
-          <div
-            style={{
-              position: 'relative',
-              borderRadius: 'var(--radius-md)',
-              overflow: 'hidden',
-              border: '1px solid var(--border-strong)',
-              marginBottom: '1.8rem',
-              backgroundColor: '#FFFFFF',
-              boxShadow: 'var(--shadow-sm)',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <img
-              src="/store-map.png"
-              alt="디자인무드 매장 약도 및 오시는 길"
-              style={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-                maxHeight: '480px',
-                objectFit: 'cover',
-                borderRadius: 'var(--radius-md)',
-              }}
-            />
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justify: 'space-between',
-              alignItems: 'center',
-              gap: '1.2rem',
-              paddingTop: '1.2rem',
-              borderTop: '1px dashed var(--border-subtle)',
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-dark)', wordBreak: 'keep-all' }}>
-                📍 충열로16번길 21-20 1층, 디자인무드
+          <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '1.8rem', alignItems: 'center' }} className="location-grid">
+            
+            {/* Left Info & Pedestrian Walking Guide */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary-brown)', fontWeight: 700, fontSize: '1.15rem', marginBottom: '0.4rem' }}>
+                  <MapPin size={20} />
+                  <span>오시는 길 (도보 약도)</span>
+                </div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.2rem', wordBreak: 'keep-all' }}>
+                  충열로16번길 21-20 1층, 디자인무드
+                </div>
               </div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--text-medium)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <Car size={15} style={{ color: 'var(--primary-brown)' }} />
-                <span>매장 전면 편리한 무료 주차 공간 완비</span>
+
+              {/* Landmark Pedestrian Guide */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', fontSize: '0.84rem', color: 'var(--text-medium)', backgroundColor: 'var(--bg-secondary)', padding: '0.9rem 1rem', borderRadius: 'var(--radius-md)' }}>
+                <div style={{ fontWeight: 600, color: 'var(--primary-brown-dark)' }}>🚶 주요 주변 지명 &amp; 도보 안내</div>
+                <div>· <strong>동부아파트 101동 / 소양초등학교</strong>: 도보 3분</div>
+                <div>· <strong>우두사거리 / 버스정류장</strong>: 도보 4분거리</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--text-dark)', marginTop: '0.2rem' }}>
+                  <Car size={14} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
+                  <span>매장 전면 전용 무료 주차 가능</span>
+                </div>
+              </div>
+
+              {/* Map Link Buttons */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '0.2rem' }}>
+                <a
+                  href="https://map.naver.com/v5/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    padding: '0.55rem 0.95rem',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: '#03C75A',
+                    color: '#FFFFFF',
+                    fontWeight: 700,
+                    fontSize: '0.82rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 6px rgba(3, 199, 90, 0.2)',
+                  }}
+                >
+                  <Navigation size={14} />
+                  <span>네이버 지도</span>
+                  <ExternalLink size={12} />
+                </a>
+
+                <a
+                  href="https://map.kakao.com/link/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                    padding: '0.55rem 0.95rem',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: '#FEE500',
+                    color: '#191919',
+                    fontWeight: 700,
+                    fontSize: '0.82rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 6px rgba(254, 229, 0, 0.25)',
+                  }}
+                >
+                  <Navigation size={14} />
+                  <span>카카오맵</span>
+                  <ExternalLink size={12} />
+                </a>
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-              <a
-                href="https://map.naver.com/v5/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
-                target="_blank"
-                rel="noopener noreferrer"
+            {/* Right Pedestrian Map Graphic Frame */}
+            <div
+              style={{
+                position: 'relative',
+                borderRadius: 'var(--radius-md)',
+                overflow: 'hidden',
+                border: '1px solid var(--border-strong)',
+                backgroundColor: '#FFFFFF',
+                boxShadow: 'var(--shadow-sm)',
+                width: '100%',
+                maxHeight: '260px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <img
+                src="/store-map.png"
+                alt="디자인무드 도보 약도 (우두동 동부아파트, 소양초등학교 주변)"
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  padding: '0.65rem 1.1rem',
+                  width: '100%',
+                  height: '100%',
+                  display: 'block',
+                  maxHeight: '260px',
+                  objectFit: 'cover',
                   borderRadius: 'var(--radius-md)',
-                  backgroundColor: '#03C75A',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  fontSize: '0.88rem',
-                  textDecoration: 'none',
-                  boxShadow: '0 2px 8px rgba(3, 199, 90, 0.25)',
-                  transition: 'transform 0.15s ease',
                 }}
-              >
-                <Navigation size={16} />
-                <span>네이버 지도 보기</span>
-                <ExternalLink size={14} />
-              </a>
-
-              <a
-                href="https://map.kakao.com/link/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  padding: '0.65rem 1.1rem',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: '#FEE500',
-                  color: '#191919',
-                  fontWeight: 700,
-                  fontSize: '0.88rem',
-                  textDecoration: 'none',
-                  boxShadow: '0 2px 8px rgba(254, 229, 0, 0.3)',
-                  transition: 'transform 0.15s ease',
-                }}
-              >
-                <Navigation size={16} />
-                <span>카카오맵 보기</span>
-                <ExternalLink size={14} />
-              </a>
+              />
             </div>
           </div>
         </div>
