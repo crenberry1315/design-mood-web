@@ -344,7 +344,7 @@ export default function ConsultationForm({ presetMessage }) {
             }}
           >
             <img
-              src="/store-map.png"
+              src="/store-map-raw.png"
               alt="디자인무드 본사 공식 오시는 길 약도 (우두동 동부아파트, 소양초등학교)"
               style={{
                 width: '100%',
