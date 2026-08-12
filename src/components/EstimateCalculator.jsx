@@ -15,8 +15,8 @@ export default function EstimateCalculator({ onApplyEstimate }) {
 
   // Dynamic scope options for residential vs commercial spaces
   const residentialScopeOptions = [
-    { id: 'full_window', label: '1. 전체 올 리모델링(창호포함)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/KCC 창호 풀 시공' },
-    { id: 'full_no_window', label: '2. 전체 올 리모델링(창호제외)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/창호 리폼 등 풀 시공' },
+    { id: 'full_window', label: '1. 올 리모델링(창호포함)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/KCC 창호 풀 시공' },
+    { id: 'full_no_window', label: '2. 올 리모델링(창호제외)', desc: '바닥/도배/씽크대/욕실/조명/가구/필름/도장/창호 리폼 등 풀 시공' },
     { id: 'partial', label: '3. 부분인테리어(상담 후 확인)', desc: '도배/바닥/조명/가구/중문/필름/리폼/도장 등 부분 인테리어' },
     { id: 'sink_single', label: '4. 씽크대(단품)', desc: 'E0등급 친환경 자재 / 씽크볼,후드,쿡탑,수전 4대기기 포함' },
     { id: 'bath_single', label: '5. 욕실단품(단품)', desc: '욕실 간단교체 및 철거,타일,셋팅 전체 욕실 시공' },
@@ -24,21 +24,21 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   ];
 
   const commercialScopeOptions = [
-    { id: 'comm_full', label: '1. 올 인테리어', desc: '철거 / 전기 / 에어컨 / 가구 / 목공 / 도장 등 풀 시공' },
-    { id: 'comm_partial', label: '2. 부분 인테리어', desc: '필름 / 전기 / 가구 / 바닥등 부분 교체를 통한 실속 마감 연출' },
-    { id: 'comm_single', label: '3. 단품 인테리어', desc: '가구 / 조명 / 바닥 / 타일 / 필름 등을 통한 상가 분위기의 변화' },
+    { id: 'comm_full', label: '1. 올 리모델링', desc: '철거 / 전기 / 에어컨 / 가구 / 목공 / 도장 등 풀 시공' },
+    { id: 'comm_partial', label: '2. 부분 리모델링', desc: '필름 / 전기 / 가구 / 바닥등 부분 교체를 통한 실속 마감 연출' },
+    { id: 'comm_single', label: '3. 단품 리모델링', desc: '가구 / 조명 / 바닥 / 타일 / 필름 등을 통한 상가 분위기의 변화' },
   ];
 
   const residentialGradeOptions = [
-    { id: 'basic', label: '베이직 실속형', desc: '최소한의 비용으로 최대의 효율과 깔끔함을 내는 것을 목표로하는 등급' },
-    { id: 'modern_classic', label: '모던 클래식', desc: '과거의 우아함과 현재의 세련미가 조화롭게 어우러진 하이브리드 프리미엄 등급' },
-    { id: 'residential_highend', label: '하이엔드', desc: '타협 없는 최고급 자재와 독창적인 디자인으로 공간의 가치를 예술의 경지로 끌어올리는 최상위 프리미엄 등급' },
+    { id: 'basic', label: 'BASIC', desc: '최소한의 비용으로 최대의 효율과 깔끔함을 내는 것을 목표로하는 등급' },
+    { id: 'modern_classic', label: 'MODERN CLASSIC', desc: '과거의 우아함과 현재의 세련미가 조화롭게 어우러진 하이브리드 프리미엄 등급' },
+    { id: 'residential_highend', label: 'HIGH-END', desc: '타협 없는 최고급 자재와 독창적인 디자인으로 공간의 가치를 예술의 경지로 끌어올리는 최상위 프리미엄 등급' },
   ];
 
   const commercialGradeOptions = [
-    { id: 'standard', label: '스탠다드', desc: '가성비와 기능성에 집중한 기본형으로, 임대 목적의 상가나 소규모 오피스에 적합' },
-    { id: 'premium', label: '프리미엄', desc: '브랜드의 신뢰감과 세련된 이미지를 주는 등급, 일반적인 병원,카페,중대형오피스,쇼룸에 적합' },
-    { id: 'commercial_highend', label: '하이엔드', desc: '오감으로 브랜드의 가치와 압도적인 럭셔리를 전달하는 등급으로, 플래그십 스토어, 고급오피스,파인다이닝,프리미엄 뷰티샵에 적합' },
+    { id: 'standard', label: 'STANDARD', desc: '가성비와 기능성에 집중한 기본형으로, 임대 목적의 상가나 소규모 오피스에 적합' },
+    { id: 'premium', label: 'PREMIUM', desc: '브랜드의 신뢰감과 세련된 이미지를 주는 등급, 일반적인 병원,카페,중대형오피스,쇼룸에 적합' },
+    { id: 'commercial_highend', label: 'HIGH-END', desc: '오감으로 브랜드의 가치와 압도적인 럭셔리를 전달하는 등급으로, 플래그십 스토어, 고급오피스,파인다이닝,프리미엄 뷰티샵에 적합' },
   ];
 
   const currentScopeOptions = spaceType === 'commercial' ? commercialScopeOptions : residentialScopeOptions;
@@ -120,7 +120,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
   };
 
   return (
-    <section id="calculator" className="section-padding" style={{ backgroundColor: 'var(--bg-main)', position: 'relative' }}>
+    <section id="calculator" className="section-padding" style={{ backgroundColor: 'var(--bg-secondary)', position: 'relative' }}>
       <div className="container">
         
         {/* Section Header */}
@@ -178,7 +178,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        justify: 'center',
                         gap: '0.35rem',
                         transition: 'var(--transition-fast)',
                         whiteSpace: 'nowrap',
@@ -243,7 +243,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justify: 'space-between',
                         gap: '0.75rem',
                         transition: 'var(--transition-fast)',
                       }}
@@ -355,14 +355,22 @@ export default function EstimateCalculator({ onApplyEstimate }) {
 
                 {/* Included Services Bullet points */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-dark)' }}>기본 포함 내역:</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-dark)' }}>기본 포함 내역</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
                     <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
-                    <span>3D 설계 도면 및 현장 실측 무료</span>
+                    <span>현장 실측 및 견적 무료 진행</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
                     <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
-                    <span>친환경 E0 정품 자재 인증서 제공</span>
+                    <span>3D설계 도면 및 계약진행시 3D렌더링 이미지 제공</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
+                    <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
+                    <span>친환경 E0 정품 자재 사용</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.84rem', color: 'var(--text-medium)' }}>
+                    <Check size={16} style={{ color: 'var(--primary-brown)', flexShrink: 0 }} />
+                    <span>공사신고,승강기보양,동의서 등 당사진행</span>
                   </div>
                 </div>
               </div>

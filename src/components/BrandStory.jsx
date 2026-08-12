@@ -26,7 +26,7 @@ export default function BrandStory() {
   ];
 
   return (
-    <section id="about" className="section-padding" style={{ backgroundColor: 'var(--bg-main)', position: 'relative' }}>
+    <section id="about" className="section-padding" style={{ backgroundColor: 'var(--bg-secondary)', position: 'relative' }}>
       <div className="container">
         
         {/* Section Title Header */}
@@ -120,7 +120,7 @@ export default function BrandStory() {
             </div>
             <div>
               <h4 style={{ fontSize: '1.2rem', color: 'var(--text-dark)', fontFamily: 'var(--font-body)', fontWeight: 600, wordBreak: 'keep-all' }}>
-                춘천시 우두동 매장 직접 방문 &amp; 자재 샘플 관람 가능
+                매장 직접 방문 &amp; 자재 샘플 관람 가능
               </h4>
               <p style={{ fontSize: '0.92rem', color: 'var(--text-medium)', marginTop: '0.2rem', wordBreak: 'keep-all' }}>
                 실제 장판, 마루, 벽지, 타일 샘플을 매장에서 직접 눈으로 확인해 보세요.

@@ -53,7 +53,7 @@ export default function HeroSection({ onOpenConsultation }) {
         position: 'relative',
         paddingTop: '8.5rem',
         paddingBottom: '5.5rem',
-        background: 'linear-gradient(180deg, #FAF7F2 0%, #F4EFE6 100%)',
+        background: 'linear-gradient(180deg, #F4EFE6 0%, #EFE7DB 100%)',
         overflow: 'hidden',
       }}
     >

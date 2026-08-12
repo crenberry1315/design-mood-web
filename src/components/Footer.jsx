@@ -84,7 +84,10 @@ export default function Footer({ kakaoUrl = 'https://pf.kakao.com/_MJyIX' }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.88rem', color: '#C0B7AF' }}>
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0, marginTop: '0.2rem' }} />
-                <span>강원특별자치도 춘천시 우두동 충열로16번길 21-20 1층</span>
+                <span>
+                  충열로16번길<br />
+                  21-20 1층, 디자인무드
+                </span>
               </div>
 
               <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>

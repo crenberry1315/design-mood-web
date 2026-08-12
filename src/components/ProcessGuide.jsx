@@ -53,7 +53,7 @@ export default function ProcessGuide() {
   ];
 
   return (
-    <section id="process" className="section-padding" style={{ backgroundColor: 'var(--bg-secondary)', position: 'relative' }}>
+    <section id="process" className="section-padding" style={{ backgroundColor: 'var(--bg-main)', position: 'relative' }}>
       <div className="container">
         
         {/* Section Header */}
@@ -142,10 +142,10 @@ export default function ProcessGuide() {
           }}
         >
           <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', marginBottom: '1.5rem', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-            TRUSTED MATERIAL PARTNERS (엄선된 정품 제휴 자재)
+            TRUSTED MATERIAL PARTNERS (정품 제휴 자재)
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'center' }}>
             {/* Top Row Partners */}
             <div
               style={{
@@ -153,7 +153,7 @@ export default function ProcessGuide() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexWrap: 'wrap',
-                gap: '1rem 1.4rem',
+                gap: '0.8rem 1.1rem',
                 width: '100%',
               }}
             >
@@ -161,11 +161,11 @@ export default function ProcessGuide() {
                 <div
                   key={i}
                   style={{
-                    padding: '0.65rem 1.3rem',
+                    padding: '0.45rem 0.95rem',
                     backgroundColor: '#FFFFFF',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-sm)',
-                    fontSize: '0.92rem',
+                    fontSize: '0.82rem',
                     fontWeight: 600,
                     color: 'var(--text-medium)',
                     boxShadow: 'var(--shadow-sm)',
@@ -184,7 +184,7 @@ export default function ProcessGuide() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexWrap: 'wrap',
-                gap: '1rem 1.4rem',
+                gap: '0.8rem 1.1rem',
                 width: '100%',
               }}
             >
@@ -192,11 +192,11 @@ export default function ProcessGuide() {
                 <div
                   key={i}
                   style={{
-                    padding: '0.65rem 1.3rem',
+                    padding: '0.45rem 0.95rem',
                     backgroundColor: '#FFFFFF',
                     border: '1px solid var(--border-subtle)',
                     borderRadius: 'var(--radius-sm)',
-                    fontSize: '0.92rem',
+                    fontSize: '0.82rem',
                     fontWeight: 600,
                     color: 'var(--text-medium)',
                     boxShadow: 'var(--shadow-sm)',
