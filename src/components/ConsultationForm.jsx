@@ -329,15 +329,35 @@ export default function ConsultationForm({ presetMessage }) {
             </div>
           </div>
 
-          {/* Top: Large Prominent SVG Map Canvas */}
+          {/* Top: High-Precision Vector Map Display */}
           <div
             style={{
               position: 'relative',
+              borderRadius: 'var(--radius-md)',
+              overflow: 'hidden',
+              border: '1px solid var(--border-strong)',
+              backgroundColor: '#FAFAF8',
+              boxShadow: 'var(--shadow-sm)',
               width: '100%',
               marginBottom: '1.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <SvgStoreMap />
+            <img
+              src="/store-map-vector.png?v=20260812_v2"
+              alt="디자인무드 본사 공식 오시는 길 약도 (충열로16번길 21-20)"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                maxHeight: '560px',
+                objectFit: 'contain',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: '#FAF7F2',
+              }}
+            />
           </div>
 
           {/* Bottom: Info, Landmark Guide & Navigation Buttons */}
