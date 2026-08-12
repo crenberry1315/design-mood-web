@@ -49,7 +49,7 @@ export default function ProcessGuide() {
     '예림 (YERIM)',
     '현대 L&C',
     '재현하늘창',
-    '아메리칸 스탠다드',
+    'American Standard',
   ];
 
   return (

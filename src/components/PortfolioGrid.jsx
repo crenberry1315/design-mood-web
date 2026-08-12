@@ -75,7 +75,7 @@ export default function PortfolioGrid({ onSelectConsultation }) {
       materials: [
         '바닥재: 600x600 이태리 수입 포세린 타일 (크림 그레이)',
         '목공: 천장 라인조명 마감, 영림 히든도어 문틀',
-        '욕실: 아메리칸 스탠다드 원피스 양변기 & 젠다이 인비저블 욕실',
+        '욕실: American Standard 원피스 양변기 & 젠다이 인비저블 욕실',
         '가구: 예림 무광 페트 신발장 & 드레스룸',
       ],
     },

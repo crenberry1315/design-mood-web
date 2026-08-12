@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Phone, MessageSquare, CheckCircle2, Mail, Loader2 } from 'lucide-react';
+import { Send, Phone, MessageSquare, CheckCircle2, Mail, Loader2, MapPin, Navigation, ExternalLink, Car } from 'lucide-react';
 
 export default function ConsultationForm({ presetMessage }) {
   const [formData, setFormData] = useState({
@@ -37,7 +37,6 @@ export default function ConsultationForm({ presetMessage }) {
     setIsSubmitting(true);
 
     try {
-      // Send real-time form data to design_mood_2120@naver.com via FormSubmit AJAX API
       const response = await fetch('https://formsubmit.co/ajax/design_mood_2120@naver.com', {
         method: 'POST',
         headers: {
@@ -59,7 +58,6 @@ export default function ConsultationForm({ presetMessage }) {
       if (response.ok || response.status === 200) {
         setSubmitted(true);
       } else {
-        // Fallback UI indication
         setSubmitted(true);
       }
     } catch (error) {
@@ -78,7 +76,7 @@ export default function ConsultationForm({ presetMessage }) {
         <div className="section-header">
           <div className="section-tag">
             <MessageSquare size={14} />
-            <span>CONSULTATION</span>
+            <span>CONSULTATION & LOCATION</span>
           </div>
           <h2 className="section-title">
             무료 현장실측 및 <br />
@@ -98,9 +96,10 @@ export default function ConsultationForm({ presetMessage }) {
             padding: '2.8rem 2.2rem',
             borderRadius: 'var(--radius-lg)',
             backgroundColor: '#FFFFFF',
+            boxShadow: 'var(--shadow-lg)',
+            border: '1px solid var(--border-subtle)',
             boxSizing: 'border-box',
             width: '100%',
-            overflow: 'hidden',
           }}
         >
           {submitted ? (
@@ -114,7 +113,7 @@ export default function ConsultationForm({ presetMessage }) {
                   color: 'var(--primary-brown)',
                   display: 'flex',
                   alignItems: 'center',
-                  justify: 'center',
+                  justifyContent: 'center',
                   margin: '0 auto 1.2rem auto',
                 }}
                 className="icon-box"
@@ -149,7 +148,6 @@ export default function ConsultationForm({ presetMessage }) {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', width: '100%', boxSizing: 'border-box' }}>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }} className="form-grid-2">
-                {/* Name */}
                 <div>
                   <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>
                     성함 <span style={{ color: '#E53E3E' }}>*</span>
@@ -174,7 +172,6 @@ export default function ConsultationForm({ presetMessage }) {
                   />
                 </div>
 
-                {/* Phone */}
                 <div>
                   <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>
                     연락처 <span style={{ color: '#E53E3E' }}>*</span>
@@ -201,7 +198,6 @@ export default function ConsultationForm({ presetMessage }) {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }} className="form-grid-2">
-                {/* Location */}
                 <div>
                   <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>
                     시공 현장 위치 (춘천 지역)
@@ -225,7 +221,6 @@ export default function ConsultationForm({ presetMessage }) {
                   />
                 </div>
 
-                {/* Schedule */}
                 <div>
                   <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>
                     희망 공사 시기
@@ -254,7 +249,6 @@ export default function ConsultationForm({ presetMessage }) {
                 </div>
               </div>
 
-              {/* Message / Preset Summary */}
               <div>
                 <label style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-dark)', marginBottom: '0.4rem', display: 'block' }}>
                   문의 내역 및 세부 요청사항
@@ -280,7 +274,6 @@ export default function ConsultationForm({ presetMessage }) {
                 />
               </div>
 
-              {/* Submit button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -292,7 +285,7 @@ export default function ConsultationForm({ presetMessage }) {
                   marginTop: '0.5rem',
                   display: 'flex',
                   alignItems: 'center',
-                  justify: 'center',
+                  justifyContent: 'center',
                   gap: '0.5rem',
                   opacity: isSubmitting ? 0.75 : 1,
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
@@ -311,9 +304,129 @@ export default function ConsultationForm({ presetMessage }) {
                   </>
                 )}
               </button>
-
             </form>
           )}
+        </div>
+
+        {/* Store Location & Map Section */}
+        <div
+          style={{
+            maxWidth: '840px',
+            margin: '3.5rem auto 0 auto',
+            padding: '2.2rem',
+            borderRadius: 'var(--radius-lg)',
+            backgroundColor: '#FFFFFF',
+            boxShadow: 'var(--shadow-md)',
+            border: '1px solid var(--border-subtle)',
+            boxSizing: 'border-box',
+          }}
+          className="glass-card location-card"
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--primary-brown)', fontWeight: 700, fontSize: '1.25rem', marginBottom: '0.6rem' }}>
+            <MapPin size={22} />
+            <span>오시는 길 & 매장 약도</span>
+          </div>
+
+          <p style={{ fontSize: '0.92rem', color: 'var(--text-medium)', marginBottom: '1.8rem', wordBreak: 'keep-all' }}>
+            디자인무드 매장에 방문하시면 실제 마감재(마루, 장판, 타일, 스위치, 조명) 샘플을 직접 보시며 1:1 디테일 상담을 진행하실 수 있습니다.
+          </p>
+
+          <div
+            style={{
+              position: 'relative',
+              borderRadius: 'var(--radius-md)',
+              overflow: 'hidden',
+              border: '1px solid var(--border-strong)',
+              marginBottom: '1.8rem',
+              backgroundColor: '#F8F6F2',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+          >
+            <img
+              src="/store-map.png"
+              alt="디자인무드 매장 약도 및 오시는 길"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                maxHeight: '450px',
+                objectFit: 'contain',
+                margin: '0 auto',
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justify: 'space-between',
+              alignItems: 'center',
+              gap: '1.2rem',
+              paddingTop: '1.2rem',
+              borderTop: '1px dashed var(--border-subtle)',
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-dark)', wordBreak: 'keep-all' }}>
+                📍 충열로16번길 21-20 1층, 디자인무드
+              </div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-medium)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Car size={15} style={{ color: 'var(--primary-brown)' }} />
+                <span>매장 전면 편리한 무료 주차 공간 완비</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <a
+                href="https://map.naver.com/v5/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  padding: '0.65rem 1.1rem',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: '#03C75A',
+                  color: '#FFFFFF',
+                  fontWeight: 700,
+                  fontSize: '0.88rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 2px 8px rgba(3, 199, 90, 0.25)',
+                  transition: 'transform 0.15s ease',
+                }}
+              >
+                <Navigation size={16} />
+                <span>네이버 지도 보기</span>
+                <ExternalLink size={14} />
+              </a>
+
+              <a
+                href="https://map.kakao.com/link/search/%EA%B0%95%EC%9B%90%ED%8A%B9%EB%B3%84%EC%9E%90%EC%B9%98%EB%8F%84%20%EC%B6%98%EC%B2%9C%EC%8B%9C%20%EC%B6%A9%EC%97%B4%EB%A1%9C16%EB%B2%88%EA%B8%B8%2021-20"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.45rem',
+                  padding: '0.65rem 1.1rem',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: '#FEE500',
+                  color: '#191919',
+                  fontWeight: 700,
+                  fontSize: '0.88rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 2px 8px rgba(254, 229, 0, 0.3)',
+                  transition: 'transform 0.15s ease',
+                }}
+              >
+                <Navigation size={16} />
+                <span>카카오맵 보기</span>
+                <ExternalLink size={14} />
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -332,7 +445,7 @@ export default function ConsultationForm({ presetMessage }) {
           }
         }
         @media (max-width: 576px) {
-          .consultation-card {
+          .consultation-card, .location-card {
             padding: 1.5rem 1rem !important;
             border-radius: var(--radius-md) !important;
             max-width: 100% !important;
