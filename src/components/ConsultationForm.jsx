@@ -346,14 +346,14 @@ export default function ConsultationForm({ presetMessage }) {
             }}
           >
             <img
-              src="/store-map-vector.png?v=20260812_v2"
+              src="/store-map-vector.png?v=20260812_full3"
               alt="디자인무드 본사 공식 오시는 길 약도 (충열로16번길 21-20)"
               style={{
                 width: '100%',
                 height: 'auto',
                 display: 'block',
-                maxHeight: '560px',
-                objectFit: 'contain',
+                maxHeight: '640px',
+                objectFit: 'cover',
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: '#FAF7F2',
               }}
