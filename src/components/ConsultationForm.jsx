@@ -348,12 +348,12 @@ export default function ConsultationForm({ presetMessage }) {
               alt="디자인무드 도보 약도 (우두동 동부아파트, 소양초등학교 주변)"
               style={{
                 width: '100%',
-                height: 'auto',
+                height: '380px',
                 display: 'block',
-                maxHeight: '520px',
-                objectFit: 'contain',
+                objectFit: 'cover',
                 borderRadius: 'var(--radius-md)',
               }}
+              className="map-full-cover"
             />
           </div>
 
@@ -465,6 +465,9 @@ export default function ConsultationForm({ presetMessage }) {
           .success-desc {
             font-size: 0.88rem !important;
             word-break: keep-all !important;
+          }
+          .map-full-cover {
+            height: 240px !important;
           }
         }
       `}</style>
