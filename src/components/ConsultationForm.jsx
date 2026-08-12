@@ -345,13 +345,15 @@ export default function ConsultationForm({ presetMessage }) {
           >
             <img
               src="/store-map.png"
-              alt="디자인무드 도보 약도 (우두동 동부아파트, 소양초등학교 주변)"
+              alt="디자인무드 본사 공식 오시는 길 약도 (우두동 동부아파트, 소양초등학교)"
               style={{
                 width: '100%',
-                height: '380px',
+                height: 'auto',
                 display: 'block',
-                objectFit: 'cover',
+                maxHeight: '520px',
+                objectFit: 'contain',
                 borderRadius: 'var(--radius-md)',
+                backgroundColor: '#FAF7F2',
               }}
               className="map-full-cover"
             />
