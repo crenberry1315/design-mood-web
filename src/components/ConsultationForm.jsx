@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Phone, MessageSquare, CheckCircle2, Mail, Loader2, MapPin, Navigation, ExternalLink, Car } from 'lucide-react';
 
+import SvgStoreMap from './SvgStoreMap';
+
 export default function ConsultationForm({ presetMessage }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -327,36 +329,15 @@ export default function ConsultationForm({ presetMessage }) {
             </div>
           </div>
 
-          {/* Top: Large Prominent Map Canvas */}
+          {/* Top: Large Prominent SVG Map Canvas */}
           <div
             style={{
               position: 'relative',
-              borderRadius: 'var(--radius-md)',
-              overflow: 'hidden',
-              border: '1px solid var(--border-strong)',
-              backgroundColor: '#FAFAF8',
-              boxShadow: 'var(--shadow-sm)',
               width: '100%',
               marginBottom: '1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
           >
-            <img
-              src="/store-map-raw.png"
-              alt="디자인무드 본사 공식 오시는 길 약도 (우두동 동부아파트, 소양초등학교)"
-              style={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-                maxHeight: '520px',
-                objectFit: 'contain',
-                borderRadius: 'var(--radius-md)',
-                backgroundColor: '#FAF7F2',
-              }}
-              className="map-full-cover"
-            />
+            <SvgStoreMap />
           </div>
 
           {/* Bottom: Info, Landmark Guide & Navigation Buttons */}
