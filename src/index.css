@@ -318,3 +318,27 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-brown-light);
 }
+
+/* Mobile Responsive Optimization Rules */
+@media (max-width: 576px) {
+  .section-header {
+    margin-bottom: 2rem !important;
+  }
+  .section-tag {
+    font-size: 0.76rem !important;
+    padding: 0.3rem 0.75rem !important;
+    white-space: normal !important;
+  }
+  .section-title {
+    font-size: 1.55rem !important;
+  }
+  .section-desc {
+    font-size: 0.9rem !important;
+  }
+  .btn {
+    white-space: normal !important;
+    word-break: keep-all !important;
+    max-width: 100% !important;
+  }
+}
+

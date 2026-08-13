@@ -161,7 +161,7 @@ export default function EstimateCalculator({ onApplyEstimate }) {
                 <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.8rem', display: 'block', wordBreak: 'keep-all' }}>
                   1. 공간 유형 선택
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }} className="space-type-grid">
                   {spaceOptions.map((opt) => (
                     <button
                       key={opt.id}
@@ -400,21 +400,43 @@ export default function EstimateCalculator({ onApplyEstimate }) {
         }
         @media (max-width: 576px) {
           .calc-card {
-            padding: 1.2rem 1rem !important;
+            padding: 1.15rem 0.75rem !important;
             border-radius: var(--radius-md) !important;
           }
           .calc-result-box {
-            padding: 1.4rem 1rem !important;
+            padding: 1.2rem 0.75rem !important;
+          }
+          .space-type-grid {
+            gap: 0.35rem !important;
           }
           .space-opt-btn {
-            font-size: 0.78rem !important;
-            padding: 0.6rem 0.2rem !important;
+            font-size: 0.75rem !important;
+            padding: 0.55rem 0.1rem !important;
+            white-space: normal !important;
+            word-break: keep-all !important;
+            letter-spacing: -0.04em !important;
+          }
+          .calc-opt-item {
+            padding: 0.75rem 0.65rem !important;
           }
           .calc-price-main {
-            font-size: 1.5rem !important;
+            font-size: 1.4rem !important;
+            word-break: keep-all !important;
           }
           .calc-price-sub {
+            font-size: 1.18rem !important;
+            word-break: keep-all !important;
+          }
+        }
+        @media (max-width: 380px) {
+          .space-opt-btn span {
+            font-size: 0.7rem !important;
+          }
+          .calc-price-main {
             font-size: 1.25rem !important;
+          }
+          .calc-price-sub {
+            font-size: 1.05rem !important;
           }
         }
       `}</style>
