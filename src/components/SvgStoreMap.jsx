@@ -83,34 +83,26 @@ export default function SvgStoreMap() {
           <line x1="0" y1="510" x2="900" y2="510" stroke="#DDD7CE" strokeWidth="1.5" />
 
           {/* Road Name Vertical Labels */}
-          {/* 충열로 16번길 (Left) */}
-          <text x="140" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 140 240)">
+          <text x="140" y="240" fill="#6E6256" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 140 240)">
             충열로 16번길
           </text>
-
-          {/* 충열로 16번길 (Center) */}
-          <text x="490" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 490 240)">
+          <text x="490" y="240" fill="#6E6256" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 490 240)">
             충열로 16번길
           </text>
-
-          {/* 영서로 2756번길 (Right) */}
-          <text x="835" y="240" fill="#665E55" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 835 240)">
+          <text x="835" y="240" fill="#6E6256" fontSize="14" fontWeight="600" textAnchor="middle" transform="rotate(-90 835 240)">
             영서로 2756번길
           </text>
-
-          {/* 충열로 20번길 (Horizontal Bottom) */}
-          <text x="500" y="496" fill="#665E55" fontSize="15" fontWeight="600" textAnchor="middle">
+          <text x="500" y="496" fill="#6E6256" fontSize="15" fontWeight="600" textAnchor="middle">
             충열로 20번길
           </text>
 
 
           {/* ==================== BUILDINGS - TOP LEFT BLOCK ==================== */}
 
-          {/* Top Left - Custom Polygon Building */}
           <path
             d="M 205 130 H 325 V 150 H 350 V 215 H 205 Z"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
@@ -122,61 +114,54 @@ export default function SvgStoreMap() {
             width="80"
             height="70"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="405" y="186" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">BBQ</text>
+          <text x="405" y="186" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">BBQ</text>
 
           {/* 대청마루 Building */}
           <path
             d="M 205 230 H 260 V 310 H 295 V 450 H 205 Z"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="250" y="345" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">대청마루</text>
+          <text x="250" y="345" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">대청마루</text>
 
 
-          {/* ⭐ DESIGN MOOD BUILDING (HIGHLIGHTED ORANGE) ⭐ */}
+          {/* ⭐ DESIGN MOOD BUILDING (HIGHLIGHTED BRIGHT CREAM + BRAND ORANGE BORDER) ⭐ */}
           <g id="design-mood-building">
             <path
               d="M 310 320 H 455 V 450 H 310 Z"
-              fill="url(#designMoodGrad)"
-              stroke="#D9531E"
-              strokeWidth="2.5"
+              fill="#FFF8F0"
+              stroke="#FF5500"
+              strokeWidth="3.5"
               filter="url(#building-shadow)"
             />
-            {/* Inner Design Mood Box Icon & Text */}
-            <g transform="translate(382, 385)">
-              {/* Logo House Icon Outline */}
-              <path d="M -16 -12 L 0 -26 L 16 -12 V 12 H -16 Z" fill="none" stroke="#2C1A11" strokeWidth="2.2" strokeLinejoin="round" />
-              <text x="0" y="-1" fill="#2C1A11" fontSize="11" fontWeight="800" textAnchor="middle">M</text>
-              <text x="0" y="28" fill="#1C1009" fontSize="13" fontWeight="800" textAnchor="middle">Design Mood</text>
-            </g>
+            {/* Real Official Logo Image Filled Cleanly Inside Building */}
+            <image href="/logo-brown.png" x="316" y="326" width="133" height="118" preserveAspectRatio="xMidYMid meet" />
           </g>
 
 
           {/* ==================== BUILDINGS - TOP RIGHT BLOCK ==================== */}
 
-          {/* Top Right Polygon 1 */}
           <path
             d="M 535 130 H 605 V 145 H 645 V 215 H 535 Z"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
 
-          {/* Top Right Polygon 2 */}
           <rect
             x="660"
             y="130"
             width="125"
             height="85"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
@@ -188,21 +173,20 @@ export default function SvgStoreMap() {
             width="110"
             height="80"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="590" y="266" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">참미</text>
-          <text x="590" y="288" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
+          <text x="590" y="266" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">참미</text>
+          <text x="590" y="288" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
 
-          {/* Right Middle Rect */}
           <rect
             x="660"
             y="230"
             width="125"
             height="80"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
@@ -214,29 +198,28 @@ export default function SvgStoreMap() {
             width="75"
             height="125"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="572" y="378" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">대영</text>
-          <text x="572" y="400" fill="#332D27" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
+          <text x="572" y="378" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">대영</text>
+          <text x="572" y="400" fill="#4A3B32" fontSize="14" fontWeight="700" textAnchor="middle">닭갈비</text>
 
           {/* CAFE HWA Building */}
           <path
             d="M 625 325 H 685 V 450 H 625 Z"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="655" y="378" fill="#332D27" fontSize="13" fontWeight="700" textAnchor="middle">CAFE</text>
-          <text x="655" y="398" fill="#332D27" fontSize="13" fontWeight="700" textAnchor="middle">HWA</text>
+          <text x="655" y="378" fill="#4A3B32" fontSize="13" fontWeight="700" textAnchor="middle">CAFE</text>
+          <text x="655" y="398" fill="#4A3B32" fontSize="13" fontWeight="700" textAnchor="middle">HWA</text>
 
-          {/* Far Right Bottom Polygon */}
           <path
             d="M 700 335 H 785 V 420 L 760 450 H 700 Z"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
@@ -244,63 +227,57 @@ export default function SvgStoreMap() {
 
           {/* ==================== BUILDINGS - BOTTOM AREA (삼성 아파트) ==================== */}
 
-          {/* 103동 */}
           <rect
             x="235"
             y="545"
             width="130"
             height="80"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="300" y="593" fill="#2C241D" fontSize="18" fontWeight="700" textAnchor="middle">103동</text>
+          <text x="300" y="593" fill="#3B2E25" fontSize="18" fontWeight="700" textAnchor="middle">103동</text>
 
-          {/* 우두동 삼성 아파트 */}
           <rect
             x="395"
             y="545"
             width="150"
             height="80"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="470" y="582" fill="#2C241D" fontSize="15" fontWeight="700" textAnchor="middle">우두동</text>
-          <text x="470" y="605" fill="#2C241D" fontSize="15" fontWeight="700" textAnchor="middle">삼성 아파트</text>
+          <text x="470" y="582" fill="#3B2E25" fontSize="15" fontWeight="700" textAnchor="middle">우두동</text>
+          <text x="470" y="605" fill="#3B2E25" fontSize="15" fontWeight="700" textAnchor="middle">삼성 아파트</text>
 
-          {/* 102동 */}
           <rect
             x="575"
             y="545"
             width="130"
             height="80"
             fill="#FFF8F0"
-            stroke="#554D44"
+            stroke="#6B5E52"
             strokeWidth="1.5"
             filter="url(#building-shadow)"
           />
-          <text x="640" y="593" fill="#2C241D" fontSize="18" fontWeight="700" textAnchor="middle">102동</text>
+          <text x="640" y="593" fill="#3B2E25" fontSize="18" fontWeight="700" textAnchor="middle">102동</text>
 
 
-          {/* ==================== DESTINATION PIN & BADGE ==================== */}
+          {/* ==================== CLEAN UNIFIED DESTINATION PIN (NO OVERLAPPING OBJECTS) ==================== */}
 
-          <g transform="translate(425, 410)" filter="url(#pin-glow)">
-            {/* Pin Pointer Drop Icon */}
+          <g transform="translate(382, 310)" filter="url(#pin-glow)">
+            {/* Single elegant pin body pointing cleanly to building roof */}
             <path
-              d="M 0 0 C -14 -14, -20 -28, -20 -40 C -20 -53, -9 -62, 0 -62 C 9 -62, 20 -53, 20 -40 C 20 -28, 14 -14, 0 0 Z"
-              fill="#E03E00"
+              d="M 0 0 C -20 -20, -32 -38, -32 -62 C -32 -86, -18 -100, 0 -100 C 18 -100, 32 -86, 32 -62 C 32 -38, 20 -20, 0 0 Z"
+              fill="#E62E00"
               stroke="#FFFFFF"
-              strokeWidth="2.5"
+              strokeWidth="3"
             />
-            {/* Center Inner Circle */}
-            <circle cx="0" cy="-40" r="8" fill="#FFFFFF" />
-
-            {/* "도착지" Text Badge */}
-            <rect x="-35" y="6" width="70" height="24" rx="4" fill="#000000" />
-            <text x="0" y="23" fill="#FFFFFF" fontSize="13" fontWeight="800" textAnchor="middle">도착지</text>
+            {/* Inner white circle with crisp destination text */}
+            <circle cx="0" cy="-62" r="22" fill="#FFFFFF" />
+            <text x="0" y="-57" fill="#E62E00" fontSize="12" fontWeight="900" textAnchor="middle">도착지</text>
           </g>
 
         </svg>
