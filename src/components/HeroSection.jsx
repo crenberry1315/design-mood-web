@@ -9,12 +9,12 @@ export default function HeroSection({ onOpenConsultation }) {
       title: '실제 장판, 마루, 벽지, 타일 샘플 직접 확인이 가능한 매장',
     },
     {
-      image: '/hero/hero-site-1-v2.jpg',
+      image: '/hero/hero-site-1-crisp.jpg',
       badge: '춘천 아파트 올 리모델링',
       title: '따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링',
     },
     {
-      image: '/hero/hero-site-2-v2.jpg',
+      image: '/hero/hero-site-2-crisp.jpg',
       badge: '감성 거실 인테리어',
       title: '600각 포세린 타일과 시그니처 간접조명 연출',
     },
