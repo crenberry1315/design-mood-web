@@ -88,11 +88,10 @@ export default function PortfolioGrid() {
             }}
           >
             <p style={{ marginBottom: '1rem' }}>
-              블로그에 소개해 드릴 멋진 완공 현장들이 밀려 있지만, <br className="hidden-mobile" />
-              사진 보정과 상세한 스토리텔링을 직접 꼼꼼히 챙기다 보니 업로드가 조금씩 지연되고 있네요.
+              소개해 드릴 완공 현장들이 밀려 있어 업로드가 지연되고 있습니다.
             </p>
             <p style={{ color: 'var(--primary-brown-dark)', fontWeight: 500 }}>
-              그저 보여주기 식의 빠른 포스팅보다는, 시공의 디테일과 진정성을 담은 진짜 이야기를 보여드리기 위함이니 양해 부탁드립니다.
+              형식적인 빠른 포스팅보다 시공의 디테일과 진정성을 담은 진짜 이야기를 보여드리기 위함이오니, 너른 양해 부탁드립니다.
             </p>
           </div>
 
