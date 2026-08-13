@@ -1,9 +1,7 @@
 import React from 'react';
-import { Sparkles, Camera, BookOpen, Clock, ExternalLink, ArrowRight, HeartHandshake } from 'lucide-react';
+import { Sparkles, Camera, Clock } from 'lucide-react';
 
 export default function PortfolioGrid() {
-  const blogUrl = 'https://blog.naver.com'; // 브랜드 네이버 블로그 연결 링크
-
   return (
     <section id="portfolio" className="section-padding" style={{ backgroundColor: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
       {/* Background Subtle Accent Graphic */}
@@ -98,14 +96,12 @@ export default function PortfolioGrid() {
             </p>
           </div>
 
-          {/* Action & Info Badges */}
+          {/* Info Badge */}
           <div
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
               justifyContent: 'center',
               alignItems: 'center',
-              gap: '1rem',
               paddingTop: '1.5rem',
               borderTop: '1px dashed rgba(197, 160, 127, 0.35)',
             }}
@@ -126,26 +122,6 @@ export default function PortfolioGrid() {
               <Clock size={16} style={{ color: 'var(--primary-brown)' }} />
               <span>포트폴리오 보정 및 포스팅 순차 업로드 예정</span>
             </div>
-
-            <a
-              href={blogUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.65rem 1.4rem',
-                fontSize: '0.92rem',
-                borderRadius: 'var(--radius-full)',
-                textDecoration: 'none',
-              }}
-            >
-              <BookOpen size={16} />
-              <span>네이버 공식 블로그 바로가기</span>
-              <ExternalLink size={14} />
-            </a>
           </div>
 
         </div>
