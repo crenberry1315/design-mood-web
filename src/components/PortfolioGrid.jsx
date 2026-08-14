@@ -66,31 +66,31 @@ export default function PortfolioGrid() {
 
           <h3
             style={{
-              fontSize: '1.6rem',
+              fontSize: '1.45rem',
               fontWeight: 700,
               color: 'var(--text-dark)',
-              marginBottom: '1.5rem',
+              marginBottom: '1.2rem',
               fontFamily: 'var(--font-body)',
               letterSpacing: '-0.02em',
+              lineHeight: 1.4,
+              wordBreak: 'keep-all',
             }}
           >
-            "시공의 디테일과 진정성을 담은 포트폴리오를 준비하고 있습니다."
+            소개해 드릴 완공 현장들이 밀려 있어 업로드가 지연되고 있습니다.
           </h3>
 
           <div
             style={{
               maxWidth: '680px',
-              margin: '0 auto 2.5rem auto',
+              margin: '0 auto 2.2rem auto',
               fontSize: '1.05rem',
-              color: '#5A524C',
+              color: 'var(--primary-brown-dark)',
               lineHeight: 1.85,
               wordBreak: 'keep-all',
+              fontWeight: 500,
             }}
           >
-            <p style={{ marginBottom: '1rem' }}>
-              소개해 드릴 완공 현장들이 밀려 있어 업로드가 지연되고 있습니다.
-            </p>
-            <p style={{ color: 'var(--primary-brown-dark)', fontWeight: 500 }}>
+            <p>
               형식적인 빠른 포스팅보다 시공의 디테일과 진정성을 담은 진짜 이야기를 보여드리기 위함이오니, 너른 양해 부탁드립니다.
             </p>
           </div>
