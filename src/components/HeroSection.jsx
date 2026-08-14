@@ -10,23 +10,18 @@ export default function HeroSection({ onOpenConsultation }) {
     },
     {
       image: '/hero/hero-site-1-crisp.jpg',
-      badge: '춘천 아파트 올 리모델링',
-      title: '따뜻함이 스며드는 웜 베이지 앤 우드 모던 스타일링',
+      badge: '모던 미니멀 인테리어',
+      title: '간접조명과 화이트 톤으로 확장감을 극대화한 모던 미니멀 인테리어',
     },
     {
       image: '/hero/hero-site-2-crisp.jpg',
-      badge: '감성 거실 인테리어',
-      title: '600각 포세린 타일과 시그니처 간접조명 연출',
+      badge: '모던 화이트 주방',
+      title: '600각 포세린 타일과 간접 조명으로 완성한 모던 화이트 주방',
     },
     {
       image: '/hero/hero-site-3-opt.jpg',
-      badge: '디테일 목공 & 히든도어 시공',
-      title: '오차 없이 마감하는 정밀 현장 목공 라인',
-    },
-    {
-      image: '/hero/hero-site-4-opt.jpg',
-      badge: '친환경 E0 맞춤 주방 시공',
-      title: '동선 최적화 감성 아일랜드 주방 및 씽크대',
+      badge: '거실 시공 연출',
+      title: '실링팬과 우물천장 간접조명으로 완성한 거실',
     },
   ];
 
