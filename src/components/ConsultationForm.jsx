@@ -3,6 +3,66 @@ import { Send, Phone, MessageSquare, CheckCircle2, Mail, Loader2, MapPin, Naviga
 
 import SvgStoreMap from './SvgStoreMap';
 
+// Aligo API Configuration (Kakao Alimtalk & SMS Fallback)
+const ALIGO_USER_ID = 'designmood2120';
+const ALIGO_API_KEY = 'll2068kja446f9bfir6rgdgi1j4iyaza';
+const ALIGO_SENDER_KEY = 'db1482fbf8e94a15e0ba415651c374337c422b31';
+const ALIGO_TPL_CODE = 'UK_3588';
+const KAKAO_CHANNEL_ID = '@디자인무드designmood';
+const SENDER_NUMBER = '01077821061'; // 알리고 등록 발신번호 (대표님 번호)
+const RECIPIENT_NUMBERS = ['01077821061', '01075761061']; // 알림톡 수신 번호 목록
+
+// Send Aligo Kakao Alimtalk Notification
+async function sendAligoNotification(formData) {
+  try {
+    const locationText = formData.location ? formData.location : '미입력';
+    const messageText = formData.schedule 
+      ? `[희망시기: ${formData.schedule}]\n${formData.message || '상세 내역 없음'}`
+      : (formData.message || '상세 내역 없음');
+
+    // 알리고 승인 템플릿 (UK_3588) 본문 규격 100% 일치
+    const msgText = `[디자인무드] 신규 견적 상담 신청서가 접수되었습니다.\n고객명: ${formData.name}\n연락처: ${formData.phone}\n현장위치: ${locationText}\n문의내용: ${messageText}`;
+
+    const params = new URLSearchParams();
+    params.append('apikey', ALIGO_API_KEY);
+    params.append('userid', ALIGO_USER_ID);
+    params.append('senderkey', ALIGO_SENDER_KEY);
+    params.append('tpl_code', ALIGO_TPL_CODE);
+    params.append('sender', SENDER_NUMBER.replace(/-/g, ''));
+
+    // 수신자 지정 (receiver_1, receiver_2 ...)
+    RECIPIENT_NUMBERS.forEach((num, idx) => {
+      const i = idx + 1;
+      params.append(`receiver_${i}`, num.replace(/-/g, ''));
+      params.append(`subject_${i}`, '[디자인무드] 신규 견적 상담 신청');
+      params.append(`message_${i}`, msgText);
+    });
+
+    // 알림톡 수신 실패 시 대체 문자(SMS/LMS) 자동 발송
+    params.append('failover', 'Y');
+    RECIPIENT_NUMBERS.forEach((num, idx) => {
+      const i = idx + 1;
+      params.append(`fsubject_${i}`, '[디자인무드] 신규 견적 상담 신청');
+      params.append(`fmessage_${i}`, msgText);
+    });
+
+    const response = await fetch('https://alimtalk-api.aligo.in/akv10/alimtalk/send/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
+
+    const resData = await response.json();
+    console.log('Aligo Kakao Alimtalk Result:', resData);
+    return resData.code === 0 || resData.result_code === '1';
+  } catch (err) {
+    console.error('Aligo Kakao Alimtalk Send Error:', err);
+    return false;
+  }
+}
+
 export default function ConsultationForm({ presetMessage }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -39,7 +99,11 @@ export default function ConsultationForm({ presetMessage }) {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/design_mood_2120@naver.com', {
+      // 1. 알리고(Aligo) 문자/알림 발송 전송
+      await sendAligoNotification(formData);
+
+      // 2. 이메일(FormSubmit) 백업 전송
+      await fetch('https://formsubmit.co/ajax/design_mood_2120@naver.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,13 +121,9 @@ export default function ConsultationForm({ presetMessage }) {
         }),
       });
 
-      if (response.ok || response.status === 200) {
-        setSubmitted(true);
-      } else {
-        setSubmitted(true);
-      }
+      setSubmitted(true);
     } catch (error) {
-      console.error('Email transmission error:', error);
+      console.error('Submission error:', error);
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
