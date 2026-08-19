@@ -9,8 +9,8 @@ const ALIGO_API_KEY = 'll2068kja446f9bfir6rgdgi1j4iyaza';
 const ALIGO_SENDER_KEY = 'db1482fbf8e94a15e0ba415651c374337c422b31';
 const ALIGO_TPL_CODE = 'UK_3588';
 const KAKAO_CHANNEL_ID = '@디자인무드designmood';
-const SENDER_NUMBER = '01077821061'; // 알리고 등록 발신번호 (대표님 번호)
-const RECIPIENT_NUMBERS = ['01077821061', '01075761061']; // 알림톡 수신 번호 목록
+const SENDER_NUMBER = '01053793685'; // 알리고 등록 발신번호 (010-5379-3685)
+const RECIPIENT_NUMBERS = ['01077821061', '01075761061', '01053793685']; // 알림톡 및 대체문자 수신 번호 목록
 
 // Send Aligo Kakao Alimtalk Notification
 async function sendAligoNotification(formData) {
@@ -46,7 +46,7 @@ async function sendAligoNotification(formData) {
       params.append(`fmessage_${i}`, msgText);
     });
 
-    const response = await fetch('https://alimtalk-api.aligo.in/akv10/alimtalk/send/', {
+    const response = await fetch('https://kakaoapi.aligo.in/akv10/alimtalk/send/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
