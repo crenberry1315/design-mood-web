@@ -30,12 +30,16 @@ async function sendAligoNotification(formData) {
     params.append('tpl_code', ALIGO_TPL_CODE);
     params.append('sender', SENDER_NUMBER.replace(/-/g, ''));
 
+    const buttonJson = JSON.stringify({ button: [{ name: '채널 추가', linkType: 'AC' }] });
+
     // 수신자 지정 (receiver_1, receiver_2 ...)
     RECIPIENT_NUMBERS.forEach((num, idx) => {
       const i = idx + 1;
       params.append(`receiver_${i}`, num.replace(/-/g, ''));
-      params.append(`subject_${i}`, '[디자인무드] 신규 견적 상담 신청');
+      params.append(`subject_${i}`, '디자인무드 견적상담');
+      params.append(`emtitle_${i}`, '디자인무드 견적상담');
       params.append(`message_${i}`, msgText);
+      params.append(`button_${i}`, buttonJson);
     });
 
     // 알림톡 수신 실패 시 대체 문자(SMS/LMS) 자동 발송
