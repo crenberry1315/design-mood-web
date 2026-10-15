@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 — 2026-10-15
+
+- Edit homepage slideshow photos in the administrator app: add or replace images, arrange 1–10 slides, edit the short title and photo text, and choose frame-fill or whole-photo display.
+- Load saved slides on the public homepage without rebuilding it, while retaining the original four photos as the initial configuration and fallback. Limit long captions to fit the photo frame.
+- Keep uploads private until saved and restrict changes to approved administrators. Migration 003 protects referenced files, rejects invalid configurations and detects concurrent saves; model and policy tests cover 20 cases.
+- Guard menu changes and discarded uploads so failed reloads cannot leave deleted photo paths in the editor.
+
 ## 0.1.1 — 2026-10-15
 
 - Use address-free public case titles and remove location input and display. Generalize the existing case title to ‘아파트 인테리어’ and clear its location while preserving all four photos.

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Camera,
   Check,
@@ -27,6 +27,7 @@ import {
 } from "../lib/portfolioRepository";
 import { prepareImage } from "../lib/prepareImage";
 import PhotoEditor from "./PhotoEditor";
+import HeroManager from "./HeroManager";
 import "./admin.css";
 
 function messageFor(error) {
@@ -41,7 +42,7 @@ function AdminShell({ children }) {
         <a className="admin-brand" href="/">
           <img src="/logo-brown.png" alt="" />
           <span>
-            DESIGN MOOD<small>포트폴리오 관리</small>
+            DESIGN MOOD<small>홈페이지 사진 관리</small>
           </span>
         </a>
         <a
@@ -227,17 +228,28 @@ function PasswordRecovery({ onComplete }) {
   );
 }
 
-function Dashboard({ user }) {
+function Dashboard({ user, registerLeave }) {
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState(null);
   const [baseline, setBaseline] = useState("");
   const [loading, setLoading] = useState(true);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusyState] = useState(false);
+  const busyRef = useRef(false);
+  const setBusy = (value) => {
+    busyRef.current = value;
+    setBusyState(value);
+  };
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
   const pendingUploads = useRef(new Map());
-  const dirty = Boolean(project && projectSignature(project) !== baseline);
+  const dirty = Boolean(
+    pendingUploads.current.size ||
+    (project && projectSignature(project) !== baseline),
+  );
+  useEffect(() => {
+    registerLeave(discard);
+  });
   const selectedId = project?.id;
   useEffect(() => {
     if (!selectedId) return;
@@ -310,23 +322,31 @@ function Dashboard({ user }) {
     setNotice("");
   };
   async function discard() {
+    if (busyRef.current) return false;
     if (dirty && !window.confirm("저장하지 않은 변경사항을 버리고 이동할까요?"))
       return false;
-    if (pendingUploads.current.size) {
-      try {
+    setBusy(true);
+    // An abandoned editor must never retain paths that cleanup may delete.
+    setProject(null);
+    setBaseline("");
+    setNotice("");
+    try {
+      if (pendingUploads.current.size) {
         await removeImages([...pendingUploads.current.keys()]);
-      } catch (err) {
-        setError(messageFor(err));
-        return false;
+        for (const url of pendingUploads.current.values())
+          URL.revokeObjectURL(url);
+        pendingUploads.current.clear();
       }
-      for (const url of pendingUploads.current.values())
-        URL.revokeObjectURL(url);
-      pendingUploads.current.clear();
+      return true;
+    } catch (err) {
+      setError(messageFor(err));
+      return false;
+    } finally {
+      setBusy(false);
     }
-    return true;
   }
   async function choose(nextProject) {
-    if (busy || !(await discard())) return;
+    if (busyRef.current || !(await discard())) return;
     setBusy(true);
     try {
       const [fresh] = await withImageUrls([nextProject]);
@@ -340,7 +360,7 @@ function Dashboard({ user }) {
     }
   }
   async function reload() {
-    if (busy || !(await discard())) return;
+    if (busyRef.current || !(await discard())) return;
     setBusy(true);
     setError("");
     try {
@@ -354,14 +374,14 @@ function Dashboard({ user }) {
     }
   }
   async function logout() {
-    if (busy || !(await discard())) return;
+    if (busyRef.current || !(await discard())) return;
     const { error: authError } = await supabase.auth.signOut();
     if (authError) setError("로그아웃하지 못했습니다. 다시 시도해 주세요.");
   }
   async function upload(event) {
     const files = [...event.target.files];
     event.target.value = "";
-    if (!files.length || busy) return;
+    if (!files.length || busyRef.current) return;
     if (project.images.length + files.length > MAX_IMAGES) {
       setError(`사진은 최대 ${MAX_IMAGES}장까지 등록할 수 있습니다.`);
       return;
@@ -386,7 +406,7 @@ function Dashboard({ user }) {
   }
   async function save(event) {
     event.preventDefault();
-    if (busy) return;
+    if (busyRef.current) return;
     setBusy(true);
     setError("");
     setNotice("");
@@ -432,7 +452,7 @@ function Dashboard({ user }) {
     }
   }
   async function remove() {
-    if (busy || !project?.updated_at) return;
+    if (busyRef.current || !project?.updated_at) return;
     setBusy(true);
     setError("");
     try {
@@ -728,6 +748,54 @@ function Dashboard({ user }) {
   );
 }
 
+function AdminWorkspace({ user }) {
+  const [mode, setMode] = useState("portfolio");
+  const [navigating, setNavigating] = useState(false);
+  const navigationLock = useRef(false);
+  const leave = useRef(async () => true);
+  const registerLeave = useCallback((guard) => {
+    leave.current = guard;
+  }, []);
+  async function navigate(next) {
+    if (next === mode || navigationLock.current) return;
+    navigationLock.current = true;
+    setNavigating(true);
+    try {
+      if (await leave.current()) setMode(next);
+    } finally {
+      navigationLock.current = false;
+      setNavigating(false);
+    }
+  }
+  return (
+    <>
+      <nav className="admin-navigation" aria-label="관리 메뉴">
+        <button
+          type="button"
+          disabled={navigating}
+          aria-pressed={mode === "portfolio"}
+          onClick={() => navigate("portfolio")}
+        >
+          시공 포트폴리오
+        </button>
+        <button
+          type="button"
+          disabled={navigating}
+          aria-pressed={mode === "hero"}
+          onClick={() => navigate("hero")}
+        >
+          메인 슬라이드쇼
+        </button>
+      </nav>
+      {mode === "portfolio" ? (
+        <Dashboard user={user} registerLeave={registerLeave} />
+      ) : (
+        <HeroManager user={user} registerLeave={registerLeave} />
+      )}
+    </>
+  );
+}
+
 export default function AdminApp() {
   const [session, setSession] = useState(undefined);
   const [access, setAccess] = useState("checking");
@@ -803,6 +871,6 @@ export default function AdminApp() {
         </section>
       </main>
     );
-  else body = <Dashboard key={userId} user={session.user} />;
+  else body = <AdminWorkspace key={userId} user={session.user} />;
   return <AdminShell>{body}</AdminShell>;
 }
