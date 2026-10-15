@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Calculator, Check, ArrowRight, Sparkles, Building, Home, Store } from 'lucide-react';
 
+const MIN_PYEONG = 15;
+const MAX_PYEONG = 60;
+const PYEONG_MARKS = [15, 24, 32, 45, 60];
+const pyeongPosition = (value) => `${((value - MIN_PYEONG) / (MAX_PYEONG - MIN_PYEONG)) * 100}%`;
+
 export default function EstimateCalculator({ onApplyEstimate }) {
   const [spaceType, setSpaceType] = useState('apartment');
   const [pyeong, setPyeong] = useState(32);
@@ -195,33 +200,43 @@ export default function EstimateCalculator({ onApplyEstimate }) {
               {/* Step 2: Pyeong Slider */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
-                  <label style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', wordBreak: 'keep-all' }}>
+                  <label htmlFor="construction-pyeong" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-dark)', wordBreak: 'keep-all' }}>
                     2. 시공 평수 선택
                   </label>
-                  <span style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown)', whiteSpace: 'nowrap' }}>
+                  <output htmlFor="construction-pyeong" className="pyeong-value" style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary-brown)', whiteSpace: 'nowrap' }}>
                     {pyeong} 평 <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>({Math.round(pyeong * 3.3)}㎡)</span>
-                  </span>
+                  </output>
                 </div>
-                <input
-                  type="range"
-                  min="15"
-                  max="60"
-                  step="1"
-                  value={pyeong}
-                  onChange={(e) => setPyeong(Number(e.target.value))}
-                  style={{
-                    width: '100%',
-                    accentColor: 'var(--primary-brown)',
-                    cursor: 'pointer',
-                    height: '6px',
-                  }}
-                />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.4rem' }}>
-                  <span>15평</span>
-                  <span>24평</span>
-                  <span>32평</span>
-                  <span>45평</span>
-                  <span>60평</span>
+                <div className="pyeong-control" style={{ '--pyeong-progress': pyeongPosition(pyeong) }}>
+                  <div className="pyeong-slider">
+                    <div className="pyeong-rail" aria-hidden="true" />
+                    <input
+                      id="construction-pyeong"
+                      className="pyeong-range"
+                      type="range"
+                      min={MIN_PYEONG}
+                      max={MAX_PYEONG}
+                      step="1"
+                      value={pyeong}
+                      aria-valuetext={`${pyeong}평, 약 ${Math.round(pyeong * 3.3)}제곱미터`}
+                      onChange={(e) => setPyeong(Number(e.target.value))}
+                    />
+                  </div>
+                  <div className="pyeong-marks" aria-label="자주 선택하는 평수">
+                    {PYEONG_MARKS.map((mark) => (
+                      <button
+                        key={mark}
+                        type="button"
+                        className="pyeong-mark"
+                        style={{ left: pyeongPosition(mark) }}
+                        aria-label={`${mark}평 선택`}
+                        aria-pressed={pyeong === mark}
+                        onClick={() => setPyeong(mark)}
+                      >
+                        {mark}평
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
