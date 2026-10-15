@@ -55,4 +55,4 @@ npm run build:admin
 
 관리자 화면은 별도로 빌드한 `dist-admin/`을 기존 Netlify 사이트 [design-mood-admin-2120.netlify.app](https://design-mood-admin-2120.netlify.app)에 수동 배포합니다. 홈페이지를 푸시해도 관리자 화면이 함께 갱신되지는 않습니다. `netlify.toml`과 `dist-admin/_headers`에 관리자 보안 헤더가 정의되어 있습니다.
 
-2026-10-15 기준 기존 공개 홈페이지와 [admin.designmood.kr](https://admin.designmood.kr)의 DNS·HTTPS·인증 연결이 적용되어 있고, `0.1.1`의 사진별 설명·확대보기는 운영 화면에서도 확인했습니다. Supabase 마이그레이션 001·002·003과 첫 관리자 권한, GitHub 연결 변수도 적용되어 있습니다. 메인 슬라이드쇼는 기본 사진 4장을 보존했고 자동 테스트 20개와 공개·관리자 빌드를 통과했습니다. `0.1.2` 공개 홈페이지·Netlify 관리자 UI 배포는 진행 중이며 완료 후 운영 화면 검증이 필요합니다. 사용자 지정 SMTP는 설정되지 않았고 비밀번호 재설정 이메일 수신은 검증되지 않았습니다. 자세한 현재 상태는 [설정·배포 문서](docs/portfolio-admin-setup.md)를 참고하세요.
+공개 홈페이지와 [admin.designmood.kr](https://admin.designmood.kr)의 DNS·HTTPS·인증 연결, Supabase 마이그레이션 001·002·003과 첫 관리자 권한, GitHub 연결 변수가 적용되어 있습니다. `0.1.1`의 사진별 설명·확대보기는 운영 화면에서 확인했습니다. `0.1.2` 관리자도 운영 배포 후 로그인 유지·메뉴·기존 사진 4장과 문구 보존·미저장 이동 확인·순서 변경·표시 방식·사진 교체 업로드·실제 저장을 검증했습니다. 자동 테스트 20개와 공개·관리자 빌드를 통과했으며, 공개 홈페이지는 배포 후 [설정·배포 문서](docs/portfolio-admin-setup.md)의 절차로 화면과 갱신 동작을 확인합니다. 사용자 지정 SMTP는 설정되지 않았고 비밀번호 재설정 이메일 수신은 검증되지 않았습니다.
