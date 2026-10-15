@@ -51,4 +51,4 @@ npm run build:admin
 
 관리자 화면은 별도로 빌드한 `dist-admin/`을 기존 Netlify 사이트 [design-mood-admin-2120.netlify.app](https://design-mood-admin-2120.netlify.app)에 수동 배포합니다. 홈페이지를 푸시해도 관리자 화면이 함께 갱신되지는 않습니다. `netlify.toml`과 `dist-admin/_headers`에 관리자 보안 헤더가 정의되어 있습니다.
 
-2026-10-15 기준 Supabase 마이그레이션·첫 관리자 권한·인증 리다이렉트와 GitHub 변수는 적용되어 있습니다. `admin.designmood.kr`의 DNS 등록과 Netlify 소유권 검증을 마쳤으며 HTTPS 인증서 발급을 확인 중입니다. 사용자 지정 SMTP는 설정되지 않았고 비밀번호 재설정 이메일 수신은 검증되지 않았습니다. 자세한 현재 상태와 확인 순서는 [설정·배포 문서](docs/portfolio-admin-setup.md)를 참고하세요.
+2026-10-15 기준 공개 홈페이지 배포와 [admin.designmood.kr](https://admin.designmood.kr)의 DNS·HTTPS 연결을 완료했습니다. Supabase 마이그레이션·첫 관리자 권한·인증 리다이렉트와 GitHub 변수도 적용되어 있습니다. 운영 앱 로그인·저장·사진 표시·검증 자료 삭제를 확인했습니다. 사용자 지정 SMTP는 설정되지 않았고 비밀번호 재설정 이메일 수신은 검증되지 않았습니다. 자세한 현재 상태는 [설정·배포 문서](docs/portfolio-admin-setup.md)를 참고하세요.

@@ -1,6 +1,6 @@
 # Portfolio 관리자 서비스 설정과 배포
 
-버전 `0.1.0`, 2026-10-15 작업 중 상태를 기록합니다. 아래의 완료·진행 중 표시는 최초 구성 상태이며, 배포할 때 실제 서비스 설정과 브라우저 결과를 다시 확인합니다.
+버전 `0.1.0`, 2026-10-15 배포 확인 상태를 기록합니다. 설정을 변경하거나 다시 배포할 때 실제 서비스와 브라우저 결과를 다시 확인합니다.
 
 ## 서비스 구성과 현재 상태
 
@@ -9,7 +9,7 @@
 | 공개 홈페이지 | `https://designmood.kr`, GitHub Pages | `main` 푸시 자동 배포 |
 | 관리자 기본 주소 | `https://design-mood-admin-2120.netlify.app` | 기존 사이트에 `dist-admin/` 수동 배포 |
 | Netlify site ID | `78df4310-8146-4fc9-a663-64b9f1aafbb1` | 기존 사이트 식별자 |
-| 관리자 사용자 지정 주소 | `https://admin.designmood.kr` | DNS 등록·Netlify 소유권 검증 완료, HTTPS 발급 확인 중 |
+| 관리자 사용자 지정 주소 | `https://admin.designmood.kr` | DNS·Netlify 소유권 검증·HTTPS 정상 접속 및 로그인 화면 확인 |
 | Supabase 프로젝트 | `fslymhrfkcmetxdnzxxw`, Seoul | 마이그레이션과 첫 관리자 권한 적용됨 |
 | 최초 관리자 | `design_mood_2120@naver.com` | 관리자 멤버십 적용됨 |
 | Supabase 신규 가입 | 비활성화 | 적용됨 |
@@ -92,4 +92,4 @@ npm run build:admin
 | CNAME | `admin` | `design-mood-admin-2120.netlify.app` |
 | TXT | `subdomain-owner-verification` | `6c561260f6821e8767a9badc782fce34` |
 
-레코드 등록 후 Netlify의 도메인 소유권 확인·도메인 연결 상태와 HTTPS 인증서 발급을 확인합니다. `https://admin.designmood.kr/` 접속, 인증 redirect, 실제 관리자 로그인까지 확인한 다음 사용 안내의 주소와 진행 중 상태를 갱신합니다. DNS 등록이나 인증서 발급 대기만으로 연결 완료라고 보고하지 않습니다.
+도메인 소유권·DNS 검증과 HTTPS 정상 응답을 확인했습니다. 사용자 지정 주소에서 로그인 화면을 확인했고, Netlify 기본 운영 주소에서는 실제 관리자 로그인·비공개 저장·사진 2장 표시·검증 사례 삭제까지 확인했습니다. 두 origin의 로그인 세션은 공유되지 않습니다. 사용자 지정 SMTP 및 비밀번호 재설정 이메일 수신은 아직 검증하지 않았습니다.
