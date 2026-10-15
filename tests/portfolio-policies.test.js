@@ -36,6 +36,15 @@ before(async () => {
       "utf8",
     ),
   );
+  await db.exec(
+    await readFile(
+      new URL(
+        "../supabase/migrations/202610150002_photo_descriptions.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
   await db.query("insert into auth.users values ($1),($2)", [admin, outsider]);
   await db.query("insert into public.portfolio_admins values ($1)", [admin]);
   for (const [id, status, path] of [
@@ -53,6 +62,34 @@ before(async () => {
   }
 });
 after(() => db.close());
+
+test("photo descriptions are bounded by the database and legacy photos remain valid", () =>
+  asRole("authenticated", admin, async () => {
+    const original = [{ path: draftPath, caption: "거실" }];
+    const text = "자재와 시공 디테일\n두 번째 줄";
+    await db.query(
+      "update public.portfolio_projects set images=$1::jsonb where id=$2",
+      [JSON.stringify([{ ...original[0], description: text }]), draft],
+    );
+    const result = await db.query(
+      "select images from public.portfolio_projects where id=$1",
+      [draft],
+    );
+    assert.equal(result.rows[0].images[0].description, text);
+    for (const description of ["가".repeat(2001), { nested: "invalid" }]) {
+      await assert.rejects(
+        db.query(
+          "update public.portfolio_projects set images=$1::jsonb where id=$2",
+          [JSON.stringify([{ ...original[0], description }]), draft],
+        ),
+        /check constraint/,
+      );
+    }
+    await db.query(
+      "update public.portfolio_projects set images=$1::jsonb where id=$2",
+      [JSON.stringify(original), draft],
+    );
+  }));
 
 async function asRole(role, id, callback) {
   await db.exec(`set role ${role}`);

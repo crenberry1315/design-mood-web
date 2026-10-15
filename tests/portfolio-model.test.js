@@ -48,3 +48,44 @@ test("payload excludes ephemeral signed URLs and server timestamps", () => {
     }),
   );
 });
+
+test("per-slide descriptions survive save and reordering, and mark edits dirty", () => {
+  const project = {
+    ...newProject(),
+    title: "아파트 인테리어",
+    location: "공개하지 않을 위치",
+  };
+  project.images = [
+    "11111111-1111-4111-8111-111111111111",
+    "22222222-2222-4222-8222-222222222222",
+  ].map((id, i) => ({
+    path: `projects/${project.id}/${id}.webp`,
+    caption: `사진 ${i + 1}`,
+    description: `설명 ${i + 1}\n자재 디테일`,
+  }));
+  const before = projectSignature(project);
+  const saved = projectPayload({
+    ...project,
+    images: [...project.images].reverse(),
+  });
+  assert.equal(saved.location, "");
+  assert.equal(saved.images[0].description, "설명 2\n자재 디테일");
+  assert.notEqual(
+    before,
+    projectSignature({
+      ...project,
+      images: [
+        { ...project.images[0], description: "수정" },
+        project.images[1],
+      ],
+    }),
+  );
+  assert.throws(
+    () =>
+      projectPayload({
+        ...project,
+        images: [{ ...project.images[0], description: "가".repeat(2001) }],
+      }),
+    /부연설명/,
+  );
+});

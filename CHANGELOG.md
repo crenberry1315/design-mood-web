@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — 2026-10-15
+
+- Use address-free public case titles and remove location input and display. Generalize the existing case title to ‘아파트 인테리어’ and clear its location while preserving all four photos.
+- Edit each photo through administrator slide tabs: add a title of up to 200 characters and a separate description of up to 2,000 characters with line breaks. Reordering photos preserves their descriptions.
+- Read per-photo details and the overall construction introduction in separate public detail tabs. Click a photo to open the fullscreen viewer, switch between fit and 100% stored-pixel size, and move between photos. Escape closes the viewer and returns focus to its opener.
+- Add migration 002 to validate optional photo descriptions while keeping existing photo records compatible. Model and policy tests now cover 15 cases. See the [administrator guide](docs/관리자_사용안내.md).
+
 ## 0.1.0 — 2026-10-15
 
 - Manage construction portfolios in a separate administrator app: save drafts, publish cases, edit descriptions, arrange photos and set display order. See the [administrator guide](docs/관리자_사용안내.md).

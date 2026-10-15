@@ -329,6 +329,66 @@
   flex-wrap: wrap;
   gap: 7px;
 }
+.admin-photo-editor {
+  margin-bottom: 26px;
+  min-width: 0;
+}
+.admin-photo-tabs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 14px 3px;
+}
+.admin-photo-tabs button {
+  flex: 0 0 92px;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 9px;
+  background: #f5f0e7;
+  color: var(--text-medium);
+  cursor: pointer;
+  font: 500 12px var(--font-body);
+}
+.admin-photo-tabs button[aria-selected="true"] {
+  border-color: var(--primary-brown);
+  background: #e9ddcb;
+  color: var(--primary-brown);
+}
+.admin-photo-tabs img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+.admin-photo-tabs span {
+  display: block;
+  padding: 6px 0;
+}
+.admin-photo-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+  padding: 18px;
+  background: #faf8f5;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+}
+.admin-photo-fields {
+  min-width: 0;
+}
+.admin-photo-fields h4 {
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+.admin-photo-fields .admin-image-actions {
+  margin-top: 18px;
+}
+.admin-photo-tabs button:focus-visible {
+  outline: 3px solid var(--primary-brown);
+  outline-offset: 2px;
+}
 .admin-image-actions .admin-button {
   padding: 8px 12px;
 }
@@ -422,6 +482,11 @@
   margin-bottom: 24px;
 }
 @media (max-width: 800px) {
+  .admin-photo-panel {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 18px;
+  }
   .admin-workspace {
     grid-template-columns: 1fr;
   }
