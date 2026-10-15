@@ -2,6 +2,7 @@ import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { PGlite } from "@electric-sql/pglite";
+import { DEFAULT_HERO_SLIDES } from "../src/lib/heroModel.js";
 
 const db = new PGlite();
 const admin = "11111111-1111-4111-8111-111111111111";
@@ -46,6 +47,15 @@ before(async () => {
     ),
   );
   await db.query("insert into auth.users values ($1),($2)", [admin, outsider]);
+  await db.exec(
+    await readFile(
+      new URL(
+        "../supabase/migrations/202610150003_homepage_hero.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
   await db.query("insert into public.portfolio_admins values ($1)", [admin]);
   for (const [id, status, path] of [
     [published, "published", publishedPath],
@@ -297,11 +307,187 @@ test("admin cannot overwrite or delete images still referenced by a project", ()
       0,
     );
   }));
+test("main slideshow starts with the exact existing four photos and denies unauthorized writes", async () => {
+  await asRole("anon", null, async () => {
+    assert.deepEqual(
+      (
+        await db.query(
+          "select slides from public.homepage_hero where id='main'",
+        )
+      ).rows[0].slides,
+      DEFAULT_HERO_SLIDES,
+    );
+    await assert.rejects(
+      db.query("update public.homepage_hero set slides=slides"),
+      /permission denied/,
+    );
+  });
+  await asRole("authenticated", outsider, async () => {
+    assert.equal(
+      (
+        await db.query(
+          "update public.homepage_hero set slides=slides returning id",
+        )
+      ).rows.length,
+      0,
+    );
+    await assert.rejects(
+      db.query("delete from public.homepage_hero"),
+      /permission denied/,
+    );
+    await assert.rejects(
+      db.query(
+        "insert into public.homepage_hero(id,slides) values('main','[]')",
+      ),
+      /permission denied/,
+    );
+  });
+});
+test("admin main-slideshow saves reject stale versions and invalid configurations", () =>
+  asRole("authenticated", admin, async () => {
+    const original = (
+      await db.query(
+        "select updated_at::text as version from public.homepage_hero",
+      )
+    ).rows[0].version;
+    assert.equal(
+      (
+        await db.query(
+          "update public.homepage_hero set slides=$1::jsonb where updated_at=$2::timestamptz returning id",
+          [JSON.stringify([...DEFAULT_HERO_SLIDES].reverse()), original],
+        )
+      ).rows.length,
+      1,
+    );
+    assert.equal(
+      (
+        await db.query(
+          "update public.homepage_hero set slides=$1::jsonb where updated_at=$2::timestamptz returning id",
+          [JSON.stringify(DEFAULT_HERO_SLIDES), original],
+        )
+      ).rows.length,
+      0,
+    );
+    for (const slides of [
+      [],
+      Array(11).fill(DEFAULT_HERO_SLIDES[0]),
+      [
+        {
+          ...DEFAULT_HERO_SLIDES[0],
+          path: "https://external.example/image.webp",
+        },
+      ],
+      [{ ...DEFAULT_HERO_SLIDES[0], title: "" }],
+      [{ ...DEFAULT_HERO_SLIDES[0], fit: "stretch" }],
+    ])
+      await assert.rejects(
+        db.query("update public.homepage_hero set slides=$1::jsonb", [
+          JSON.stringify(slides),
+        ]),
+        /check constraint/,
+      );
+    await db.query("update public.homepage_hero set slides=$1::jsonb", [
+      JSON.stringify(DEFAULT_HERO_SLIDES),
+    ]);
+  }));
+test("hero uploads stay private until saved, cannot be overwritten or removed while referenced, and are removable after replacement", async () => {
+  const path = "hero/cccccccc-cccc-4ccc-8ccc-cccccccccccc.webp";
+  await asRole("authenticated", outsider, async () => {
+    await assert.rejects(
+      db.query(
+        "insert into storage.objects(bucket_id,name) values('portfolio-images',$1)",
+        [path],
+      ),
+      /row-level security/,
+    );
+  });
+  await asRole("authenticated", admin, async () => {
+    await db.query(
+      "insert into storage.objects(bucket_id,name) values('portfolio-images',$1)",
+      [path],
+    );
+    await assert.rejects(
+      db.query(
+        "insert into storage.objects(bucket_id,name) values('portfolio-images','hero/invalid.jpg')",
+      ),
+      /row-level security/,
+    );
+  });
+  await asRole("anon", null, async () => {
+    assert.equal(
+      (await db.query("select name from storage.objects where name=$1", [path]))
+        .rows.length,
+      0,
+    );
+  });
+  await asRole("authenticated", admin, async () => {
+    await db.query("update public.homepage_hero set slides=$1::jsonb", [
+      JSON.stringify([{ path, title: "메인 사진", badge: "", fit: "cover" }]),
+    ]);
+    assert.equal(
+      (
+        await db.query(
+          "delete from storage.objects where name=$1 returning name",
+          [path],
+        )
+      ).rows.length,
+      0,
+    );
+    assert.equal(
+      (
+        await db.query(
+          "update storage.objects set name='hero/overwritten.webp' where name=$1 returning name",
+          [path],
+        )
+      ).rows.length,
+      0,
+    );
+  });
+  await asRole("anon", null, async () => {
+    assert.equal(
+      (await db.query("select name from storage.objects where name=$1", [path]))
+        .rows.length,
+      1,
+    );
+  });
+  await asRole("authenticated", admin, async () => {
+    await db.query("update public.homepage_hero set slides=$1::jsonb", [
+      JSON.stringify(DEFAULT_HERO_SLIDES),
+    ]);
+  });
+  await asRole("anon", null, async () => {
+    assert.equal(
+      (await db.query("select name from storage.objects where name=$1", [path]))
+        .rows.length,
+      0,
+    );
+  });
+  await asRole("authenticated", admin, async () => {
+    assert.equal(
+      (
+        await db.query(
+          "delete from storage.objects where name=$1 returning name",
+          [path],
+        )
+      ).rows.length,
+      1,
+    );
+  });
+});
+
 test("removing membership revokes existing-session write and draft permissions", async () => {
   await db.query("delete from public.portfolio_admins where user_id=$1", [
     admin,
   ]);
   await asRole("authenticated", admin, async () => {
+    assert.equal(
+      (
+        await db.query(
+          "update public.homepage_hero set slides=slides returning id",
+        )
+      ).rows.length,
+      0,
+    );
     assert.equal(
       (await db.query("select public.is_portfolio_admin() as allowed")).rows[0]
         .allowed,
