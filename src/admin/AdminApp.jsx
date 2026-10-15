@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  ArrowDown,
-  ArrowUp,
   Camera,
   Check,
   ExternalLink,
@@ -10,7 +8,6 @@ import {
   Plus,
   Save,
   ShieldCheck,
-  Trash2,
 } from "lucide-react";
 import { isBackendConfigured, supabase } from "../lib/supabase";
 import {
@@ -29,6 +26,7 @@ import {
   withImageUrls,
 } from "../lib/portfolioRepository";
 import { prepareImage } from "../lib/prepareImage";
+import PhotoEditor from "./PhotoEditor";
 import "./admin.css";
 
 function messageFor(error) {
@@ -386,14 +384,6 @@ function Dashboard({ user }) {
       setBusy(false);
     }
   }
-  function moveImage(index, offset) {
-    const images = [...project.images];
-    [images[index], images[index + offset]] = [
-      images[index + offset],
-      images[index],
-    ];
-    update("images", images);
-  }
   async function save(event) {
     event.preventDefault();
     if (busy) return;
@@ -567,14 +557,18 @@ function Dashboard({ user }) {
             <form onSubmit={save}>
               <fieldset disabled={busy}>
                 <label>
-                  현장명 <span className="admin-required">필수</span>
+                  공개 제목 <span className="admin-required">필수</span>
                   <input
                     required
                     maxLength={100}
                     value={project.title}
-                    placeholder="예: 우두동 아파트 리모델링"
+                    placeholder="예: 아파트 인테리어"
                     onChange={(event) => update("title", event.target.value)}
                   />
+                  <small className="admin-muted">
+                    홈페이지에 공개되는 제목입니다. 아파트명·동·호수 등 주소
+                    정보는 입력하지 마세요.
+                  </small>
                 </label>
                 <div className="admin-fields">
                   <label>
@@ -605,15 +599,6 @@ function Dashboard({ user }) {
                     />
                   </label>
                 </div>
-                <label>
-                  위치
-                  <input
-                    maxLength={160}
-                    value={project.location}
-                    placeholder="예: 춘천시 우두동"
-                    onChange={(event) => update("location", event.target.value)}
-                  />
-                </label>
                 <label>
                   시공 설명
                   <textarea
@@ -649,74 +634,11 @@ function Dashboard({ user }) {
                     onChange={upload}
                   />
                 </label>
-                <ol className="admin-image-list">
-                  {project.images.map((image, index) => (
-                    <li key={image.path}>
-                      <div className="admin-image-preview">
-                        {image.url ? (
-                          <img
-                            src={image.url}
-                            alt={image.caption || `현장 사진 ${index + 1}`}
-                          />
-                        ) : (
-                          <span>사진을 새로 불러와 주세요.</span>
-                        )}
-                        {index === 0 && <span>대표 사진</span>}
-                      </div>
-                      <label>
-                        사진 {index + 1} 설명
-                        <input
-                          maxLength={200}
-                          value={image.caption}
-                          placeholder="예: 시공 후 거실"
-                          onChange={(event) =>
-                            update(
-                              "images",
-                              project.images.map((item, i) =>
-                                i === index
-                                  ? { ...item, caption: event.target.value }
-                                  : item,
-                              ),
-                            )
-                          }
-                        />
-                      </label>
-                      <div className="admin-image-actions">
-                        <button
-                          type="button"
-                          className="admin-button"
-                          disabled={index === 0}
-                          aria-label={`사진 ${index + 1} 앞으로 이동`}
-                          onClick={() => moveImage(index, -1)}
-                        >
-                          <ArrowUp size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          className="admin-button"
-                          disabled={index === project.images.length - 1}
-                          aria-label={`사진 ${index + 1} 뒤로 이동`}
-                          onClick={() => moveImage(index, 1)}
-                        >
-                          <ArrowDown size={16} />
-                        </button>
-                        <button
-                          type="button"
-                          className="admin-button danger"
-                          aria-label={`사진 ${index + 1} 제거`}
-                          onClick={() =>
-                            update(
-                              "images",
-                              project.images.filter((_, i) => i !== index),
-                            )
-                          }
-                        >
-                          <Trash2 size={16} /> 제거
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                <PhotoEditor
+                  key={project.id}
+                  images={project.images}
+                  onChange={(images) => update("images", images)}
+                />
                 <div className="admin-fields">
                   <label>
                     공개 상태

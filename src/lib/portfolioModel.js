@@ -6,6 +6,7 @@ export const CATEGORIES = {
 export const MAX_IMAGES = 20;
 export const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
 export const MAX_STORED_BYTES = 5 * 1024 * 1024;
+export const MAX_PHOTO_DESCRIPTION = 2000;
 
 export function newProject() {
   return {
@@ -36,19 +37,28 @@ export function projectPayload(project) {
     throw new Error(
       "표시 순서는 -100,000~100,000 사이의 정수로 입력해 주세요.",
     );
-  if (project.location.length > 160 || project.description.length > 10000)
-    throw new Error("위치는 160자, 설명은 10,000자까지 입력할 수 있습니다.");
+  if (project.description.length > 10000)
+    throw new Error("시공 설명은 10,000자까지 입력할 수 있습니다.");
   if (!["draft", "published"].includes(project.status))
     throw new Error("공개 상태를 선택해 주세요.");
   if (project.images.length > MAX_IMAGES)
     throw new Error(`사진은 최대 ${MAX_IMAGES}장까지 등록할 수 있습니다.`);
-  const images = project.images.map(({ path, caption = "" }) => {
-    if (!new RegExp(`^projects/${project.id}/[a-f0-9-]+\\.webp$`).test(path))
-      throw new Error("사진 경로를 확인해 주세요.");
-    if (caption.length > 200)
-      throw new Error("사진 설명은 200자까지 입력해 주세요.");
-    return { path, caption: caption.trim() };
-  });
+  const images = project.images.map(
+    ({ path, caption = "", description = "" }) => {
+      if (!new RegExp(`^projects/${project.id}/[a-f0-9-]+\\.webp$`).test(path))
+        throw new Error("사진 경로를 확인해 주세요.");
+      if (caption.length > 200)
+        throw new Error("사진 제목은 200자까지 입력해 주세요.");
+      if (
+        typeof description !== "string" ||
+        description.length > MAX_PHOTO_DESCRIPTION
+      )
+        throw new Error(
+          `사진 부연설명은 ${MAX_PHOTO_DESCRIPTION.toLocaleString()}자까지 입력해 주세요.`,
+        );
+      return { path, caption: caption.trim(), description: description.trim() };
+    },
+  );
   if (new Set(images.map((image) => image.path)).size !== images.length)
     throw new Error("중복된 사진이 있습니다.");
   if (project.status === "published" && !images.length)
@@ -57,7 +67,8 @@ export function projectPayload(project) {
     id: project.id,
     title,
     category: project.category,
-    location: project.location.trim(),
+    // Location is no longer collected or published. Clear legacy values on save.
+    location: "",
     area,
     description: project.description.trim(),
     status: project.status,
@@ -71,6 +82,10 @@ export function projectSignature(project) {
     ...project,
     updated_at: undefined,
     created_at: undefined,
-    images: project.images.map(({ path, caption = "" }) => ({ path, caption })),
+    images: project.images.map(({ path, caption = "", description = "" }) => ({
+      path,
+      caption,
+      description,
+    })),
   });
 }

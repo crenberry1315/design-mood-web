@@ -3,18 +3,21 @@ import {
   ArrowLeft,
   ArrowRight,
   Camera,
-  MapPin,
+  ZoomIn,
   Sparkles,
   X,
 } from "lucide-react";
 import { isBackendConfigured } from "../lib/supabase";
 import { listProjects } from "../lib/portfolioRepository";
 import { CATEGORIES } from "../lib/portfolioModel";
+import PhotoLightbox from "./PhotoLightbox";
 import "./portfolio.css";
 
-function ProjectDetail({ project, onClose, onConsult }) {
+export function ProjectDetail({ project, onClose, onConsult }) {
   const dialog = useRef(null);
   const [index, setIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const [contentTab, setContentTab] = useState("photo");
   useEffect(() => {
     const opener = document.activeElement;
     const previousOverflow = document.body.style.overflow;
@@ -27,6 +30,11 @@ function ProjectDetail({ project, onClose, onConsult }) {
   }, []);
   const currentIndex = Math.min(index, Math.max(0, project.images.length - 1));
   const image = project.images[currentIndex];
+  const previous = () =>
+    setIndex(
+      (currentIndex - 1 + project.images.length) % project.images.length,
+    );
+  const next = () => setIndex((currentIndex + 1) % project.images.length);
   return (
     <dialog
       ref={dialog}
@@ -49,10 +57,23 @@ function ProjectDetail({ project, onClose, onConsult }) {
         </header>
         <div className="portfolio-detail-image">
           {image?.url ? (
-            <img
-              src={image.url}
-              alt={image.caption || `${project.title} 사진 ${currentIndex + 1}`}
-            />
+            <button
+              type="button"
+              className="portfolio-photo-button"
+              aria-label={`사진 ${currentIndex + 1} 크게 보기`}
+              onClick={() => setExpanded(true)}
+            >
+              <img
+                src={image.url}
+                alt={
+                  image.caption || `${project.title} 사진 ${currentIndex + 1}`
+                }
+              />
+              <span className="portfolio-zoom-hint">
+                <ZoomIn size={16} />
+                사진 크게 보기
+              </span>
+            </button>
           ) : (
             <Camera size={36} />
           )}
@@ -62,13 +83,7 @@ function ProjectDetail({ project, onClose, onConsult }) {
                 type="button"
                 className="portfolio-prev"
                 aria-label="이전 사진"
-                onClick={() =>
-                  setIndex(
-                    () =>
-                      (currentIndex - 1 + project.images.length) %
-                      project.images.length,
-                  )
-                }
+                onClick={previous}
               >
                 <ArrowLeft size={20} />
               </button>
@@ -76,9 +91,7 @@ function ProjectDetail({ project, onClose, onConsult }) {
                 type="button"
                 className="portfolio-next"
                 aria-label="다음 사진"
-                onClick={() =>
-                  setIndex((currentIndex + 1) % project.images.length)
-                }
+                onClick={next}
               >
                 <ArrowRight size={20} />
               </button>
@@ -86,20 +99,78 @@ function ProjectDetail({ project, onClose, onConsult }) {
           )}
         </div>
         <div className="portfolio-detail-content">
-          <p className="portfolio-image-caption">
-            {image?.caption || "현장 사진"}{" "}
+          <p className="portfolio-image-caption" aria-live="polite">
+            {image?.caption || "시공 사진"}{" "}
             <span>
               {currentIndex + 1} / {project.images.length}
             </span>
           </p>
           <h2 id="portfolio-detail-title">{project.title}</h2>
-          {project.location && (
-            <p className="portfolio-location">
-              <MapPin size={15} />
-              {project.location}
+          <div
+            className="portfolio-content-tabs"
+            role="tablist"
+            aria-label="시공 설명"
+          >
+            {[
+              ["photo", "사진 설명"],
+              ["project", "시공 소개"],
+            ].map(([value, label], tabIndex) => (
+              <button
+                type="button"
+                role="tab"
+                className="portfolio-content-tab"
+                key={value}
+                id={`portfolio-tab-${value}`}
+                aria-selected={contentTab === value}
+                aria-controls={`portfolio-panel-${value}`}
+                tabIndex={contentTab === value ? 0 : -1}
+                onClick={() => setContentTab(value)}
+                onKeyDown={(event) => {
+                  if (
+                    !["ArrowLeft", "ArrowRight", "Home", "End"].includes(
+                      event.key,
+                    )
+                  )
+                    return;
+                  event.preventDefault();
+                  const nextTab =
+                    event.key === "Home"
+                      ? 0
+                      : event.key === "End"
+                        ? 1
+                        : 1 - tabIndex;
+                  setContentTab(nextTab === 0 ? "photo" : "project");
+                  event.currentTarget.parentElement.children[nextTab].focus();
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div
+            id="portfolio-panel-photo"
+            role="tabpanel"
+            aria-labelledby="portfolio-tab-photo"
+            hidden={contentTab !== "photo"}
+            tabIndex={0}
+          >
+            <p className="portfolio-description" aria-live="polite">
+              {image?.description ||
+                image?.caption ||
+                "사진을 누르면 시공 디테일을 크게 볼 수 있습니다."}
             </p>
-          )}
-          <p className="portfolio-description">{project.description}</p>
+          </div>
+          <div
+            id="portfolio-panel-project"
+            role="tabpanel"
+            aria-labelledby="portfolio-tab-project"
+            hidden={contentTab !== "project"}
+            tabIndex={0}
+          >
+            <p className="portfolio-description">
+              {project.description || "사진으로 공간의 시공 모습을 살펴보세요."}
+            </p>
+          </div>
           <button
             type="button"
             className="btn btn-primary"
@@ -112,6 +183,16 @@ function ProjectDetail({ project, onClose, onConsult }) {
           </button>
         </div>
       </article>
+      {expanded && image?.url && (
+        <PhotoLightbox
+          image={image}
+          number={currentIndex + 1}
+          count={project.images.length}
+          onPrevious={previous}
+          onNext={next}
+          onClose={() => setExpanded(false)}
+        />
+      )}
     </dialog>
   );
 }
@@ -249,10 +330,9 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                       </div>
                       <div className="portfolio-card-body">
                         <p>
-                          {project.location}
                           {project.area
-                            ? `${project.location ? " · " : ""}${project.area}평`
-                            : ""}
+                            ? `${project.area}평`
+                            : CATEGORIES[project.category]}
                         </p>
                         <h3>{project.title}</h3>
                         <span>
