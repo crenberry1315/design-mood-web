@@ -1,0 +1,95 @@
+# Portfolio 관리자 서비스 설정과 배포
+
+버전 `0.1.0`, 2026-10-15 작업 중 상태를 기록합니다. 아래의 완료·진행 중 표시는 최초 구성 상태이며, 배포할 때 실제 서비스 설정과 브라우저 결과를 다시 확인합니다.
+
+## 서비스 구성과 현재 상태
+
+| 항목 | 설정 | 상태 |
+| --- | --- | --- |
+| 공개 홈페이지 | `https://designmood.kr`, GitHub Pages | `main` 푸시 자동 배포 |
+| 관리자 기본 주소 | `https://design-mood-admin-2120.netlify.app` | 기존 사이트에 `dist-admin/` 수동 배포 |
+| Netlify site ID | `78df4310-8146-4fc9-a663-64b9f1aafbb1` | 기존 사이트 식별자 |
+| 관리자 사용자 지정 주소 | `https://admin.designmood.kr` | DNS 등록·Netlify 소유권 검증 완료, HTTPS 발급 확인 중 |
+| Supabase 프로젝트 | `fslymhrfkcmetxdnzxxw`, Seoul | 마이그레이션과 첫 관리자 권한 적용됨 |
+| 최초 관리자 | `design_mood_2120@naver.com` | 관리자 멤버십 적용됨 |
+| Supabase 신규 가입 | 비활성화 | 적용됨 |
+| GitHub 연결 변수 | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` | 저장소 변수 설정됨 |
+| Supabase Auth Site URL·redirect 목록 | 관리자 origin 및 복구 후 돌아갈 주소 | 아래 정확한 URL로 적용 완료 |
+| 사용자 지정 SMTP | 미설정 | 비밀번호 재설정 이메일 수신 미검증 |
+
+## 로컬 설정과 빌드
+
+Node.js 24를 사용합니다. 의존성은 잠금 파일 기준으로 설치합니다.
+
+```powershell
+npm ci
+Copy-Item .env.example .env.local
+```
+
+이미 `.env.local`이 있으면 덮어쓰지 말고 필요한 값을 확인합니다.
+
+```dotenv
+VITE_SUPABASE_URL=https://fslymhrfkcmetxdnzxxw.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=프로젝트의_sb_publishable_키
+```
+
+`.env.local`은 Git에서 제외합니다. publishable key는 브라우저에 포함되는 공개 연결 키이며, 데이터 접근은 인증과 RLS로 제한합니다. 서버 전용 `sb_secret_` 또는 service-role key를 넣지 마세요. 배포 전 검사 스크립트는 Supabase HTTPS 주소와 `sb_publishable_` 키 형식을 확인합니다.
+
+```powershell
+npm test
+npm run lint
+npm run build
+npm run build:admin
+```
+
+공개 빌드는 `dist/`, 관리자 빌드는 `dist-admin/`입니다. 관리자 빌드는 공개 폴더 전체를 복사하지 않고 필요한 로고·파비콘과 `_headers`를 추가하며, 공개 사이트의 `CNAME`을 포함하지 않습니다. `npm run dev:admin`은 5176 포트에서 관리자 개발 화면을 엽니다.
+
+## 데이터베이스와 저장소 권한
+
+`supabase/migrations/202610150001_portfolio.sql`과 `supabase/grant-initial-admin.sql`은 현재 클라우드에 적용되어 있습니다. 기존 프로젝트에 다시 실행하지 마세요. 테이블·정책·함수를 새로 만드는 초기 마이그레이션이므로 재실행을 전제로 하지 않습니다. 변경이 필요하면 현재 스키마를 확인하고 별도의 후속 마이그레이션을 작성합니다.
+
+새 환경을 준비할 때만 스키마 적용 여부를 먼저 확인한 뒤 초기 마이그레이션을 한 번 적용합니다. 관리자 계정은 운영자가 Supabase Auth에서 준비하고, 해당 사용자의 UUID를 `public.portfolio_admins`에 등록합니다. 클라이언트의 프로필이나 metadata 값으로 권한을 부여하지 않습니다. 기존 첫 관리자 부여 SQL의 이메일을 다른 사용자에게 그대로 재사용하지 마세요.
+
+- `portfolio_projects`: 방문자는 공개 사례만 읽을 수 있고 승인된 관리자만 생성·수정·삭제할 수 있습니다.
+- `portfolio_admins`: 일반 계정이 스스로 관리자에 등록할 수 없습니다. 운영자가 멤버십을 제거하면 기존 로그인 세션에도 서버의 쓰기·비공개 읽기 권한 제한이 적용됩니다.
+- `portfolio-images`: 비공개 버킷, WebP만 허용, 저장 파일당 5MB 제한입니다. 방문자는 공개 사례가 참조하는 사진에 대해서만 서명 URL을 발급받습니다. 관리자는 비공개 사례의 사진도 볼 수 있습니다.
+- 파일은 새 UUID 경로로 업로드하며 덮어쓰기를 허용하지 않습니다. 사례가 참조하는 파일은 삭제할 수 없습니다. 사례 변경 후 사용하지 않는 파일을 별도로 정리합니다.
+- 사진 URL의 유효 시간은 600초입니다. 공개 화면은 1분 간격과 focus 시 데이터를 갱신하고, 관리자는 사례 선택 시와 편집 중 4분 간격·focus 시 링크를 갱신합니다.
+- 수정과 삭제는 `updated_at` 값을 조건으로 사용합니다. 다른 세션에서 먼저 수정한 기록을 덮어쓰지 않습니다. 사진 링크 갱신은 편집 중인 필드·사진 순서·동시 수정 검사 기준을 보존합니다.
+
+`npm test`는 PGlite의 모의 Auth/Storage 스키마에서 애플리케이션 마이그레이션을 실행해 권한을 확인합니다. 실제 Storage API·이메일·호스팅 동작 검증을 대신하지 않습니다.
+
+## 인증 origin과 이메일 복구
+
+Supabase Authentication URL Configuration의 Site URL은 `https://admin.designmood.kr`입니다. 허용 redirect에는 `https://admin.designmood.kr/`와 `https://design-mood-admin-2120.netlify.app/` 두 주소를 등록했습니다. 로컬 복구 검증이 필요하면 `http://localhost:5176/`을 별도로 허용합니다. 운영 설정을 바꿀 때 현재 콘솔과 대조하세요.
+
+복구 이메일 요청은 사용 중인 origin의 `/`로 돌아가도록 지정합니다. 복구 링크로 돌아오면 새 비밀번호 입력 화면을 표시합니다. 비밀번호 최소 길이는 화면에서 12자로 제한합니다. 관리자 세션은 접속 origin의 `sessionStorage`에 저장되므로 Netlify 기본 주소·사용자 지정 주소·로컬 주소 사이에 공유되지 않습니다.
+
+사용자 지정 SMTP는 아직 설정되지 않았습니다. 이메일 요청 성공 응답이나 UI 안내만으로 메일 도착을 보장하지 마세요. 운영자가 SMTP 설정과 발송 제한을 확인하고 실제 관리자 메일함에서 재설정 메일 수신·링크 접속·비밀번호 변경·재로그인을 확인해야 합니다.
+
+## 공개 홈페이지 배포
+
+`.github/workflows/deploy.yml`은 `main` 푸시 또는 수동 실행으로 동작합니다. GitHub 저장소 변수의 URL/key를 사용해 Node.js 24에서 `npm ci`, 연결 설정 검사, `npm test`, `npm run build`를 수행한 뒤 `dist/`를 GitHub Pages로 배포합니다.
+
+배포 후 공개 주소에서 사례 목록, 공간 유형 필터, 사진 상세보기, 상담 연결, 평수 슬라이더와 약도를 확인합니다. 테스트용 현장과 개인정보가 공개되지 않았는지도 확인합니다. 빌드 성공은 사용자 화면과 실제 데이터 연결 검증을 대신하지 않습니다.
+
+## 관리자 Netlify 배포
+
+```powershell
+npm run build:admin
+```
+
+기존 Netlify 사이트 ID `78df4310-8146-4fc9-a663-64b9f1aafbb1`의 수동 배포 영역에 `dist-admin/`을 올립니다. 새 사이트를 만들지 않습니다. `netlify.toml`에도 같은 빌드 명령과 출력 폴더가 정의되어 있지만, 현재 운영 경로는 미리 빌드한 폴더를 올리는 Netlify Drop 수동 배포입니다.
+
+`dist-admin/_headers`는 `no-store`, `noindex,nofollow`, 프레임 차단, 콘텐츠 유형 보호와 CSP를 포함합니다. 배포 응답에서 헤더 적용을 확인하고, 관리자 로그인·비공개 저장·사진 업로드·공개 전환·사진 정렬·동시 수정 충돌을 실제 서비스에서 확인합니다. 관리자 빌드를 공개 홈페이지의 `dist/` 대신 올리지 않도록 주의합니다.
+
+## 관리자 도메인 연결
+
+카페24에 등록했고 권한 있는 네임서버 응답으로 확인한 DNS 레코드입니다. 기존 루트·www·와일드카드 레코드는 유지했습니다. 동일 레코드를 중복으로 만들지 마세요.
+
+| 유형 | 호스트 | 값 |
+| --- | --- | --- |
+| CNAME | `admin` | `design-mood-admin-2120.netlify.app` |
+| TXT | `subdomain-owner-verification` | `6c561260f6821e8767a9badc782fce34` |
+
+레코드 등록 후 Netlify의 도메인 소유권 확인·도메인 연결 상태와 HTTPS 인증서 발급을 확인합니다. `https://admin.designmood.kr/` 접속, 인증 redirect, 실제 관리자 로그인까지 확인한 다음 사용 안내의 주소와 진행 중 상태를 갱신합니다. DNS 등록이나 인증서 발급 대기만으로 연결 완료라고 보고하지 않습니다.
