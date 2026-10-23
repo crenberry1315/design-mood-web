@@ -6,6 +6,17 @@ import {
   heroSignature,
 } from "../src/lib/heroModel.js";
 
+test("hero watermark defaults OFF and retains ON/OFF through save/reorder and dirty checks", () => {
+  const config = { slides: DEFAULT_HERO_SLIDES };
+  assert.equal(heroPayload(config).slides[0].watermark, false);
+  assert.equal(heroSignature(config), heroSignature({ slides: DEFAULT_HERO_SLIDES.map((slide) => ({ ...slide, watermark: false })) }));
+  const enabled = { slides: DEFAULT_HERO_SLIDES.map((slide, i) => ({ ...slide, watermark: i === 0 })) };
+  assert.notEqual(heroSignature(config), heroSignature(enabled));
+  assert.deepEqual(heroPayload({ slides: [...enabled.slides].reverse() }).slides.map((slide) => slide.watermark), [false, false, false, true]);
+  for (const watermark of ["true", 1, null])
+    assert.throws(() => heroPayload({ slides: [{ ...DEFAULT_HERO_SLIDES[0], watermark }] }), /워터마크/);
+});
+
 test("main slideshow preserves order and user text but excludes signed URLs", () => {
   const config = {
     slides: DEFAULT_HERO_SLIDES.map((slide) => ({

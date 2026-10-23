@@ -6,6 +6,22 @@ import {
   projectSignature,
 } from "../src/lib/portfolioModel.js";
 
+test("per-photo watermarks default OFF, survive save/reorder, and mark edits dirty", () => {
+  const project = { ...newProject(), title: "현장" };
+  const image = { path: `projects/${project.id}/11111111-1111-4111-8111-111111111111.webp` };
+  project.images = [image];
+  assert.equal(projectPayload(project).images[0].watermark, false);
+  assert.equal(projectSignature(project), projectSignature({ ...project, images: [{ ...image, watermark: false }] }));
+  const enabled = { ...project, images: [{ ...image, watermark: true }] };
+  assert.equal(projectPayload(enabled).images[0].watermark, true);
+  assert.notEqual(projectSignature(project), projectSignature(enabled));
+  const second = { ...image, path: `projects/${project.id}/22222222-2222-4222-8222-222222222222.webp`, watermark: false };
+  const reordered = projectPayload({ ...project, images: [second, enabled.images[0]] });
+  assert.deepEqual(reordered.images.map((photo) => photo.watermark), [false, true]);
+  for (const watermark of ["false", 1, null])
+    assert.throws(() => projectPayload({ ...project, images: [{ ...image, watermark }] }), /워터마크/);
+});
+
 test("published content requires a valid image while incomplete drafts can be saved", () => {
   const project = { ...newProject(), title: "  우두동 현장  " };
   assert.equal(projectPayload(project).title, "우두동 현장");

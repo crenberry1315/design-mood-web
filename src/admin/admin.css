@@ -289,7 +289,7 @@
   color: var(--text-medium);
   margin-bottom: 20px;
 }
-.admin-app input:not([type="file"]),
+.admin-app input:not([type="file"]):not([type="checkbox"]),
 .admin-app textarea,
 .admin-app select {
   display: block;
@@ -305,6 +305,36 @@
 }
 .admin-app textarea {
   resize: vertical;
+}
+.admin-app .admin-watermark-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: #f8f5ef;
+  cursor: pointer;
+}
+.admin-watermark-toggle > span {
+  flex: 1;
+  min-width: 0;
+}
+.admin-watermark-toggle input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary-brown);
+  cursor: pointer;
+}
+.admin-watermark-toggle strong {
+  min-width: 28px;
+  font-size: 12px;
+  color: var(--primary-brown-dark);
+}
+.admin-watermark-toggle:has(input:checked) {
+  background: #eee4d5;
+  border-color: var(--primary-brown);
 }
 .admin-app input:focus,
 .admin-app textarea:focus,

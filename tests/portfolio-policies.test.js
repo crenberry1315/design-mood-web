@@ -56,6 +56,9 @@ before(async () => {
       "utf8",
     ),
   );
+  await db.exec(await readFile(new URL(
+    "../supabase/migrations/202610230004_photo_watermarks.sql", import.meta.url,
+  ), "utf8"));
   await db.query("insert into public.portfolio_admins values ($1)", [admin]);
   for (const [id, status, path] of [
     [published, "published", publishedPath],
@@ -474,6 +477,26 @@ test("hero uploads stay private until saved, cannot be overwritten or removed wh
     );
   });
 });
+
+test("watermark ON/OFF persists for portfolio and hero; invalid flags are rejected", () =>
+  asRole("authenticated", admin, async () => {
+    for (const watermark of [true, false]) {
+      const images = [{ path: draftPath, caption: "거실", watermark }];
+      await db.query("update public.portfolio_projects set images=$1::jsonb where id=$2", [JSON.stringify(images), draft]);
+      const result = await db.query("select images from public.portfolio_projects where id=$1", [draft]);
+      assert.equal(result.rows[0].images[0].watermark, watermark);
+      const slides = DEFAULT_HERO_SLIDES.map((slide) => ({ ...slide, watermark }));
+      await db.query("update public.homepage_hero set slides=$1::jsonb", [JSON.stringify(slides)]);
+      const hero = await db.query("select slides from public.homepage_hero");
+      assert.equal(hero.rows[0].slides[0].watermark, watermark);
+    }
+    for (const watermark of ["false", 1, null, {}]) {
+      await assert.rejects(db.query("update public.portfolio_projects set images=$1::jsonb where id=$2", [JSON.stringify([{ path: draftPath, watermark }]), draft]), /check constraint/);
+      await assert.rejects(db.query("update public.homepage_hero set slides=$1::jsonb", [JSON.stringify([{ ...DEFAULT_HERO_SLIDES[0], watermark }])]), /check constraint/);
+    }
+    await db.query("update public.portfolio_projects set images=$1::jsonb where id=$2", [JSON.stringify([{ path: draftPath }]), draft]);
+    await db.query("update public.homepage_hero set slides=$1::jsonb", [JSON.stringify(DEFAULT_HERO_SLIDES)]);
+  }));
 
 test("removing membership revokes existing-session write and draft permissions", async () => {
   await db.query("delete from public.portfolio_admins where user_id=$1", [

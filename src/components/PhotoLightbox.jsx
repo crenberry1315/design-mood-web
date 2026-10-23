@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Maximize2, X, ZoomIn } from "lucide-react";
+import WatermarkedImage from "./WatermarkedImage";
 
 export default function PhotoLightbox({
   image,
@@ -79,8 +80,11 @@ export default function PhotoLightbox({
             사진을 불러오지 못했습니다. 닫은 뒤 다시 열어 주세요.
           </p>
         ) : (
-          <img
+          <WatermarkedImage
             src={image.url}
+            watermark={image.watermark}
+            fit={natural ? "contain" : "scale-down"}
+            natural={natural}
             alt={image.caption || `시공 사진 ${number}`}
             onError={() => setFailedUrl(image.url)}
           />

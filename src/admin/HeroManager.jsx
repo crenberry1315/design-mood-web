@@ -12,6 +12,8 @@ import { MAX_HERO_SLIDES, heroSignature, isHeroUpload } from "../lib/heroModel";
 import { loadHero, saveHero, uploadHero } from "../lib/heroRepository";
 import { removeImages } from "../lib/portfolioRepository";
 import { prepareImage } from "../lib/prepareImage";
+import WatermarkedImage from "../components/WatermarkedImage";
+import WatermarkToggle from "./WatermarkToggle";
 
 const errorText = (error) =>
   /[가-힣]/.test(error?.message || "")
@@ -19,6 +21,7 @@ const errorText = (error) =>
     : "처리하지 못했습니다. 연결 상태와 관리자 권한을 확인한 뒤 다시 시도해 주세요.";
 
 export default function HeroManager({ user, registerLeave }) {
+  const [uploadWatermark, setUploadWatermark] = useState(false);
   const [config, setConfig] = useState(null);
   const [baseline, setBaseline] = useState("");
   const [busy, setBusyState] = useState(false);
@@ -157,7 +160,7 @@ export default function HeroManager({ user, registerLeave }) {
       for (const file of files) {
         const slide = await uploadHero(await prepareImage(file));
         pending.current.set(slide.path, slide.url);
-        added.push(slide);
+        added.push({ ...slide, watermark: uploadWatermark });
       }
       setNotice("사진을 준비했습니다. 저장하면 홈페이지에 반영됩니다.");
     } catch (err) {
@@ -284,6 +287,12 @@ export default function HeroManager({ user, registerLeave }) {
         ) : (
           <form onSubmit={save}>
             <fieldset disabled={busy}>
+              <WatermarkToggle
+                label="추가할 메인 사진 워터마크"
+                checked={uploadWatermark}
+                onChange={setUploadWatermark}
+                hint="이후 추가할 사진에 적용됩니다. 사진 교체 시에는 해당 사진의 ON/OFF를 유지합니다."
+              />
               <label className="admin-upload">
                 <ImagePlus size={26} />
                 <strong>메인 사진 추가</strong>
@@ -301,10 +310,11 @@ export default function HeroManager({ user, registerLeave }) {
                   <li key={slide.path}>
                     <div className="admin-hero-preview">
                       {slide.url ? (
-                        <img
+                        <WatermarkedImage
                           src={slide.url}
                           alt={slide.title}
-                          style={{ objectFit: slide.fit }}
+                          fit={slide.fit}
+                          watermark={slide.watermark}
                         />
                       ) : (
                         <span>사진을 다시 불러와 주세요.</span>
@@ -313,6 +323,12 @@ export default function HeroManager({ user, registerLeave }) {
                     </div>
                     <div className="admin-hero-fields">
                       <h3>메인 사진 {index + 1}</h3>
+                      <WatermarkToggle
+                        label={`메인 사진 ${index + 1} 워터마크`}
+                        checked={slide.watermark}
+                        onChange={(value) => edit(index, "watermark", value)}
+                        hint="저장하면 홈페이지에 반영됩니다."
+                      />
                       <label>
                         짧은 제목
                         <input

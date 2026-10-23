@@ -37,7 +37,7 @@ export function heroPayload(config) {
   )
     throw new Error(`메인 사진은 1~${MAX_HERO_SLIDES}장으로 구성해 주세요.`);
   const slides = config.slides.map(
-    ({ path, title, badge = "", fit = "cover" }) => {
+    ({ path, title, badge = "", fit = "cover", watermark = false }) => {
       if (!bundled.has(path) && !isHeroUpload(path))
         throw new Error("메인 사진 경로를 확인해 주세요.");
       if (
@@ -50,7 +50,9 @@ export function heroPayload(config) {
         throw new Error("짧은 제목은 80자까지 입력해 주세요.");
       if (!["cover", "contain"].includes(fit))
         throw new Error("사진 표시 방식을 선택해 주세요.");
-      return { path, title: title.trim(), badge: badge.trim(), fit };
+      if (typeof watermark !== "boolean")
+        throw new Error("워터마크 사용 여부를 확인해 주세요.");
+      return { path, title: title.trim(), badge: badge.trim(), fit, watermark };
     },
   );
   if (new Set(slides.map((slide) => slide.path)).size !== slides.length)
@@ -59,11 +61,12 @@ export function heroPayload(config) {
 }
 export function heroSignature(config) {
   return JSON.stringify(
-    config.slides.map(({ path, title, badge, fit }) => ({
+    config.slides.map(({ path, title, badge, fit, watermark = false }) => ({
       path,
       title,
       badge,
       fit,
+      watermark,
     })),
   );
 }
