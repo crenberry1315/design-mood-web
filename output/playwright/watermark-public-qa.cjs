@@ -1,0 +1,76 @@
+/* oxlint-disable no-unused-expressions -- Playwright CLI evaluates this function. */
+async (page) => {
+  const assert = (ok, message) => { if (!ok) throw new Error(message); };
+  const state = page.__wmState;
+  const geometry = async (selector) => {
+    await page.locator(selector+' .watermarked-image__bounds').waitFor();
+    return page.locator(selector).evaluate((el) => {
+      const image = el.querySelector('img.watermarked-image__photo');
+      const layer = el.querySelector('.watermarked-image__bounds');
+      const rect = image.getBoundingClientRect();
+      const box = layer.getBoundingClientRect();
+      const fit = getComputedStyle(image).objectFit;
+      const scale = Math.min(rect.width/image.naturalWidth,rect.height/image.naturalHeight,fit==='scale-down'?1:Infinity);
+      const width = fit==='contain'||fit==='scale-down' ? image.naturalWidth*scale : rect.width;
+      const height = fit==='contain'||fit==='scale-down' ? image.naturalHeight*scale : rect.height;
+      const expected = {x:rect.x+(rect.width-width)/2,y:rect.y+(rect.height-height)/2,width,height};
+      return {actual:{x:box.x,y:box.y,width:box.width,height:box.height},expected,pointerEvents:getComputedStyle(layer).pointerEvents};
+    });
+  };
+  const checks = [];
+  const check = async (selector, name) => {
+    const data = await geometry(selector);
+    for (const key of ['x','y','width','height']) assert(Math.abs(data.actual[key]-data.expected[key])<1, name+' '+key+' aligns with photo');
+    assert(data.pointerEvents==='none',name+' does not intercept controls');
+    checks.push({name,...data});
+  };
+  await page.setViewportSize({width:1440,height:1000});
+  await page.getByRole('button',{name:'Go to slide 1',exact:true}).click();
+  await check('.hero-img-container > .watermarked-image:first-child','hero ON');
+  assert(await page.locator('.hero-img-container > .watermarked-image:nth-child(2) .watermarked-image__bounds').count()===0, 'hero OFF has no layer');
+  await page.locator('.hero-img-container').screenshot({path:'output/playwright/watermark-public-hero.png'});
+  await check('.portfolio-cover','thumbnail ON');
+  await page.locator('.portfolio-card').screenshot({path:'output/playwright/watermark-thumbnail-on.png'});
+  await page.getByRole('button',{name:'워터마크 검증용 시공 사례 상세보기',exact:true}).click();
+  await check('.portfolio-photo-button','detail landscape');
+  await page.getByRole('button',{name:'사진 1 크게 보기',exact:true}).click();
+  await check('.photo-lightbox-viewport','lightbox fitted landscape');
+  await page.screenshot({path:'output/playwright/watermark-lightbox-desktop.png'});
+  await page.getByRole('button',{name:'100% 크기',exact:true}).click();
+  await check('.photo-lightbox-viewport','lightbox natural landscape');
+  assert(await page.locator('.watermarked-image--natural').evaluate(el=>el.offsetWidth===el.querySelector('img').naturalWidth),'100% actual pixels');
+  await page.screenshot({path:'output/playwright/watermark-lightbox-natural.png'});
+  await page.getByRole('button',{name:'확대보기 다음 사진',exact:true}).click();
+  await check('.photo-lightbox-viewport','lightbox portrait resets fitted');
+  assert(await page.locator('.watermarked-image--natural').count()===0,'next photo resets fit');
+  await page.screenshot({path:'output/playwright/watermark-lightbox-portrait.png'});
+  await page.setViewportSize({width:390,height:844});
+  await check('.photo-lightbox-viewport','mobile portrait');
+  await page.screenshot({path:'output/playwright/watermark-lightbox-mobile-portrait.png'});
+  await page.getByRole('button',{name:'확대보기 이전 사진',exact:true}).click();
+  await check('.photo-lightbox-viewport','mobile landscape');
+  await page.screenshot({path:'output/playwright/watermark-lightbox-mobile.png'});
+  await page.getByRole('button',{name:'100% 크기',exact:true}).click();
+  await check('.photo-lightbox-viewport','mobile natural');
+  await page.locator('.photo-lightbox-viewport').evaluate(el=>el.scrollTo(250,200));
+  await check('.photo-lightbox-viewport','mobile natural scrolled');
+  await page.getByRole('button',{name:'확대보기 닫기',exact:true}).click();
+  await check('.portfolio-photo-button','mobile detail');
+  await page.screenshot({path:'output/playwright/watermark-detail-mobile.png'});
+  await page.getByRole('button',{name:'상세보기 닫기',exact:true}).click();
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile no page overflow');
+  state.project.images[0].watermark = false;
+  await page.reload();
+  await page.locator('.portfolio-card').waitFor();
+  assert(await page.locator('.portfolio-cover .watermarked-image__bounds').count()===0,'public OFF thumbnail');
+  await page.locator('.portfolio-card').screenshot({path:'output/playwright/watermark-thumbnail-off.png'});
+  await page.getByRole('button',{name:'워터마크 검증용 시공 사례 상세보기',exact:true}).click();
+  assert(await page.locator('.portfolio-photo-button .watermarked-image__bounds').count()===0,'public OFF detail');
+  await page.getByRole('button',{name:'사진 1 크게 보기',exact:true}).click();
+  assert(await page.locator('.photo-lightbox-viewport .watermarked-image__bounds').count()===0,'public OFF lightbox');
+  state.project.images[0].watermark = true;
+  assert(state.errors.length===0,'no browser exceptions');
+  state.publicPassed = true;
+  state.geometryChecks = checks;
+  return {public:'PASS',geometryChecks:checks.length,admin:state.adminPassed,errors:state.errors};
+}
