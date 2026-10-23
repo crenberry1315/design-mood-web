@@ -34,6 +34,6 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("../assets/watermark.png") center / 62% auto no-repeat;
-  opacity: 0.72;
+  background: url("../assets/watermark.png") center / 43.4% auto no-repeat;
+  opacity: 0.55;
 }
