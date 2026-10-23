@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3 — 2026-10-23
+
+- Choose watermark ON/OFF before uploading portfolio or main slideshow photos, then adjust and preview each photo independently before saving. Preserve the setting during reordering and main-photo replacement.
+- Display the supplied transparent Design Mood watermark on enabled photos in the main slideshow, portfolio thumbnails, detail views and fitted or 100% fullscreen views. Keep photo files unchanged and existing photos OFF by default.
+- Add migration 004 to validate optional boolean watermark flags without modifying existing photo or text records. Model and policy tests cover 23 cases.
+- Rename the gallery heading to ‘실제 시공 갤러리’ and remove the satisfaction percentage badge while retaining saved slideshow photos and text.
+
 ## 0.1.2 — 2026-10-15
 
 - Edit homepage slideshow photos in the administrator app: add or replace images, arrange 1–10 slides, edit the short title and photo text, and choose frame-fill or whole-photo display.
