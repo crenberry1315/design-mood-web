@@ -44,7 +44,7 @@ export function projectPayload(project) {
   if (project.images.length > MAX_IMAGES)
     throw new Error(`사진은 최대 ${MAX_IMAGES}장까지 등록할 수 있습니다.`);
   const images = project.images.map(
-    ({ path, caption = "", description = "" }) => {
+    ({ path, caption = "", description = "", watermark = false }) => {
       if (!new RegExp(`^projects/${project.id}/[a-f0-9-]+\\.webp$`).test(path))
         throw new Error("사진 경로를 확인해 주세요.");
       if (caption.length > 200)
@@ -56,7 +56,9 @@ export function projectPayload(project) {
         throw new Error(
           `사진 부연설명은 ${MAX_PHOTO_DESCRIPTION.toLocaleString()}자까지 입력해 주세요.`,
         );
-      return { path, caption: caption.trim(), description: description.trim() };
+      if (typeof watermark !== "boolean")
+        throw new Error("워터마크 사용 여부를 확인해 주세요.");
+      return { path, caption: caption.trim(), description: description.trim(), watermark };
     },
   );
   if (new Set(images.map((image) => image.path)).size !== images.length)
@@ -82,10 +84,11 @@ export function projectSignature(project) {
     ...project,
     updated_at: undefined,
     created_at: undefined,
-    images: project.images.map(({ path, caption = "", description = "" }) => ({
+    images: project.images.map(({ path, caption = "", description = "", watermark = false }) => ({
       path,
       caption,
       description,
+      watermark,
     })),
   });
 }

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Trash2 } from "lucide-react";
 import { MAX_PHOTO_DESCRIPTION } from "../lib/portfolioModel";
+import WatermarkedImage from "../components/WatermarkedImage";
+import WatermarkToggle from "./WatermarkToggle";
 
 export default function PhotoEditor({ images, onChange }) {
   const [selectedPath, setSelectedPath] = useState(null);
@@ -84,9 +86,11 @@ export default function PhotoEditor({ images, onChange }) {
       >
         <div className="admin-image-preview">
           {selected.url ? (
-            <img
+            <WatermarkedImage
               src={selected.url}
               alt={selected.caption || `사진 ${selectedIndex + 1}`}
+              watermark={selected.watermark}
+              fit="contain"
             />
           ) : (
             <span>사진을 새로 불러와 주세요.</span>
@@ -94,6 +98,12 @@ export default function PhotoEditor({ images, onChange }) {
         </div>
         <div className="admin-photo-fields">
           <h4>사진 {selectedIndex + 1} 설명</h4>
+          <WatermarkToggle
+            label={`사진 ${selectedIndex + 1} 워터마크`}
+            checked={selected.watermark}
+            onChange={(value) => edit("watermark", value)}
+            hint="선택한 사진에 적용됩니다. 저장하면 홈페이지에 반영됩니다."
+          />
           <label>
             사진 제목
             <input

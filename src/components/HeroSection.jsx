@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DEFAULT_HERO_SLIDES } from "../lib/heroModel";
 import { loadHero } from "../lib/heroRepository";
 import { isBackendConfigured } from "../lib/supabase";
+import WatermarkedImage from "./WatermarkedImage";
 import {
   ArrowRight,
   Calculator,
@@ -293,7 +294,7 @@ export default function HeroSection() {
               gap: "0.75rem",
             }}
           >
-            {/* Top Bar Outside Photo: Gallery Header & Satisfaction Stat Badge */}
+            {/* Gallery heading */}
             <div
               style={{
                 display: "flex",
@@ -314,65 +315,7 @@ export default function HeroSection() {
                 }}
               >
                 <Sparkles size={16} style={{ color: "var(--primary-brown)" }} />
-                <span>매장 &amp; 실제 시공 갤러리</span>
-              </div>
-
-              {/* Stat Badge Moved Outside Slideshow Photo */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  padding: "0.5rem 1rem",
-                  backgroundColor: "#FFFFFF",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-subtle)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <div
-                  className="icon-box"
-                  style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(124, 94, 67, 0.12)",
-                    color: "var(--primary-brown-dark)",
-                    flexShrink: 0,
-                  }}
-                >
-                  <Sparkles size={16} />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "0.72rem",
-                      color: "var(--text-muted)",
-                      fontWeight: 500,
-                      lineHeight: 1.1,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    대표 시공 만족도
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "0.95rem",
-                      fontWeight: 700,
-                      color: "var(--primary-brown-dark)",
-                      lineHeight: 1.2,
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    99.4% 고객 만족
-                  </div>
-                </div>
+                <span>실제 시공 갤러리</span>
               </div>
             </div>
 
@@ -394,11 +337,13 @@ export default function HeroSection() {
                 className="hero-img-container"
               >
                 {slides.map((slide, idx) => (
-                  <img
+                  <WatermarkedImage
                     key={slide.path}
                     aria-hidden={idx !== currentIndex}
                     src={slide.image}
                     alt={slide.title}
+                    watermark={slide.watermark}
+                    fit={slide.fit || "cover"}
                     style={{
                       position: "absolute",
                       inset: 0,

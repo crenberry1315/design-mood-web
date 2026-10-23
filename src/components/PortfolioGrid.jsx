@@ -11,6 +11,7 @@ import { isBackendConfigured } from "../lib/supabase";
 import { listProjects } from "../lib/portfolioRepository";
 import { CATEGORIES } from "../lib/portfolioModel";
 import PhotoLightbox from "./PhotoLightbox";
+import WatermarkedImage from "./WatermarkedImage";
 import "./portfolio.css";
 
 export function ProjectDetail({ project, onClose, onConsult }) {
@@ -63,8 +64,10 @@ export function ProjectDetail({ project, onClose, onConsult }) {
               aria-label={`사진 ${currentIndex + 1} 크게 보기`}
               onClick={() => setExpanded(true)}
             >
-              <img
+              <WatermarkedImage
                 src={image.url}
+                watermark={image.watermark}
+                fit="contain"
                 alt={
                   image.caption || `${project.title} 사진 ${currentIndex + 1}`
                 }
@@ -318,8 +321,9 @@ export default function PortfolioGrid({ onSelectConsultation }) {
                     >
                       <div className="portfolio-cover">
                         {project.images[0]?.url ? (
-                          <img
+                          <WatermarkedImage
                             src={project.images[0].url}
+                            watermark={project.images[0].watermark}
                             alt={project.images[0].caption || project.title}
                             loading="lazy"
                           />

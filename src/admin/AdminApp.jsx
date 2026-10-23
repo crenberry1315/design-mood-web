@@ -28,6 +28,7 @@ import {
 import { prepareImage } from "../lib/prepareImage";
 import PhotoEditor from "./PhotoEditor";
 import HeroManager from "./HeroManager";
+import WatermarkToggle from "./WatermarkToggle";
 import "./admin.css";
 
 function messageFor(error) {
@@ -229,6 +230,7 @@ function PasswordRecovery({ onComplete }) {
 }
 
 function Dashboard({ user, registerLeave }) {
+  const [uploadWatermark, setUploadWatermark] = useState(false);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState(null);
   const [baseline, setBaseline] = useState("");
@@ -392,7 +394,7 @@ function Dashboard({ user, registerLeave }) {
     try {
       for (const file of files) {
         const image = await uploadImage(project.id, await prepareImage(file));
-        added.push(image);
+        added.push({ ...image, watermark: uploadWatermark });
         pendingUploads.current.set(image.path, image.url);
       }
       update("images", [...project.images, ...added]);
@@ -642,6 +644,12 @@ function Dashboard({ user, registerLeave }) {
                     첫 번째 사진이 대표 사진입니다.
                   </span>
                 </div>
+                <WatermarkToggle
+                  label="업로드할 사진 워터마크"
+                  checked={uploadWatermark}
+                  onChange={setUploadWatermark}
+                  hint="이후 추가할 사진에 적용됩니다. 업로드 후 사진별로 변경할 수 있습니다."
+                />
                 <label className="admin-upload">
                   <ImagePlus size={26} />
                   <strong>사진 선택하여 업로드</strong>
